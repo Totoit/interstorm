@@ -1,0 +1,85 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% block content %}
+    <script src="{% static "js/handlebars/checklogin-mobile.js" %}"></script>
+{#<script src="{% static "js/handlebars/login.js" %}"></script>#}
+{#<script src="{% static "js/dashboard/logout.js" %}"></script>#}
+    <script>
+        var lastlogin = JSON.parse(localStorage.getItem('returning-user'));
+    </script>
+    <style>
+      .lang-select2 > ul { top: 10px !important; left: -10px !important;}
+      .m-login-box { margin: 0 auto; }
+    </style>
+    <div id="mobile_login_form" class="form hidden" data-href="account">
+        <div>
+            <div class="change_box_fix m-login-box" align="center">
+                <img src="/static/images/pwr-logo.png" style="width: 100%;">
+                <div style="width: 100%;margin-top: 50px;">
+                    <div style="width:20%;float:left;padding-right: 0;padding-left:15px;" align="left">
+
+                        <div class="select-lang">
+                            <ul class="lang-list" style="padding: 0;margin: 0;">
+                                <li class="lang-select2 lang-select">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="width:80%;float: left;padding: 0 15px;">
+                        <input type="text" class="winput user we-dark-input mobile-email-input-check" data-toggle="popover"
+                            placeholder="{% trans "LANG_YOUR_EMAIL" %}" id="email2" name="email" onchange="$('#email_popup').val(this.value)">
+                        {#        <img src="{% static "images/auth/email.png" %}">#}
+                        <input type="password" class="winput we-dark-input" style="margin-bottom: 10px;" data-toggle="popover" placeholder="{% trans "LANG_PASSWORD" %}"
+                            id="password2" name="password"  onchange="$('#password_popup').val(this.value)">
+                        {#        <img src="{% static "images/auth/password.png" %}">#}
+                        <a href="/forgot-password/" style="float: right;text-decoration: underline;color: #cccccc;">{% trans "LANG_FORGOT_PASSWORD" %}?</a>
+                    </div>
+                </div>
+                <div style="width: 100%;margin-top: 50px;margin-left: 10px;">
+                    <a class="btn btnLogin loginBtnPopup" id="loginBtn" style="margin-top: 50px;">{% trans "LANG_SIGNIN"|upper %}</a>
+                    <a class="btn btnRegister" data-toggle="modal" data-target="#registerModal" style="margin-top: 50px;">{% trans "LANG_REGISTER"|upper %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var currentPageURL = window.location.href;
+            var parts = currentPageURL.split("/");
+            var current = parts[parts.length - 2];
+            if(current == 'login'){
+                $('#mainNav , footer , #mobile-foot-menu').hide();
+            }else{
+                $('#mainNav , footer , #mobile-foot-menu').show();
+            }
+
+            var setlogin_lang = $('.lang-select:nth-child(1)').html();
+            $('.lang-select:nth-child(1)').html('')
+            $('.lang-select2').html( setlogin_lang );
+        });
+
+        if (lastlogin) {
+            console.log(lastlogin.username);
+            $('#email').val(lastlogin.username);
+            $('#email').addClass('hidden');
+            console.log(lastlogin.firstname);
+            $('.account-welcome-again .welcome-name').html(lastlogin.firstname);
+            $('.account-welcome-again').removeClass('hidden');
+        }else{
+             $('.account-new-create').removeClass('hidden');
+        }
+        $('.account-link-another').click(function () {
+            $('#email').removeClass('hidden');
+            $('#email').val('');
+            $('.account-new-create').removeClass('hidden');
+            $('.account-welcome-again').addClass('hidden');
+            localStorage.setItem("returning-user", "");
+        });
+        $('.account-link-create').click(function () {
+            window.location = this.getAttribute('href');
+        })
+    </script>
+{% endblock %}

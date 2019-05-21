@@ -1,0 +1,95 @@
+<div class="col-md-12 p-lr-0" style="overflow:hidden;padding-bottom: 1rem;border-bottom: 1px solid #aeaeae;margin-bottom: 40px;">
+    <div style="float:left;" class="ds-card-img">
+        <img src="{{ icon }}">
+    </div>
+    <div style="float:left;" class="ds-card-text">
+        <h3>{{ name }}</h3>
+        <i>{{ trans 'LANG_JS_MIN' }} : {{ mycurrency }} {{ minlimit }} &nbsp;&nbsp;&nbsp; {{ trans 'LANG_JS_MAX' }} : {{ mycurrency }} {{ maxlimit }}</i>
+    </div>
+</div>
+<span id="withdraw_step1">
+    <div class="col-md-12" style="padding: 1rem !important;">
+    {{#each fields}}
+    {{#if this.mandatory }}
+    {{#ifNotCond @key "amount" }}
+    <div id="div_{{@key}}" class="class_{{@key}}">
+        <div class="col-md-12 no-pd-lr">
+            <div class="account-register">
+            {{#inputselect this.options}}
+                <span>{{ upperspace @key}} {{#if this.mandatory }}<font color="red">*</font>{{/if}}</span>
+                <select id="{{@key}}" name="{{@key}}"  class="form-input">
+                {{#each this.options}}
+                        {{#if this.id}}
+                            <option value="{{this.id}}" data-cardToken="{{this.cardToken}}">{{this.name}}</option>
+                        {{else}}
+                            <option value="{{this.code}}">{{this.code}}</option>
+                        {{/if}}
+                {{/each}}
+                </select>
+            {{else}}
+                {{#if this.registrationFields}}
+                    {{#each this.registrationFields}}
+                        <span>{{ upperspace @key}} {{#if this.mandatory }}<font color="red">*</font>{{/if}}</span>
+                        <input id="{{@key}}" name="{{@key}}" type="text"/>
+                    {{/each}}
+                {{else}}
+                    <span>{{ upperspace @key}} {{#if this.mandatory }}<font color="red">*</font>{{/if}}</span>
+                    <input id="{{@key}}" name="{{@key}}" type="text"/  class="form-input">
+                {{/if}}
+            {{/inputselect}}
+            </div>
+        </div>
+    </div>
+    {{/ifNotCond}}
+    {{/if}}
+    {{/each}}
+    {{#if fields.amount }}
+    <div id="div_amount" class="class_amount">
+    <div class="account-register">
+        <span >{{ trans 'LANG_AMOUNT' }} {{#if fields.amount.mandatory }}<font color="red">*</font>{{/if}}</span>
+        <input class="form-input" id="amount" name="amount" min="0" step="0.1" type="number" >
+        <div style="margin-top: 20px;overflow: hidden;">
+            <div class="col-md-4 m-0 p-0" style="float: left;" align="center">
+                <div class="dp-amount m1">50</div>
+            </div>
+            <div class="col-md-4 m-0 p-0" style="float: left;" align="center">
+                <div class="dp-amount m2">80</div>
+            </div>
+            <div class="col-md-4 m-0 p-0" style="float: left;" align="center">
+                <div class="dp-amount m3">150</div>
+            </div>
+        </div>
+    </div>
+    </div>
+    {{/if}}
+    </div>
+    <div class="account-register foot">
+        <div class="col-md-12 no-pd-lr" style="overflow: hidden;    border-bottom: 1px solid #B0BEC5 !important;margin-bottom: 15px;">
+            <div class="col-md-6" style="float: left;padding-left: 0;">
+                <font style="font-weight: 600;color: #495057;font-size:20px !important;">{{ trans  'Withdraw amount'  }}</font>
+            </div>
+            <div class="col-md-6" style="float: left; text-align: right;padding-right: 0;">
+                <font style="font-weight: 600;color: #495057;font-size:20px!important;"><span id="cal-withdraw-amount"  style="font-weight: 600;color: #495057 !important;font-size:20px!important;">0.00</span> {{mycurrency}}</font>
+            </div>
+        </div>
+        <div class="col-md-12 no-pd-lr" style="overflow: hidden; border-bottom: 1px solid #B0BEC5;margin-bottom: 15px;">
+            <div class="col-md-6" style="float: left;padding-left: 0;">
+                <font style="font-weight: 600;color: #495057;font-size:20px!important;">{{ trans 'Withdraw fee' }}</font>
+            </div>
+            <div class="col-md-6" style="float: left; text-align: right;padding-right: 0;">
+                <font style="color: #495057;font-weight: 600;font-size:20px!important;"><span id="cal-withdraw-fee" style="font-weight: 600;color: #495057 !important;font-size:20px!important;">0.00</span> {{mycurrency}}</font>
+            </div>
+        </div>
+        <div class="col-md-12 no-pd-lr" style="overflow: hidden; border-bottom: 1px solid #B0BEC5;margin-bottom: 15px;">
+            <div class="col-md-6" style="float: left;padding-left: 0;">
+                <font style="font-weight: 600;color: #000;font-size:20px!important;">{{ trans 'Total'}}</font>
+            </div>
+            <div class="col-md-6" style="float: left; text-align: right;padding-right: 0;">
+                <font style="color: #000;font-weight: 600;font-size:20px!important;"><span id="cal-withdraw-total"  style="font-weight: 600;color: #000;font-size:20px!important;">0.00</span> {{mycurrency}}</font>
+            </div>
+        </div>
+        <div class="col-md-12 no-pd-lr">
+            <button class="go-withdraw" type="submit">{{ trans 'LANG_SUBMIT' }}</button>
+        </div>
+    </div>
+</span>

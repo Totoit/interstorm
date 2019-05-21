@@ -1,0 +1,34 @@
+{{!-- start tablet & mobile --}}
+<div class="each-row">
+    <div class="row mg-bt-20">
+        <div class="col-12">
+            <p style="width:100%;margin-bottom:5px;">WITHDRAW METHOD</p>
+            <img src="{{ icon }}">
+        </div>
+    </div>
+    <div class="row mg-bt-20">
+        <div class="col-6">
+            <p style="margin-bottom:5px;">CHARGE</p>
+            <p style="margin-bottom:5px;font-size: 18px;">0 %</p>
+        </div>
+        <div class="col-6">
+            <p style="margin-bottom:5px;">MINIMAL AMOUNT</p>
+            <p style="margin-bottom:5px;font-size: 18px;">{{ withdrawLimit.min }}</p>
+        </div> 
+    </div>
+    <div class="row mg-bt-20">
+        <div class="col-6 ">
+            <p style="margin-bottom:5px;">WITHDRAWAL TIME</p>
+
+            <p  style="margin-bottom:5px;" class="green">
+                <i class="glyphicon glyphicon-ok-circle green" style="font-size: 20px;margin-right: 7px;top: 4px;"></i>
+                <span class="green" style="position: absolute;font-size: 18px;">1-5 days</span>
+            </p>
+
+        </div>
+        <div class="col-6">
+            <button class="btn btn-transparent-blue" onclick="showWithDrawModal('{{code}}','{{#if payCard.id }}{{payCard.id}}{{/if}}')" style="width:100%;margin-top: 12px;">Choose</button>
+        </div>  
+    </div>
+</div>
+{{!-- end tablet & mobile --}}

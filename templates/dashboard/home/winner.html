@@ -1,0 +1,11 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+<style>
+    .slick-track {min-height: 70px;}
+</style>
+<script src="{% static "js/dashboard/winner.js" %}"></script>
+<div class="winner-container">
+    <p class="winner-title">{% trans 'LANG_TODAY_WINNERS_HAVE_WON' %}</p>
+    <ul class="winner-list"></ul>
+</div>

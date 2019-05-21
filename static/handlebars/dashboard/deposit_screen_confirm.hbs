@@ -1,0 +1,24 @@
+<div style="width:100%;overflow:hidden;" align="center">
+  <table id="ds-confirm-table">
+    <tr>
+      <td>{{ trans 'LANG_JS_TRANSACTION_ID' }}</td>
+      <td>{{transactionID}}</td>
+    </tr>
+    <tr>
+      <td>{{ trans 'LANG_JS_TIME' }}</td>
+      <td>{{time}}</td>
+    </tr>
+    <tr>
+      <td>{{ trans 'LANG_JS_AMOUNT_CREDIT_TO' }} {{credit.name}}</td>
+      <td>{{credit.currency}} {{credit.amount}}</td>
+    </tr>
+    <tr>
+      <td style="font-weight: 600;">{{ trans 'LANG_JS_AMOUNT_DEBIT_FROM' }} {{debit.name}}</td>
+
+      <td style="font-weight: 600;font-size: 30px;color:#ffbd00;">{{debit.currency}} {{debit.amount}}</td>
+    </tr>
+  </table>
+  <a href="/account/deposit/">
+    <button class="ok-deposit">{{ trans 'LANG_JS_OK' }}</button>
+  </a>
+</div>

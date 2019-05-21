@@ -1,0 +1,9 @@
+<h5 class="black" style="text-align:center;margin-bottom: 15px;">{{ trans 'LANG_JS_AMOUNT_CREDIT_TO' }} {{credit.name}} {{credit.currency}} {{credit.amount}}</h5>
+<div style="width:100%;overflow:hidden;" align="center">
+  <div class="deposit-mm-box">
+    <h3 class="black">{{ trans 'LANG_JS_AMOUNT_DEBIT_FROM' }} {{debit.name}}</h3>
+    <h3 class="black" style="margin-bottom: 0;">{{debit.currency}} <span style="font-size:40px;color:#DE1B18;font-weight:600;">{{debit.amount}}</h3>
+  </div>
+</div>
+<input type="hidden" id="pid" value="{{pid}}">
+<button  type="submit" class="go-deposit"  style="margin-top:50px;">{{ trans 'LANG_JS_CONFIRM' }}</button>

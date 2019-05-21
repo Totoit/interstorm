@@ -1,0 +1,129 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load menu_tags %}
+{% block content %}
+<script src="{% static 'js/dashboard/limits_list.js' %}?t=2554565151"></script>
+ 
+<div class="height-full">
+    <div class="row height-full">
+        {% include "home/submenu.html" with mode='profile'%}
+
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>{% trans 'LANG_YOUR_LIMITS' %}</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            <div id="limit-list" style="box-shadow: 0 0 20px rgba(0, 0, 1, 0.1);margin-top:10px;">
+                <div class="line-gradient"></div>
+                <div class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="margin:0;">
+
+                        <table class="table tb-report hidden-780" style="margin-top:0;">
+                            <thead>
+                                <tr role="row" class="head-table">
+                                    <th role="columnheader" style="border-top: 0;">{% trans 'LANG_LIMIT_TYPE' %}</th>
+                                    <th role="columnheader" style="border-top: 0;">{% trans 'LANG_AMOUNT' %}</th>
+                                    <th role="columnheader" style="border-top: 0;">{% trans 'LANG_STATUS' %}</th>
+                                    <th role="columnheader" style="border-top: 0;">{% trans 'LANG_EXPIRATION_DATE' %}</th>
+                                    <th role="columnheader" style="border-top: 0;">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="limits-list" role="rowgroup">
+                                <!-- data from limit_list.hbs -->
+                            </tbody>
+                            <tbody id="limits-list-nodata" style="display:none;">
+                                <tr>
+                                    <td  colspan="5">{% trans 'LANG_NO_DATA' %}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="limits-list-mobile" style="margin-top:0!important;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% comment %} <div class="container full-width-screen">
+        <div class="account-limits"> -->
+        <!-- <script>
+        function cooloffcheck(val){
+
+          if (val == "CoolOffFor24Hours"){ $(".CoolOffFor7Days,.CoolOffFor30Days").prop('checked', false);} else
+          if (val == "CoolOffFor7Days"){ $(".CoolOffFor24Hours,.CoolOffFor30Days").prop('checked', false);} else { $(".CoolOffFor24Hours,.CoolOffFor7Days").prop('checked', false);}
+          if ($('.CoolOffFor24Hours').is(":checked") || $('.CoolOffFor7Days').is(":checked") || $('.CoolOffFor30Days').is(":checked")){
+            $(".modal-body").css('color', '#000000');
+            $("#closeAccountModal").modal('show');
+          }
+        }
+        </script>
+        <style>
+        .activity-limits hr { border:1px #FFFFFF solid;}
+        </style> -->
+        <!-- <div class="row">
+            <div class="col-md-8">
+                <div class="gaming-limits">
+                    <div class="title">
+                        <h3>{% trans 'LANG_GAMING_LIMITS' %}</h3>
+                    </div>
+                    <div class="content">
+                        <p>{% trans 'Here you can set and change financial and session limits at any time.' %}
+                            {% trans 'The deposit limits are independent of the maximun limits mentioned in the deposit section.' %}
+                        </p>
+                        <p>
+                            {% trans 'You can reduce your financial limits here, with immediate effect.' %}
+                            {% trans 'If you wish to remove or increase your financial limits, a 7  day waiting period comes into place.' %}
+                            {% trans 'The original limit will remain active until then.' %}
+                            {% trans 'If you wish to remove a limit, please contact customer support.' %}
+                        </p>
+                    </div>
+                    <div id="limits_row"></div>
+                    <br/>
+                    <div id="reality_check_row"></div>
+                    <br/>
+                    <div id="cooloff_row"></div>
+                    <br/>
+                    <div id="self_exclusion_row"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="activity-limits">
+                    <div class="title">
+                        <h3>{% trans 'Activity Limits' %}</h3>
+                    </div>
+                    <div class="title" id="showactive_limit">
+                        <p>{% trans 'There are no active limits' %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade login-modal" id="closeAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5>
+                    <span>{% trans 'Close my account'|upper %}</span>
+                </h5>
+              <div class="close-box">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="modal-body">
+                {% trans 'You will not be able to log in to this account for the duration of the closen period. Once your time out period has ended,your account will automatically become accessible.' %}
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
+{% endblock %}

@@ -1,0 +1,74 @@
+ <div class="col-sm-4 col-md-3 gamepage{{classpage}}" style="padding:0 5px;">
+            <div class="item" style="padding:0;">
+            <div class='square-box box-3-2'>
+                <div class='square-content'>
+                <div class="square-thumbnail">
+                    
+                    <div class="img crop {{languagecode}}" style="vertical-align: middle">
+                        {{#if slug}}
+                            {{#ifCond languagecode  'en'}}
+                            <a data-slug="{{slug}}" href="/game/{{slug}}"></a>
+                            {{else}}
+                            <a data-slug="{{slug}}" href="/{{languagecode}}/game/{{slug}}"></a>
+                            {{/ifCond}}
+                        {{else}}
+                        {{#ifvalue  ../mode value="game"}}
+                            {{#ifCond languagecode  'en'}}
+                            <a data-slug="{{slug}}" style="cursor:pointer;" onclick="return popupLoginGames('/game/{{slug}}?mode=real')">
+                            {{else}}
+                            <a data-slug="{{slug}}" style="cursor:pointer;" onclick="return popupLoginGames('/{{languagecode}}/game/{{slug}}?mode=real')">
+                            {{/ifCond}}
+                        {{else}}
+                            {{#ifCond languagecode  'en'}}
+                            <a data-slug="{{@key}}" style="cursor:pointer;" onclick="return popupLoginGames('/game/{{@key}}?mode=real')">
+                            {{else}}
+                            <a data-slug="{{@key}}" style="cursor:pointer;" onclick="return popupLoginGames('/{{languagecode}}/game/{{@key}}?mode=real')"></a>
+                            {{/ifCond}}
+                        {{/ifvalue}}
+                        {{/if}}
+
+                            {{#if thumbnail}}
+                            <img src="{{thumbnail}}">
+                            {{else}}
+                            <img src="/static/images/no-thumb.png">
+                            {{/if}}
+
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="btn-play-game">
+                {{#if slug}}
+                    {{#ifCond languagecode  'en'}}
+                    <a data-slug="{{slug}}" href="/game/{{slug}}">
+                    {{else}}
+                    <a data-slug="{{slug}}" href="/{{languagecode}}/game/{{slug}}"></a>
+                    {{/ifCond}}
+                {{else}}
+                {{#ifvalue  ../mode value="game"}}
+                    {{#ifCond languagecode  'en'}}
+                    <a data-slug="{{slug}}" style="cursor:pointer;" onclick="return popupLoginGames('/game/{{slug}}?mode=real')">
+                    {{else}}
+                    <a data-slug="{{slug}}" style="cursor:pointer;" onclick="return popupLoginGames('/{{languagecode}}/game/{{slug}}?mode=real')"></a>
+                    {{/ifCond}}
+                {{else}}
+                    {{#ifCond languagecode  'en'}}
+                    <a data-slug="{{@key}}" style="cursor:pointer;" onclick="return popupLoginGames('/game/{{@key}}?mode=real')">
+                    {{else}}
+                    <a data-slug="{{@key}}" style="cursor:pointer;" onclick="return popupLoginGames('/{{languagecode}}/game/{{@key}}?mode=real')"></a>
+                    {{/ifCond}}
+                {{/ifvalue}}
+                {{/if}}
+                    <img src="/static/images/CTAPlayWhite.png">
+                </a>
+            </div>
+            {{#if live_casino}}
+
+            {{else}}
+                <div class="btn-game-info" id="game-show-info-{{slug}}" onclick="categoryGameInfo('{{slug}}','{{row_no}}')" align="center">
+                    <img src="/static/images/CTA_-_Play_More_Info4.png" style="height: 44px;">
+                </div>
+            {{/if}}
+            </div>
+        </div>

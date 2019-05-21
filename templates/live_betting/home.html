@@ -1,0 +1,58 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% block content %}
+<!--  sport  -->
+<div class="container full-width">
+<!-- {% include "dashboard/game/game-box.html" with id="games-table" gamescreen="game-screen casino-live" gamemode="ROULETTE" %} Anonymous-->
+<script>
+document.domain='uniclubcasino.com';
+</script>
+<iframe
+    id="iframeLiveBetting"
+    src=""
+    width="100%"
+    height="1750"
+    frameborder="0"
+    scrolling="no" allowTransparency="true"
+    style="width:100%"
+></iframe>
+
+</div>
+<script>
+function resizeIframe() {
+  //console.log("==resizeIframe==");
+  if (typeof $("iframe").contents().find('html').height() != 'undefined'){
+      if ($("iframe").contents().find('html').height() > 100) {
+          //console.log("==iframeBetting resizeIframe==");
+          $('#iframeLiveBetting').height(  $("iframe").contents().find('html').height()  + 'px') ;
+      } else {
+          //console.log("==iframeBetting resizeIframe2==");
+          setTimeout(function (e) {
+              resizeIframe();
+          }, 50);
+      }
+  }
+}
+$(function () {
+    if ( getCookie("pwr_ss") == null || getCookie("pwr_ss") == ''){
+      setFrameSport('Anonymous');
+      setTimeout(function (e) {
+          resizeIframe();
+      }, 1000);
+    } else {
+      setTimeout(function (e) {
+          if (!isLogin){
+            setCookie('pwr_ss','',36500);
+            setFrameSport('Anonymous');
+          }
+      }, 5000);
+    }
+    $(window).resize(function() {
+      $("#iframeLiveBetting").css("width", '100%');
+    });
+});
+</script>
+{% endblock %}

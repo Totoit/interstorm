@@ -1,0 +1,331 @@
+{% spaceless %}
+    {% load staticfiles %}
+    {% load i18n %}
+    {% load cms_tags %}
+    {% load menu_tags %}
+    {% load sekizai_tags %}
+
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_language_info for LANGUAGE_CODE as LANGUAGE %}
+    {% get_language_info_list for LANGUAGES as LANGUAGES %}
+
+    {#{% get_current_language as LANGUAGE_CODE %}#}
+    {#{% get_available_languages as LANGUAGES %}#}
+    {#{% get_language_info_list for LANGUAGES as languages %}#}
+{% endspaceless %}
+
+{% load timetags %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="description" content="{% page_attribute 'meta_description' %}">
+    <meta name="author" content="">
+    {% page_attribute "title" as title %}
+    {% page_attribute "page_title" as page_title %}
+    <title>
+      {% if page_title %}
+        {{ page_title }}
+      {% else %}
+        {% if title %}
+          {{ title }}
+        {% else %}
+          {% block title %}
+          {{ SITE_NAME|title }} | {% trans "LANG_ONLINE_CASINO"|title %}
+          {% endblock %}
+        {% endif %}
+      {% endif %}
+    </title>
+    {# init js file#}
+    <script>
+        //Snare.js variables, needs to be before snare.js
+        var io_install_flash = false;
+        var io_install_stm = false;
+    </script>
+    <script type="text/javascript" src="https://mpsnare.iesnare.com/snare.js"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/handlebars-v4.0.11.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/moment-with-locales.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/callsystem.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/bootstrap-datetimepicker.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sweetalert/sweetalert.min.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/global.js' %}?t={{ timestamp|print_timestamp }}"></script>
+
+    <script src="{% static 'js/dashboard/bonus.js' %}?t={{ timestamp|print_timestamp }}"></script>
+    
+    <script type="text/javascript" src="{% static 'js/super_games.js' %}?t={{ timestamp|print_timestamp }}"></script>
+
+    <!-- recapcha v2 -->
+    <script type="text/javascript"
+            src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit&amp;hl={{ LANGUAGE_CODE }}" async
+            defer></script>
+    
+    <!-- Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sweetalert/sweetalert.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/sb-admin.css' %}?t={{ timestamp|print_timestamp }}" rel="stylesheet">
+    <link href="{% static 'libs/slick/slick.css' %}" rel="stylesheet" />
+    <link href="{% static 'libs/slick/slick-theme.css' %}" rel="stylesheet" />
+
+    {% render_block "css" %}
+    {% render_block "js_head" %}
+
+    {% block head %}{% endblock %}
+
+    {% if EVERYMATRIX %}
+        <script type="text/javascript">
+            window._EM = {
+                url: '{{ EVERYMATRIX.url|escapejs }}',
+                domain: '{{ EVERYMATRIX.domain|escapejs }}',
+                language_code: '{{ LANGUAGE_CODE|escapejs }}'
+            }
+        </script>
+    {% endif %}
+    <script src="{% static 'js/utilities.js' %}?t={{ timestamp|print_timestamp }}"></script>
+</head>
+
+<body class="" id="page-top">
+    <div id="loader-page" class="loader-page"></div>
+    <div id="loading-prcess" class="loading">Loading&#8230;</div>
+
+{% cms_toolbar %}
+
+<style>
+    .txtblue {
+        color: #1A507B;
+    }
+
+    section.campaign-campaign-text h2 {
+        margin-top: 0px;
+    }
+
+    @media screen and (max-width: 1199px) {
+        #account #accounts .wallet p#cashbalance {
+            top: 105px;
+        }
+
+        #account #accounts .wallet p#accountbonus {
+            top: 62px !important;
+            right: 30px !important;
+        }
+    }
+
+    .bg-dark {
+        background: #633d1d !important;
+    }
+
+</style>
+
+    
+
+{# slidebar #}
+
+<div class="fixed-nav bg-dark">
+    {#    <div class="leftboxlucky" >#}
+    {#        <br>#}
+    {#        <a href="#" class="btn btn-primary btnlucky" id="open-wheel">Spin nu!</a>#}
+    {#    </div>#}
+    
+    {% block sidebar-block %}
+        {#    {% include "home/slidebar.html" %}#}
+    {% endblock sidebar-block %}
+</div>
+<!-- <div class="container full-width p-0"> -->
+<div class="container full-width p-0">
+    <div class="row p-0  m-0">
+        <div class="col-md-12 p-0">
+            {% block screen_body %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% block footer %}
+    {% include 'home/footer.html' %}
+{% endblock footer %}
+
+<!-- General Chat -->
+<script type="text/javascript">
+    var videoCall;
+</script>
+
+
+<!-- Popup Modal-->
+<div class="modal fade" id="campaignmodal" tabindex="-1" role="dialog" aria-labelledby="campaignmodalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="campaignmodallabel">{% trans 'LANG_TITLE' %}</h4>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'LANG_CLOSE' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Game Screen Modal -->
+{% include 'dashboard/game/play-game.html' %}
+
+<script>
+
+function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
+
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    } else{
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+        end = dc.length;
+        }
+    }
+
+    return decodeURI(dc.substring(begin + prefix.length, end));
+} 
+
+if (getCookie("cookie_policy") != null) {
+    $('.cookie-policy').addClass('hidden');
+}
+
+(function(d, src, c) { var t=d.scripts[d.scripts.length - 1],s=d.createElement('script');s.id='la_x2s6df8d';s.async=true;s.src=src;s.onload=s.onreadystatechange=function(){var rs=this.readyState;if(rs&&(rs!='complete')&&(rs!='loaded')){return;}c(this);};t.parentElement.insertBefore(s,t.nextSibling);})(document,
+'https://dgv.ladesk.com/scripts/track.js',
+function(e){ LiveAgent.createButton('682efc74', e); });
+
+
+function onScroll() {
+    $('.sub-page-aside').removeClass('active');
+}
+
+$(document).ready(function(){
+    $(window).scroll(onScroll);
+
+    $('#sidebarCollapse').on('click', function () {
+        if($('#sidebar').hasClass('active')){
+            $('#sidebar').removeClass('active');
+            $('.overlay').fadeOut();
+            $('#mobile-foot-chat').css('display','none');
+        }else{
+            $('#sidebar').addClass('active');
+            $('.overlay').fadeIn();
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            $('#mobile-foot-chat').css('display','inline');
+            $('#mobile-foot-menu').css('padding','10px 1rem');
+        }
+    });
+
+    $('#dismiss, .overlay').on('click', function () {
+        $('#sidebar').removeClass('active');
+        $('.overlay').fadeOut();
+        $('#mobile-foot-chat').css('display','none');
+    });
+
+    $("li.tab-bar").click(function (e) {
+        document.location.href = $(this).attr('href');
+    });
+
+    $(".toggle-aside-btn").click(function (e) {
+        $('.sub-page-aside').toggleClass('active');
+    }); 
+   
+    var currentPageURL = location.pathname;
+    var str = currentPageURL.substring(0, currentPageURL.length-1);
+    var n = str.lastIndexOf('/');
+    var lastPart = str.substring(n + 1);
+
+    if(!lastPart){
+        $(".loader-page").css('background','url("https://aurumstage.s3.amazonaws.com/static/images/home_loading_v2.gif") 50% 50% no-repeat #000');
+        
+        setTimeout(function() { 
+            $(".loader-page").hide();
+        }, 2000);
+
+    }else{
+        $(".loader-page").hide();
+    }
+
+});
+
+        // if(getCookie('firstload') == ""){
+        //     $(".loader-page").css('background','url("https://aurumstage.s3.amazonaws.com/static/images/home_loading.gif") 50% 50% no-repeat #000');
+
+        //     setTimeout(function() { 
+        //         $(".loader-page").fadeOut("slow");
+        //         document.cookie = "firstload=0";
+        //     }, 5000);
+        // } else {
+        //     $(".loader-page").hide();
+        // }
+
+    function parse_query_string(query) {
+        var vars = query.split("&");
+        var query_string = {};
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            // If first entry with this name
+            if (typeof query_string[pair[0]] === "undefined") {
+                query_string[pair[0]] = decodeURIComponent(pair[1]);
+                // If second entry with this name
+            } else if (typeof query_string[pair[0]] === "string") {
+                var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+                query_string[pair[0]] = arr;
+                // If third or later entry with this name
+            } else {
+                query_string[pair[0]].push(decodeURIComponent(pair[1]));
+            }
+        }
+        return query_string;
+    }
+</script>
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Page level plugin JavaScript-->
+<!-- Custom scripts for all pages-->
+<script src="{% static 'libs/sb-admin.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'js/game.js' %}?t={{ timestamp|print_timestamp }}"></script>
+<script type="text/javascript" src="{% static 'js/games.js' %}?t={{ timestamp|print_timestamp }}"></script>
+
+<script type="text/javascript" src="{% static 'js/search.js' %}?t={{ timestamp|print_timestamp }}"></script>
+{% render_block "js" %}
+{#{% include "wheel/wheel.html" %}#}
+
+{#<script src="{% static "js/wheel.js" %}" type="text/javascript"></script>#}
+<script type="text/javascript" src="{% static 'libs/slick/slick.min.js' %}"></script>
+<script src="{% static 'js/slider.js' %}?t={{ timestamp|print_timestamp }}" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{% static  'libs/loading/jquery.loading.min.css' %}"/>
+<script src="{% static "libs/loading/jquery.loading.min.js" %}"></script>
+<script type="text/javascript" src="{% static 'libs/Carousel.js' %}?t={{ timestamp|print_timestamp }}"></script>
+
+</div>
+    
+</body>
+
+</html>

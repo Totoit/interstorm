@@ -1,0 +1,60 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% load cms_tags %}
+{% load menu_tags %}
+
+{% block title %}{% page_attribute "page_title" %} | {{ block.super }}{% endblock %}
+
+{% block menu %}
+    {% include "home/menu.html" %}
+{% endblock menu %}
+
+{% block content %}
+
+<div class="height-full">
+    <div class="row height-full">
+        <!-- {#% include "home/submenu_support.html" with mode='profile'%#} -->
+        <div class="sub-page-aside submenu-bar col-md-3" style="background: url({% static 'images/sub-menu-bg2.jpg' %}); padding-right: 0;">
+            <aside>
+                <ul>
+                    {% show_menu_below_id 'support' 0 100 100 100 'cms_templates/left_menu.html' %}
+                </ul>
+            </aside>
+            <div class="toggle-aside-btn"></div>
+        </div>
+
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>Payment method</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            <div  class="sub-page-wrapper" style="min-height: 460px;">
+                <div class="sub-page-container account-balance-block col" style="margin-top:0;">
+                        
+                    <p style="margin-bottom:30px;">You may be offered one or more of the following payment options:</p>
+
+                    <ul style="list-style-type: disc;padding-left: 30px;">
+                        <li>Credit card (Visa, MasterCard, Diners Club, American Express)</li>
+                        <li>Debit Card (Maestro in the UK and Carte Bleue in France)</li>
+                        <li>PayPal (currently available for bookings in Euros, US Dollars, AU Dollars and GB Pounds only)</li>
+                        <li>Real-time or online bank transfer</li>
+                        <li>Western Union</li>
+                        <li>Offline bank transfer</li>
+                    </ul>
+
+                    <p style="margin-bottom:30px;">Since we have different payment options from different countries, we would ask that you check during the transfer process what payment options are given to you. If your desired payment option is not shown, it may not be available for the country that you are departing from, or there is too little time left before departure.</p>
+                    <p>In some countries we may only offer the option to make the booking online and then make payment at an Aurum palace office.</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

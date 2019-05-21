@@ -1,0 +1,6 @@
+{% load cms_tags %}
+<div class="multicolumn multicolumn-{{ instance.position }} multicolumn-columns-{{ instance.num_children }} placeholder-{{ instance.placeholder|slugify }} clearfix row">
+    {% for plugin in instance.child_plugin_instances %}
+        {% render_plugin plugin %}
+    {% endfor %}
+</div>

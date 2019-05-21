@@ -1,0 +1,135 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load menu_tags %}
+
+{% block content %}
+<script src="{% static "js/dashboard/profile.js" %}"></script>
+<script src="{% static "js/dashboard/changeemail.js" %}"></script>
+<script src="{% static "js/dashboard/changepwd.js" %}"></script>
+<script src="{% static "js/powerbar.js" %}"></script>
+
+<style>
+    .g-recaptcha > div {margin: 0 auto;}
+</style>
+<div class="height-full">
+    <div class="row height-full">
+        {% include "home/submenu.html" with mode='profile'%}
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>{% trans 'LANG_MY_PROFILE'%}</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            <form id="dashboard_form"  style="display:none;">
+                <!-- ACCOUNT BALANCE BLOCK -->
+                <div class="line-gradient" style="margin-top:10px;"></div>
+                <div  class="sub-page-wrapper">
+                    <div class="sub-page-container account-balance-block col" style="margin-top:0;">
+                        <div class="wallet-detail">
+                            <p style="font-weihgt:600;">{% trans 'LANG_GAMING_ACCOUNT_BALANCE'%}</p>
+                            <h1 class="user_total_withdraws">-</h1>
+                            <a href="{% url 'deposit' %}" class="btn btn-lg col" style="margin-top:15px;">{% trans 'LANG_DEPOSIT'%}</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- TOP BLOCK -->
+                <div  class="sub-page-wrapper">
+                    <!-- Personal data -->
+                    <div class="sub-page-container col d-flex flex-column">
+
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <h6 class="line-title" style="margin-bottom: 20px;">{% trans 'LANG_ACCOUNT_INFORMATION'%}</h6>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p id="full-name" style="font-size: 1rem;" class="mg-bt-5 font-weight-bold"></p>
+                                    </div>
+                                </div>
+
+                                <div id="nation-id" class="row">
+                                    <div class="col-md-4">
+                                        <p class="mg-bt-5 border-label">{% trans 'LANG_NATIONAL_ID'%} : </p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="mg-bt-5"><span class="font-weight-bold"></span></p>
+                                    </div>
+                                </div>
+                                <div id="birth-date" class="row">
+                                    <div class="col-md-4">
+                                        <p class="mg-bt-5 border-label">{% trans 'LANG_DATE_OF_BIRTH'%} : </p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="font-weight-bold"></span>
+                                    </div>
+                                </div>
+                                <div id="address-label" class="row">
+                                    <div class="col-md-4">
+                                        <p class="mg-bt-5 border-label">{% trans 'LANG_ADDRESS' %} : </p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="font-weight-bold"></span>
+                                    </div>
+                                </div>
+                                <div id="phone-label" class="row">
+                                    <div class="col-md-4">
+                                        <p class="mg-bt-5 border-label">{% trans 'LANG_PHONE_NUMBER' %} : </p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="font-weight-bold"></span>
+                                    </div>
+                                </div> 
+                                <div id="email-label" class="row">
+                                    <div class="col-md-4">
+                                        <p class="mg-bt-5 border-label">{% trans 'LANG_EMAIL'%} : </p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span class="font-weight-bold"></span>
+                                    </div>
+                                </div>  
+                            </div>
+
+                            <div class="col-md-6 col-12">
+                                <h6 class="line-title" style="margin-bottom: 20px;">{% trans 'LANG_CHANGE_PASSWORD' %}</h6>
+                                <div class="fix-width">
+                                    <div class="form-group">
+                                        <label for="current" style="color:#595d68;">{% trans 'LANG_CURRENT_PASSWORD' %}</label>
+                                        <div class="col-md-12 p-0">
+                                            <input type="password" class="form-control input-text" id="current" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new" style="color:#595d68;">{% trans 'LANG_NEW_PASSWORD' %}</label>
+                                        <div class="col-md-12 p-0">
+                                            <input type="password" class="form-control input-text" id="new" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="renew" style="color:#595d68;">{% trans 'LANG_CONFIRM_PASSWORD' %}</label>
+                                        <div class="col-md-12 p-0">
+                                            <input type="password" class="form-control input-text" id="renew" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div id="captcha" style="width: 200px; margin-top: 7px;display:none;">
+                                            <span class="g-recaptcha" id="myrecaptcha" data-sitekey="6LfPIgYTAAAAACEcTfYjFMr8y3GX6qYVLoK-2dML"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-auto">
+                                        <input type="hidden" id="captchaResponse" value="">
+                                        <button type="button" id="changepass" class="btn btn-lg">{% trans 'LANG_SAVE' %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

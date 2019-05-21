@@ -1,0 +1,229 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load cms_tags %}
+{% load menu_tags %}
+{% comment %} {% load extra_cms_tags %} {% endcomment %}
+
+{#{% load casino_campaigns_tags %}#}
+<style>
+    @media (max-width: 992px) {
+        .copyright-content {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .copyright-License {
+            display: none !important;
+        }
+
+        .copyright-Authority {
+            display: none !important;
+        }
+    }
+
+    .FooterLogo {
+        display: inline-block;
+        padding: 0.5em;
+        margin-right: 35px;
+    }
+
+    .content-normal {
+        padding: 15px;
+    }
+
+    .AreaProgram .programTitle {
+        background-color: #525c65;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .AreaProgram .Head {
+        font-weight: bold;
+    }
+
+    .AreaProgram p {
+        color: #eee !important;
+    }
+
+    .AreaProgram .programFooter {
+        background-color: #464f56;
+        border-radius: 0 0 5px 5px;
+    }
+
+    .AreaProgram .programFooter p {
+        padding: 10px !important;
+    }
+
+    .FooterLogos {
+        display: block;
+        width: 100%;
+        max-width: 1244px;
+        margin: 0 auto;
+        padding: 1em 0 0 0;
+        text-align: left;
+    }
+
+    .FooterLogo {
+        display: inline-block;
+        padding: 0.5em;
+        margin-right: 0px;
+    }
+
+    .FooterLogoImage {
+        display: block;
+        margin: 0 auto;
+        width: auto;
+        height: 2em;
+    }
+
+    .seb .FooterLogoImage {
+        background: transparent url(/static/images/paymentmethod/SEB.png) left top no-repeat;
+        width: 80px;
+        height: 37px;
+    }
+
+    .swed .FooterLogoImage {
+        background: transparent url(/static/images/paymentmethod/Swedbank.png) left top no-repeat;
+        width: 168px;
+        height: 37px;
+    }
+
+    .dnb .FooterLogoImage {
+        background: transparent url(/static/images/paymentmethod/DNB.png) left top no-repeat;
+        width: 65px;
+        height: 37px;
+    }
+
+    .nordea .FooterLogoImage {
+        background: transparent url(/static/images/paymentmethod/Nordea.png) left top no-repeat;
+        width: 132px;
+        height: 37px;
+    }
+
+    .citadele .FooterLogoImage {
+        background: transparent url(/static/images/paymentmethod/Citadele.png) left top no-repeat;
+        width: 100px;
+        height: 37px;
+    }
+    .siauliu{
+        padding: 0.5em 1.5em;
+    }
+
+    .siauliu .FooterLogoImage {
+        background: transparent url(/static/images/paymentmethod/Siauliy.png) left top no-repeat;
+        width: 165px;
+        height: 37px;
+    }
+
+</style>
+<footer>
+    <div class="socials" align="center">
+        <a target="_blank" href="https://twitter.com/AurumPalace">
+            <img src="{% static 'images/footer/socials/twitter.png' %}">
+        </a>
+        <!-- <img src="{% static 'images/footer/socials/google.png' %}"> -->
+        <!-- <img src="{% static 'images/footer/socials/in.png' %}"> -->
+        <a target="_blank" href="https://www.instagram.com/aurumpalace">
+            <img src="{% static 'images/footer/socials/ig.png' %}">
+        </a>
+        <!-- <img src="{% static 'images/footer/socials/youtube.png' %}"> -->
+        <a target="_blank" href="https://www.facebook.com/Aurum-Palace-1531337206998239">
+            <img src="{% static 'images/footer/socials/fb.png' %}">
+        </a>
+    </div>
+    <div class="menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div>
+                        <div style="border-bottom:1px solid #845542;margin-bottom: 10px;padding-bottom: 10px;">
+                            <font class="title">{% trans 'LANG_AURUM_PALACE' %}</font>
+                        </div>
+                        <p><a href="/about-us/">{% trans 'LANG_ABOUT_US'%}</a></p>
+                        <p><a href="/vip/">{% trans 'LANG_VIP'%}</a></p>
+                        <!-- <p>Online Gambling</p> -->
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <div style="border-bottom:1px solid #845542;margin-bottom: 10px;padding-bottom: 10px;">
+                            <font class="title">{% trans 'LANG_FOR_PLAYER'%}</font>
+                        </div>
+                        <p><a href="/support/rules-security/general-terms-and-conditions/">{% trans 'LANG_TEARMS_AND_CONDITIONS'%}</a></p>
+                        <p><a href="/support/rules-security/privacy-policy/">{% trans 'LANG_PRIVACY_POLICY'%}</a></p>
+                        <p><a href="/support/rules-security/cookie-policy/">{% trans 'LANG_COOKIE_POLICY'%}</a></p>
+                        <p><a href="/support/faq/">{% trans 'LANG_FAQ'%}</a></p>
+                        <p><a href="/support/responsible-gaming/">{% trans 'LANG_RESPONSIBLE_GAMBLING'%}</a></p>
+                        <p><a href="/support/rules-security/bonus-terms-and-conditions/">{% trans 'LANG_BONUS_TERMS_AND_CONDITIONS'%}</a></p>
+                        <p><a href="/support/rules-security/anti-spam-policy">{% trans 'LANG_ANTI_SPAM_POLICY'%}</a></p>
+                        <!-- <p>Submit self-excusion request</p> -->
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <div style="border-bottom:1px solid #845542;margin-bottom: 10px;padding-bottom: 10px;">
+                            <font class="title">{% trans 'LANG_CUSTOMER_SUPPORT'%}</font>
+                        </div>
+                        <p><img src="{% static 'images/footer/mail.png' %}">{% trans 'LANG_SUPPORT_EMAIL'%}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="deposit-withdraw">
+        <span>{% trans 'LANG_DEPOSITES_AND_WITHDRAWALS' %}</span>
+        <div class="line"></div>
+        <div class="container">
+            <div id="logo" class="row">
+                <!-- loop images -->
+                    <div class="col-md-2 col-4">
+                        <img src="{% static 'images/footer/footer_logo/Footer_1.png' %}">
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <img src="{% static 'images/footer/footer_logo/Footer_2.png' %}">
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <img src="{% static 'images/footer/footer_logo/Footer_3.png' %}">
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <img src="{% static 'images/footer/footer_logo/Footer_6.png' %}">
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <img src="{% static 'images/footer/footer_logo/Footer_12.png' %}">
+                    </div>
+                    <div class="col-md-2 col-4">
+                        <img src="{% static 'images/footer/footer_logo/Footer_13.png' %}">
+                    </div>
+                <!-- loop images -->
+
+            </div>
+        </div>
+        <p class="copyright">&copy; aurum palace all rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    // $.each($('.footerSocial a'),function(key,value){
+    //     if(value.className == "SocialLink SocialFB" || value.className == "SocialLink SocialTwitter" || value.className == "SocialLink SocialIG"){
+    //         if($('.'+value.classList[1]).attr('href').includes("http")){
+    //             $('.'+value.classList[1]).attr({
+    //                 'href': $('.'+value.classList[1]).attr('href').replace('<p>','').replace('</p>','')
+    //             })
+    //         }else{
+    //             $('.'+value.classList[1]).hide();
+    //         }
+    //     }
+    // });
+    // $.each($('.footerSocial_mobile a'),function(key,value){
+    //     if(value.className == "SocialLink SocialFB" || value.className == "SocialLink SocialTwitter" || value.className == "SocialLink SocialIG"){
+    //         if($('.'+value.classList[1]).attr('href').includes("http")){
+    //             $('.'+value.classList[1]).attr({
+    //                 'href': $('.'+value.classList[1]).attr('href').replace('<p>','').replace('</p>','')
+    //             })
+    //         }else{
+    //             $('.'+value.classList[1]).hide();
+    //         }
+    //     }
+    // });
+</script>

@@ -1,0 +1,13 @@
+{{#each categories}}
+<li class="game-list-view" id="{{@key}}"><h2>{{@key}}</h2>
+	<ul>
+		{{#each this}}
+		<li class="game simple" id="game-{{this.game.slug}}">
+			<a data-slug="{{this.game.slug}}" href="#">
+				<span class="game-name">{{this.name}}</span>
+			</a>
+		</li>
+		{{/each}}
+	</ul>
+</li>
+{{/each}}

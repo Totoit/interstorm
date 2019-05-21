@@ -1,0 +1,84 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load thumbnail %}
+{% load casino_campaigns_tags %}
+{% url 'login' as login_url %}
+<style>
+        .btn-cta{
+          color: #000;
+          background-color: #FBBF00;
+          border-color: #FBBF00;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+        .btn-cta:hover{
+            color: #000;
+        }
+        .content-cta{
+            padding: 1rem
+        }
+      </style>
+<div class="section-content">
+    <div class="container full-width-screen">
+        <div class="row">
+            <div class="col-md-12 m-0 p-0"> 
+                {% comment %} <div class="content-title">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>{% trans 'LANG_WELCOME_OFFER'|title %}</h3>
+                        </div>
+                    </div>
+                </div>{% endcomment %}
+                <div class="content-data">
+                    <div class="row">
+                        {% show_results limit=12 slider=1 as campaign_list %} {% for campaign in campaign_list %}
+                        {% if campaign.landing_page %}
+                        <div class="col-md-3 m-0 p-1">
+                            <div class="content">
+                                <div class="content-cover">
+                                    <div class='square-box box-2-1'>
+                                        <div class='square-content'>
+                                            <div class="square-thumbnail">
+                                                <a href="{{ campaign.get_absolute_url }}">
+                                                    <img src="{% thumbnail campaign.image 220x220 crop=center upscale subject_location=campaign.image.subject_location %}" alt="{{ campaign.title }}"
+                                                class="hide">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-title">
+                                    <h3>
+                                        <a href="{{ campaign.get_absolute_url }}">{{ campaign.title }}</a>
+                                    </h3>
+                                </div>
+                                <div class="content-detail">
+                                    <span>{{ campaign.summary|truncatewords_html:"30"|linebreaks }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var maxHeight = 0;
+        $(".section-content .content-title").each(function(){
+            if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
+        });
+        $(".section-content .content-title").height(maxHeight);
+
+        var maxtHeight = 0;
+        $(".section-content .content-detail").each(function(){
+            if ($(this).height() > maxtHeight) { maxtHeight = $(this).height(); }
+        });
+        $(".section-content .content-detail").height(maxtHeight);
+        superImage();
+    });
+</script>

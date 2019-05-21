@@ -1,0 +1,8 @@
+{% load cms_tags %}
+<div class="column col-sm-{{ instance.width }}{% if instance.width == '3' %} col-xs-12{% endif %}">
+    <div class="content clearfix">
+        {% for plugin in instance.child_plugin_instances %}
+            {% render_plugin plugin %}
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<tr>
+    <td>{{typename}}</td>
+
+    {{#if current}}
+        {{#if current.amount}}
+            <td>{{current.amount}} {{symbol}} / {{periodLabel}}</td>
+        {{/if}}
+        {{#if current.minutes}}
+            <td>{{current.minutes}} minutes</td>
+        {{/if}}
+    {{else}}
+        <td class="text-capitalize">No limit</td>
+    {{/if}}
+
+    {{#if updatable}}
+        <td class="green text-capitalize">Active</td>
+    {{else}}
+        <td class="red text-capitalize">Inactive</td>
+    {{/if}}
+
+    {{#if expiryDate}}
+        <td class="text-capitalize">Expiration: {{expiryDate}}</td>
+    {{else}}
+        <td class="text-capitalize">No expiration</td>
+    {{/if}}
+
+    <td style="text-align:center;">
+        <a class="btn btn-white-blue text-capitalize" href="/account/limits{{ url }}">Change</a>
+    </td>
+</tr>

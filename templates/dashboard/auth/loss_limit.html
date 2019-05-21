@@ -1,0 +1,98 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% block content %}
+    <script src="{% static 'js/dashboard/limits.js' %}"></script>
+    <style>
+        .set-limit-btn, .no-limit-btn {
+            display: none;
+        }
+        input[type=radio] + label:after {
+            left:3px;
+        }
+    </style>
+
+    <div class="height-full">
+        <div class="row height-full">
+            {% include "home/submenu.html" with mode='profile'%}
+            <div class="sub-page-content col-md-9">
+                <div class="sub-page-header">
+                    <div class="bg-winner">
+                        <font>Set Loss Limit</font>
+                        <div class="winner-bar"></div>
+                    </div>
+                </div>
+
+                <div style="box-shadow: 0 0 20px rgba(0, 0, 1, 0.1);margin-top:10px;">
+                    <div class="line-gradient"></div>
+                    <div class="sub-page-wrapper">
+                        <div class="sub-page-container col d-flex flex-column" style="margin:0;">       
+                            <p class="mg-bt0">
+                                Using the menu below, you can set the maximum loss limit per day, week or month. Once a limit has been set, you will receive a confirmation by e-mail. You can reduce your limit at any time you want using this menu. However if you want to remove or increase your limit, a 7 day waiting period comes in place. This period allows you the time to consider your change.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="limits-form" name="lossLimitForm">
+                    <div style="background-color:#f5f5f5;margin:3px 0 0 0;">
+                        <div class="sub-page-wrapper">
+                            <div class="sub-page-container col d-flex flex-column" style="margin:0;">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{% trans 'LANG_AMOUNT'|upper %}(<span class="currency"></span>)</label>
+                                            <div class="col-md-12 p-0">
+                                                <input type="text" class="form-control input-text" name="loss-limit-amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <p class="mt-3">{% trans 'LANG_PERIOD' %}:</p>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-check form-check-inline mg-r-0 mg-bt-20">
+                                            <input class="form-check-input" type="radio" name="deposit-limit-period" value="daily" checked>
+                                            <label class="form-check-label">{% trans 'LANG_DAILY_LIMIT_TEXT' %}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-check form-check-inline mg-r-0 mg-bt-20">
+                                            <input class="form-check-input" type="radio" name="deposit-limit-period" value="weekly">
+                                            <label class="form-check-label">{% trans 'LANG_WEEKLY_LIMIT_TEXT' %}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-check form-check-inline mg-r-0">
+                                            <input class="form-check-input" type="radio" name="deposit-limit-period" value="monthly">
+                                            <label class="form-check-label">{% trans 'LANG_MONTHLY_LIMIT_TEXT' %}</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <a href="{% url 'limits' %}">
+                                <button type="button" class="back-step">Back</button>
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-12 text-right">
+                            <button class="next-step no-limit-btn" onClick="javascript: submitLimit('loss');" type="button">Submit</button>
+                            <button class="next-step set-limit-btn btn-change" onClick="javascript: submitLimit('loss');" type="button">Change</button>
+                            <button class="next-step set-limit-btn" onClick="javascript: removeLimit('loss');" type="button">Remove</button>
+                        </div>
+                    </div>
+
+                </form>
+
+               
+            </div>
+        </div>
+    </div>
+{% endblock %}

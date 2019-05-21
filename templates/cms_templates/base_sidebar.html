@@ -1,0 +1,25 @@
+{% extends "cms_templates/base.html" %}
+{% load i18n %}
+
+{% block cms_main %}
+<div class="col-12">
+	<div class="flex-md">
+		<div id="cms-sidebar" class="flex-md-3">
+			<div class="row">
+				<div id="cms-sidebar-inner">
+					{% block cms_sidebar %}
+						<div id="cms-sidebar-submenu">
+							{% block cms_submenu %}{% endblock %}
+						</div>
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+
+		<div id="cms-content" class="flex-md-9">
+			<div id="top"></div>
+			{% block cms_content %}{% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}

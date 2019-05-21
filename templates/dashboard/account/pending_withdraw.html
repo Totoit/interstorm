@@ -1,0 +1,128 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% block content %}
+
+<script src="{% static 'js/dashboard/banking.js' %}"></script>
+<script src="{% static 'js/dashboard/deposit.js' %}"></script>
+<link href="{% static 'css/deposit_withdraw/deposit_withdraw.css' %}" rel="stylesheet">
+
+<style>
+    @font-face {
+        font-family: Glyphicons Halflings;
+        src: url("/static/fonts/glyphicons-halflings-regular.eot");
+        src: url("/static/fonts/glyphicons-halflings-regular.eot?#iefix")
+                format("embedded-opentype"),
+            url("/static/fonts/glyphicons-halflings-regular.woff") format("woff"),
+            url("/static/fonts/glyphicons-halflings-regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .glyphicon {
+        position: relative;
+        top: 1px;
+        display: inline-block;
+        font-family: 'Glyphicons Halflings';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        cursor: pointer;
+    }
+
+    .glyphicon-triangle-right:before {
+        content: "\e250";
+    }
+
+    .glyphicon-triangle-left:before {
+        content: "\e251";
+    }
+
+    .glyphicon-remove-circle:before {
+        content: "\e088";
+    }
+
+    .glyphicon-ok-circle:before {
+        content: "\e089";
+    }
+
+    .glyphicon-time:before {
+        content: "\e023";
+    }
+</style>
+
+<div class="height-full">
+    <div class="row height-full">
+        {% include "home/submenu.html" with mode='profile'%}
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>{% trans 'LANG_PENDING_WITHDRAW' %}</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            <!-- <div style="box-shadow: 0 0 20px rgba(0, 0, 1, 0.1);margin-top:10px;">
+                <div class="line-gradient"></div>
+                <div class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="margin:0;">
+                        <p class="mg-bt-0">text text text text text text text  text text text text text text text text text text text text text text text text text text text text text</p>
+                    </div>
+                </div>
+            </div> -->
+
+            <div style="box-shadow: 0 0 20px rgba(0, 0, 1, 0.1);margin-top:10px;">
+                <div class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="margin:0;">
+                        <iframe id="tb-pending-withdraw" src="" style="border:none;width:100%;min-height:600px;"></iframe>
+                        <!-- <table id="pending-withdraw" class="light-table">
+                            <tr>
+                                <th class="t-col-1" style="width:25%;padding-left:0;">ID</th>
+                                <th class="t-col-2">Date</th>
+                                <th class="t-col-3">Type</th>
+                                <th class="t-col-4">Amount</th>
+                                <th class="t-col-5">Status</th>
+                            </tr>
+                            <tr>
+                                <td>ABC12345678</td>
+                                <td>
+                                    <p class="mg-bt0">2018-11-12</p>
+                                    <p class="pd-wd-time mg-bt0">15:26:40</p>
+                                </td>
+                                <td>Deposit</td>
+                                <td>$ 100.00</td>
+                                <td>
+                                    
+                                    <p class="mg-bt0 yellow">
+                                        <i class="glyphicon glyphicon-time yellow" style="font-size: 18px;margin-right: 7px;"></i>
+                                        <span style="position: absolute;">Pending</span>
+                                    </p>
+                                    <p class="pd-wd-cancel mg-bt0 blue" choose="ABC12345678">Cancel</p>
+
+                                    <p class="mg-bt0 red">
+                                        <i class="glyphicon glyphicon-remove-circle red" style="font-size: 18px;margin-right: 7px;"></i>
+                                        <span style="position: absolute;">Canceled</span>
+                                    </p>
+
+                                    <p class="mg-bt0 green">
+                                        <i class="glyphicon glyphicon-ok-circle green" style="font-size: 18px;margin-right: 7px;"></i>
+                                        <span style="position: absolute;">Success</span>
+                                    </p>
+                                    <p class="pd-wd-cancel mg-bt0 blue" choose="ABC12345678">Cancel</p>
+
+                                </td>
+                            </tr>
+                        </table> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

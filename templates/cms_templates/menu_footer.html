@@ -1,0 +1,8 @@
+{% load menu_tags %}
+{% for child in children %}
+{% if child.get_menu_title == "menu_footer" %}
+  {% if child.children %}
+  {% show_menu from_level to_level extra_inactive extra_active "cms_templates/page_sub_menu.html" "" "" child %}
+  {% endif %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,46 @@
+// Font
+$font-default: "Open Sans", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-color: #595d68;
+// Color Variables
+$active-color: #7a4c37;
+$background-color: #efeff0;
+// Bootstrap Color Defaults
+$white: #fff !default;
+$gray-100: #f3f3f3 !default;
+$gray-200: #e5e5e5 !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #4d4e4d !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$brown: #7a4c37 !default;
+$light-brown: #b48061 !default;
+$dark-brown: #512b20 !default;
+$ironstone: #845542 !default;
+
+$blue: #007bff !default;
+$light-blue: #1da5d1 !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #ea5b4d !default;
+$orange: #fd7e14 !default;
+$yellow-light: #fdbf4c !default;
+$yellow: #fdb737 !default;
+$green: #28a745 !default;
+$teal: #20c997 !default;
+$cyan: #17a2b8 !default;
+
+// Spacing Variables
+// Change below variable if the height of the navbar changes
+$navbar-base-height: 56px;
+// Change below variable to change the width of the sidenav
+$sidenav-base-width: 250px;
+// Change below variable to change the width of the sidenav when collapsed
+$sidenav-collapsed-width: 55px;
+// Change below variable to change the height of the sticky footer
+$sticky-footer-height: 56px;

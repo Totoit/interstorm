@@ -1,0 +1,68 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% url 'login' as login_url %}
+<div class="section-search home">
+    <div class="container full-width-screen">
+            
+            <div class="search-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="search-result ">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-category">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                         {% comment %} <ul class="search-list">
+                            <li class="search-item"><a href="#" id="search_all">A-Z</a></li>
+                            <li class="search-item"><a href="#" id="search_providers">Providers</a></li>
+                            <li class="search-item"><a href="#" id="search_jackpot">Jackpot</a></li>
+                            <li class="search-item"><a href="#" id="search_livecasino">Live Casino</a></li>
+                            <li class="search-item"><a href="#" id="search_race">Race Games</a></li>
+                        </ul> -->
+                        <!-- <ul class="search-list">
+                           <li class="search-item game_filter"><a data-value="LASTEST">Lastest Slots</a></li>
+                            <li class="search-item game_filter"><a data-value="VIDEOSLOTS">Video Slots</a></li>
+                            <li class="search-item game_filter"><a data-value="TABLEGAMES">Table Games</a></li>
+                            <li class="search-item game_filter"><a data-value="CLASSICSLOTS">Classic Slots</a></li>
+                            <li class="search-item game_filter"><a data-value="VIDEOPOKERS">Video Poker</a></li>
+                            <li class="search-item game_filter"><a data-value="OTHERGAMES">Other Games</a></li> 
+                        </ul>-->
+                        <!-- <ul class="search-list">
+                            <li class="search-item"><a id="search_ROULETTE">ROULETTE 83</a></li>
+                            <li class="search-item"><a id="search_BLACKJACK">BLACKJACK 68</a></li>
+                            <li class="search-item"><a id="search_BACCARAT">BACCARAT 28</a></li>
+                            <li class="search-item"><a id="search_CASINO_HOLD">CASINO HOLD'EM 6</a></li>
+                            <li class="search-item"><a id="search_POKER">POKER 7</a></li>
+                            <li class="search-item"><a id="search_DICE">DICE 1</a></li>
+                            <li class="search-item"><a id="search_SIC_BO">SIC BO 1</a></li>
+                            <li class="search-item"><a id="search_ALL_live">ALL 1</a></li>
+                        </ul>  {% endcomment %}
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="container full-width-screen">
+            <div class="title-search"></div>
+            <div class="search-box game-slide {{ gamescreen }}"  id={{ id }} data-value="{{ gamemode }}">
+               
+            </div>
+            <div class="game-info-search" id={{ info }}></div>
+    </div>
+    
+</div>

@@ -1,0 +1,44 @@
+<div>
+    <br />
+    <div class="subtitle">
+        <h5>{{typename}} {{#if inputperiod }}({{ symbol }}){{/if}}</h5>
+    </div>
+    <div class="sub-content">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="">{{ trans 'LANG_JS_MAXIMUM' }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" id="deposit_text_{{type}}" name="deposit_text_{{type}}" class="form-control input-text"
+                    placeholder="{{ symbol }}" value="{{current.amount}}{{current.minutes}}" {{#if updatable }}
+                    {{else}} disabled{{/if}} style="color:#FFFFFF;">
+            </div>
+        </div>
+        <br />
+        {{#if inputperiod }}
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="block-checkbox">{{ trans 'LANG_JS_1_DAY' }}
+                        <input type="radio" name="deposit_limit_{{type}}" value="daily" {{daily}} {{#if updatable }}
+                            {{else}} disabled{{/if}}> <span class="checkmark"></span>
+                    </label>
+                    <label class="block-checkbox">{{ trans 'LANG_JS_7_DAYS' }}
+                        <input type="radio" name="deposit_limit_{{type}}" value="weekly" {{weekly}} {{#if updatable }}
+                            {{else}} disabled{{/if}}> <span class="checkmark"></span>
+                    </label>
+                    <label class="block-checkbox">{{ trans 'LANG_JS_1_MONTH' }}
+                        <input type="radio" name="deposit_limit_{{type}}" value="monthly" {{monthly}}
+                            {{#if updatable }} {{else}} disabled{{/if}}> <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+        {{/if}}
+        {{#if updatable }}{{else}}
+            {{#if current.expiryDate }}
+                <i class="fa fa-lock"></i> {{ trans 'LANG_JS_EXPIRE_DATE' }} {{current.expiryDate}}
+            {{/if}}
+        {{/if}}
+    </div>
+</div>

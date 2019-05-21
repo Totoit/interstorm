@@ -1,0 +1,23 @@
+<div class="game-box">
+    <div class="item">
+        <div class="square-box">
+            <div class="square-content">
+                <div class="square-thumbnail">
+                    <div class="img crop bg-dark" style="vertical-align: middle"></div>
+                    <a href="/game/{{game.slug}}">
+                        {{#if game.thumbnail }}
+                            <img src="{{game.thumbnail}}">
+                        {{else}}
+                            <img src="/static/images/no-thumb.png" style="height: auto;width: 100%;margin-top: 20px;">
+                        {{/if}}
+                    </a>
+                </div>
+            </div>
+            <div class="square-name">
+                {{#if game.name}}
+                    <span>{{game.name}}</span>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

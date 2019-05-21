@@ -1,0 +1,108 @@
+{% load i18n %}
+{% load staticfiles %}
+<style>
+
+.go-withdraw{
+    width: 100%;
+    padding: 10px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    background: #28a745;
+    border: 2px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-top:35px;
+}
+
+#div_amount , #div_payCardID {
+  color: #000;
+}
+
+.class_gamingAccountID, .class_currency, .class_MonitoringSessionId {
+ display:none;
+}
+#credit-card-cvc-wrapper , #credit-card-number-wrapper { height:30px; }
+#credit-card-number-wrapper{overflow:hidden;}
+#withdraw_step2,#withdraw_step3 { display:none;}
+
+</style>
+<script src="{% static 'js/auth/register.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/jquery.ddslick.min.js' %}" type="text/javascript"></script>
+
+<!-- Modal -->
+<div class="modal fade withdraw-modal" id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title create-step1" id="exampleModalLabel">
+                <span style="color: #000;">{% trans 'LANG_WITHDRAW'|upper %}</span>
+            </h5>
+            <div class="close-box">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form class="" id="withdrawForm" name="withdrawForm" onsubmit="return false;">
+            <div id="withdraw_screen"></div>
+        </form>
+        <div id="withdraw_step2">
+          <form class="" id="withdrawPrepareForm" name="withdrawPrepareForm" onsubmit="return false;">
+              <div id="withdraw_screen_prepare"></div>
+          </form>
+        </div>
+        <div id="withdraw_step3">
+          <form class="" id="withdrawConfirmForm" name="withdrawConfirmForm" onsubmit="return false;">
+              <div id="withdraw_screen_confirm"></div>
+          </form>
+        </div>
+        <div id="updateresult"></div>
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+
+
+    $(document).ready(function(){
+
+        $("body").on( "click", "#withdraw-bonus-box label.block-checkbox", function() {
+            $('#withdraw-bonus-box').find('span.checkmark').removeClass('active');
+            $(this).find('span.checkmark').addClass('active');
+        });
+
+        $("body").on( "click", "#withdrawModal .dp-amount", function() {
+            $('#withdrawModal .dp-amount').removeClass('active');
+            $(this).addClass('active');
+            // console.log($(this).closest('input').html());
+            var amount = $(this).text();
+            var amountDecimal = parseFloat(Math.round(amount * 100) / 100).toFixed(2);
+            $(this).closest('.account-register').find('.form-input').val(amount);
+            $('#cal-withdraw-amount').text(amountDecimal);
+            $('#cal-withdraw-total').text(amountDecimal);
+        });
+
+        $("body").on( "keyup keypress blur change", "#withdrawModal #amount", function() {  
+            // console.log('key up',$(this).val());
+            $('#withdrawModal .dp-amount').removeClass('active');
+            var amountDecimal = parseFloat(Math.round($(this).val() * 100) / 100).toFixed(2);
+            if($(this).val() == 50){
+                $('#withdrawModal .dp-amount.m1').addClass('active');
+            }else if($(this).val() == 80){
+                $('#withdrawModal .dp-amount.m2').addClass('active');
+            }else if($(this).val() == 150){
+                $('#withdrawModal .dp-amount.m3').addClass('active');
+            }
+            $('#cal-withdraw-amount').text(amountDecimal);
+            $('#cal-withdraw-total').text(amountDecimal);
+        });
+
+    });
+
+</script>

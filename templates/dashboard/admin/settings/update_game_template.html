@@ -1,0 +1,217 @@
+
+{% extends "admin/change_list.html" %}
+{% block object-tools-items %}
+{% csrf_token %}
+<style>
+#changelist-form ,
+#content h1
+{
+    display: none !important;
+}
+
+#content-main {
+    padding-top: 50px;
+}
+
+.object-tools {
+    float:left;
+}
+
+body {
+    background: #fff;
+}
+
+.object-tools:before {
+    background: unset;
+}
+
+.inner {
+    background: #fff;
+}
+
+.sync,
+.sync:focus,
+.sync:active
+{
+    color: #fff !important;
+    background-color: #ec971f !important;
+    width:250px; 
+    margin:15px 0;
+    cursor: pointer;
+    height: 60px;
+    border: none !important;
+    border-radius: 5px !important;
+    font-size:18px !important;
+}
+
+.sync:hover {
+    color: #fff !important;
+    background-color: #e48c14 !important;
+}
+
+.swal-button,
+.swal-button:focus,
+.swal-button:hover,
+.swal-button:active
+{
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+.swal-button--confirm {
+    background-color: #0bf !important;
+    border:1px solid #0bf !important;
+    width: 81.36px;
+    color: #fff !important;
+}
+.swal-button--confirm:hover {
+    background-color: #00a8e6 !important;
+    border:1px solid #0bf !important;
+    color: #fff !important;
+}
+
+.swal-footer {
+    text-align: center !important;
+}
+
+</style>
+
+<div class="inner">
+    <!-- FOR TEST WRITE AND READ GAME FROM JSON FILES -->
+    <button id="sync-popular-games" class="sync">Sync popular games</button>
+    <br>
+    <button id="sync-all-games" class="sync">Sync all games</button>
+    <br>
+    <button id="sync-table-games" class="sync">Sync table games</button>
+    <br>
+    <button id="sync-slot-games" class="sync">Sync slot games</button>
+    <br>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/libs/autobahn/autobahn.min.js"></script>
+<script type="text/javascript" src="/static/js/callsystem.js"></script>
+
+{% if EVERYMATRIX %}
+    <script type="text/javascript">
+        window._EM = {
+            url: '{{ EVERYMATRIX.url|escapejs }}',
+            domain: '{{ EVERYMATRIX.domain|escapejs }}',
+            language_code: '{{ LANGUAGE_CODE|escapejs }}'
+        }
+    </script>
+{% endif %}
+
+<script src="/static/js/utilities.js"></script>
+
+<script src="/static/js/super_games.js"></script>
+<script type="text/javascript" src="/static/js/sweetalert/sweetalert.min.js"></script>
+<link href="/static/css/sweetalert/sweetalert.css" rel="stylesheet" />
+
+<script>
+$(document).ready(function(){
+
+    var parameters = {
+        "filterByName": [],
+        "filterBySlug": [],
+        "filterByVendor": [],
+        "filterByCategory": [],
+        "filterByTag": [],
+        "filterByPlatform": getFilterByPlatform(),
+        "filterByAttribute": {},
+        "expectedFields": 129452998655,
+        "specificExportFields": [],
+        "expectedFormat": "map",
+        "pageIndex": "",
+        "pageSize": "",
+        "sortFields": []
+    }
+
+    $('body').on('click', '#sync-all-games', function() {
+        swal({
+            title: "Are you sure?",
+            text: "Sync all games form Metrix API",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+        .then((willDelete) => {
+            if (willDelete) {
+                callGames('allGames',parameters);
+            }
+        });
+    });
+
+    $('body').on('click', '#sync-table-games', function() {
+        parameters.filterByCategory = ['TableGames'];
+        swal({
+            title: "Are you sure?",
+            text: "Sync table games form Metrix API",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+        .then((willDelete) => {
+            if (willDelete) {
+                callGames('tableGames',parameters);
+            }
+        });
+    });
+
+    $('body').on('click', '#sync-slot-games', function() {
+        parameters.filterByCategory = ['VIDEOSLOTS'];
+        swal({
+            title: "Are you sure?",
+            text: "Sync slot games form Metrix API",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+        .then((willDelete) => {
+            if (willDelete) {
+                callGames('slotGames',parameters);
+            }
+        });
+    });
+
+    $('body').on('click', '#sync-popular-games', function() {
+       var parameters = {
+            "filterByName": [],
+            "filterBySlug": [],
+            "filterByVendor": [],
+            "filterByCategory": [],
+            "filterByTag": [],
+            "filterByPlatform": getFilterByPlatform(),
+            "filterByAttribute": {},
+            "expectedFields": 129452998655,
+            "specificExportFields": [],
+            "expectedFormat": "map",
+            "pageIndex": "",
+            "pageSize": "",
+            "sortFields": [
+                {
+                "field": 1024,
+                "order": "DESC"
+                }
+            ]
+        };
+
+        swal({
+            title: "Are you sure?",
+            text: "Sync popular games form Metrix API",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+        .then((willDelete) => {
+            if (willDelete) {
+                callGames('popularGames',parameters);
+            }
+        });
+    });
+
+});
+</script>
+{% endblock object-tools-items %}
+
+<!-- <script src="static/js/super_game.js"></script> -->

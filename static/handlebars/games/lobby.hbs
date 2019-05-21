@@ -1,0 +1,12 @@
+{{#each categories}}
+{{#ifCond ../languagecode  'en'}}  
+    <a class="link-cate" href="/live-casino/{{getcat id}}"><h4>{{#if localizedName}} {{ trans localizedName}} {{else}} {{ catname id }} {{/if}}<h4></a>
+{{else}}
+    <a class="link-cate" href="/{{ ../languagecode  }}/live-casino/{{getcat id}}"><h4>{{#if localizedName}} {{ trans localizedName}} {{else}} {{ catname id }} {{/if}}</h4></a>
+{{/ifCond}}
+
+<div class="game-body">
+    <div class="game-board game-slide game-screen casino-live" id='casino-live-{{@key}}' data-value="{{id}}">
+    </div>
+</div>
+{{/each}}

@@ -1,0 +1,286 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% block content %}
+    <script src="{% static 'js/dashboard/deposit.js' %}"></script>
+    <link href="{% static 'css/deposit_withdraw/deposit_withdraw.css' %}" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: Glyphicons Halflings;
+            src: url("/static/fonts/glyphicons-halflings-regular.eot");
+            src: url("/static/fonts/glyphicons-halflings-regular.eot?#iefix")
+                    format("embedded-opentype"),
+                url("/static/fonts/glyphicons-halflings-regular.woff") format("woff"),
+                url("/static/fonts/glyphicons-halflings-regular.ttf") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+        }
+    
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: pointer;
+        }
+    
+        .glyphicon-triangle-right:before {
+            content: "\e250";
+        }
+    
+        .glyphicon-triangle-left:before {
+            content: "\e251";
+        }
+    
+        .glyphicon-remove-circle:before {
+            content: "\e088";
+        }
+    
+        .glyphicon-ok-circle:before {
+            content: "\e089";
+        }
+    
+        .glyphicon-time:before {
+            content: "\e023";
+        }
+    
+        .glyphicon-calendar:before {
+            content: "\e109";
+        }
+
+        @media only screen  and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+            .tb-report .head-table{
+                display: none;
+            }
+
+            table.tb-report , .tb-report thead, .tb-report tbody, .tb-report th, .tb-report td, .tb-report tr {
+                display: block;
+            }
+
+            .tb-report thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            .tb-report tr:nth-child(odd) {
+                background: #4d4d4d !important;
+                color: #fff;
+            }
+
+            .tb-report td {
+                border: none;
+                border-bottom: none;
+                position: relative;
+                padding-left: 50% !important;
+            }
+
+            .tb-report td:before {
+                position: absolute;
+                top: 0;
+                left: 6px;
+                width: 45%;
+                padding: 8px;
+                white-space: nowrap;
+            }
+
+            #bank-all tr, #wd-bank-all tr, .light-table tr {
+                background: #fff;
+            }
+
+            .tb-report td:nth-of-type(1):before { content: "{% trans 'LANG_PAYMENT_METHOD'|upper %}"; }
+            .tb-report td:nth-of-type(2):before { content: "{% trans 'LANG_TRANSFER_FEES' %}"; }
+            .tb-report td:nth-of-type(3):before { content: "{% trans 'LANG_MINIMAL_AMOUNT' %}"; }
+            .tb-report td:nth-of-type(4):before { content: "{% trans 'LANG_BALANCE_UPDATE_IN' %}"; }
+
+            #bank-all tr:last-child {
+                border-bottom: none;
+                padding-bottom: 15px !important;
+            }
+        }
+    </style>
+
+<div class="height-full">
+    <div class="row height-full">
+        {% include "home/submenu.html" with mode='profile'%}
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>{% trans 'LANG_DEPOSIT_MONEY'%}</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            
+            <!-- <div class="sub-page-wrapper">
+                <div class="sub-page-container col d-flex flex-column" style="margin: 0;">
+                    <div class="ConfirmationPageText"><span>1</span>
+                        <p>Enter amount</p>
+                    </div>
+                </div>
+            </div> -->
+            <div class="line-gradient" style="margin-top:10px;"></div>
+            <div class="sub-page-wrapper">
+                <div class="sub-page-container col d-flex flex-column" style="background-color:#fff;margin:0;">
+                   
+                    <div class="panel panel-default">
+
+                        <div id="deposit-step-1">
+                            <div class="row">
+                                <div class="col-md-12 col-12 pls">
+                                    <div id="deposit-form" style="margin-bottom: 10px;width:250px;">
+                                        <p style="margin-bottom:4px;">{% trans 'LANG_CURRENCY' %}</p>
+                                        <div class="col-md-12 pd-lr-0">
+                                            <select id="ddlCurrency" class="form-control input-text">
+                                                <option value="EUR">{% trans 'LANG_EUR' %}</option>
+                                                <option value="GBP">{% trans 'LANG_GBP' %}</option>
+                                                <option value="NOK">{% trans 'LANG_NOK' %}</option>
+                                                <option value="SEK">{% trans 'LANG_SEK' %}</option>
+                                            </select>
+                                        </div>
+                                        <p style="margin-bottom:4px;margin-top: 15px;">{% trans 'LANG_AMOUNT' %}</p>
+                                        <div class="col-md-12 pd-lr-0">
+                                            <input class="form-control input-text" id="amount" name="amount" type="text"> 
+                                        </div>
+                                        <p style="margin-bottom:4px;margin-top: 15px;">{% trans 'LANG_BONUS_CODE' %}</p>
+                                        <div class="col-md-12 pd-lr-0">
+                                            <input class="form-control input-text" id="bonusCode" name="bonusCode" type="text"> 
+                                        </div>
+                                        <button type="button" class="btn" id="submit-deposit-step-1" style="margin-top:15px;width:120px;">{% trans 'LANG_SUBMIT' %}</button>
+                                    </div>
+                                    <div id="deposit-i-box" class="hidden" style="margin-bottom: 10px;width:100%;">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- START ACCORDION -->
+            <!-- <div id="accordion">
+                
+                <div id="bank-transfer" class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="background-color:#f5f5f5;margin:3px 0 0 0;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading active" role="tab" id="headingOne">
+                                <h4 class="panel-title mg-bt0">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <span class="custom-title-page mg-bt0" style="font-size: 16px;">Bank transfer</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse in collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <table class="tb-report">
+                                        <tr class="head-table">
+                                            <th style="width:25%;">Payment method</th>
+                                            <th>Transfer fees</th>
+                                            <th>Minimal amount</th>
+                                            <th>Balance update in</th>
+                                            <th style="text-align:center;"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div id="credit-card" class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="background-color:#f5f5f5;margin:3px 0 0 0;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title mg-bt0">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span class="custom-title-page mg-bt0" style="font-size: 16px;">Credit cards</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <table class="tb-report">
+                                        <tr class="head-table">
+                                            <th style="width:25%;">Payment method</th>
+                                            <th>Transfer fees</th>
+                                            <th>Minimal amount</th>
+                                            <th>Balance update in</th>
+                                            <th style="text-align:center;"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div id="e-wallet" class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="background-color:#f5f5f5;margin:3px 0 0 0;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title mg-bt0">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span class="custom-title-page mg-bt0" style="font-size: 16px;">E-Wallets</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="panel-body">
+                                    <table class="tb-report">
+                                        <tr class="head-table">
+                                            <th style="width:25%;">Payment method</th>
+                                            <th>Transfer fees</th>
+                                            <th>Minimal amount</th>
+                                            <th>Balance update in</th>
+                                            <th style="text-align:center;"></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+                <div id="other-payments" class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="background-color:#f5f5f5;margin:3px 0 0 0;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading4">
+                                <h4 class="panel-title mg-bt0">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span class="custom-title-page mg-bt0" style="font-size: 16px;">Other</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4" data-parent="#accordion">
+                                <table class="tb-report">
+                                    <tr class="head-table">
+                                        <th style="width:25%;">Payment method</th>
+                                        <th>Transfer fees</th>
+                                        <th>Minimal amount</th>
+                                        <th>Balance update in</th>
+                                        <th style="text-align:center;"></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> -->
+            <!-- END ACCORDION -->
+        </div>
+    </div>
+</div>
+{% endblock %}

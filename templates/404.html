@@ -1,0 +1,42 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+{% block content %}
+    <div class="p-404" align="center" style="position: relative;width: 100%;">
+        <div class="fix-center" style="overflow: hidden; position: absolute;top: 50%;left: 50%;margin-right: -50%; transform: translate(-50%, -50%)">
+            <img src="/static/images/404.png">
+            <h3>
+            {% comment %} {% trans "LANG_PAGE_NOT_FOUND" %} {% endcomment %}
+            </h3>
+            {% if LANGUAGE_CODE == 'en' %}
+                <a href="/" class="btn btn-we-yellow">
+                {% comment %} {% trans "LANG_BACKTOHOME" %} {% endcomment %}
+                </a>
+            {% else %}
+                <a href="/{{ LANGUAGE_CODE }}/" class="btn btn-we-yellow" >
+                {% comment %} {% trans "LANG_BACKTOHOME" %} {% endcomment %}
+                </a>
+            {% endif %}
+            
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var winWidth = $(window).width();
+            var winHeight = $(window).height();
+            var navHeight = $('.fixed-nav.bg-dark').height();
+            var fixHeight = winHeight - navHeight;
+            $('.p-404').css('height', fixHeight);
+
+            $(window).resize(function(){
+                var winWidth = $(window).width();
+                var winHeight = $(window).height();
+                var navHeight = $('.fixed-nav.bg-dark').height();
+                var fixHeight = winHeight - navHeight;
+                $('.p-404').css('height', fixHeight);
+            });
+        });
+    </script>
+{% endblock content %}

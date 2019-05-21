@@ -1,0 +1,63 @@
+
+    <div class="gameplay__game-wrapper gameplay__game-wrapper--{{framenumber}}" >
+        <div class="col-md-12" align="center">
+            <div style="margin-bottom: 2em;">
+                <img src="https://aurumstage.s3.amazonaws.com/static/images/aurum_logo.png" style="margin-left: 7px;">
+            </div>
+
+            <div style="overflow:hidden;">
+                <button class="plus-button plus-button--large plus-more-games" onclick="gameSelectPopup({{framenumber}})"></button>
+            </div>
+            <div style="overflow:hidden;" onclick="gameSelectPopup({{framenumber}})">
+                <span style="text-transform:uppercase;color:#b48061;font-size: 10px;font-weight: 600;line-height: 0;cursor: pointer;">
+                    MORE GAMES
+                </span>
+            </div>
+            
+        </div>
+        {{#ifCond framenumber 1}}
+        
+        <div class="gameplay__left-group-btn">
+            {{!-- <ul class="gameplay__group-btn gameplay__group-btn-option">
+                <li onclick="favourite_game()" title="Choose Game">
+                    <span class="addIcon"></span>
+                </li>
+            </ul> --}}
+            {{!-- <ul class="gameplay__group-btn gameplay__group-btn-option">
+                <li><span class="favIcon"></span></li>
+                <li><span class="hotIcon"></span></li>
+                <li><span class="newIcon"></span></li>
+            </ul> --}}
+            <ul class="gameplay__group-btn mt-0 tool-group group-{{framenumber}}">
+                <li onclick="add_fav()" title="Add Favorite" class="fav-in-window">
+                    <span class="addingFavIcon"></span>
+                </li>
+                <li onclick="fullscreen_game(1)" title="Fullscreen">
+                    <span class="fullScnIcon"></span>
+                </li>
+                <li onclick="gameSelectPopup({{framenumber}})" title="Repeat the game" class="repeat">
+                    <span class="glyphicon glyphicon-repeat" style="margin:0;line-height: 40px;"></span>
+                </li>
+            </ul>
+        </div> 
+        {{/ifCond}}
+
+        {{#ifCond framenumber 1}}
+            <div class="gameplay__{{groupside}}-group-btn first-right-tools">
+        {{else}}
+            <div class="gameplay__{{groupside}}-group-btn">
+        {{/ifCond}}
+            <ul class="gameplay__group-btn tool-group group-{{framenumber}}">
+                <li onclick="add_fav()" title="Add Favorite" class="fav-in-window">
+                    <span class="addingFavIcon"></span>
+                </li>
+                <li onclick="fullscreen_game({{framenumber}})" title="Fullscreen">
+                    <span class="fullScnIcon"></span>
+                </li>
+                <li onclick="gameSelectPopup({{framenumber}})" title="Repeat the game" class="repeat">
+                    <span class="glyphicon glyphicon-repeat" style="margin:0;line-height: 40px;"></span>
+                </li>
+            </ul>
+        </div> 
+        <iframe class="gameplay__game-iframe hidden" id="gameframe{{framenumber}}" width="100%" name="game" src="" onerror="alert('Failed')" scrolling="no" frameborder="0"></iframe>
+    </div>

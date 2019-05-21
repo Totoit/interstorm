@@ -1,0 +1,37 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load cms_tags menu_tags %}
+{% block content %}
+
+<div class="height-full">
+    <div class="row height-full">
+        <!-- {#% include "home/submenu_support.html" with mode='profile'%#} -->
+        <div class="sub-page-aside submenu-bar col-md-3" style="background: url({% static 'images/sub-menu-bg2.jpg' %}); padding-right: 0;">
+            <aside>
+                <ul>
+                    {% show_menu_below_id 'support' 0 100 100 100 'cms_templates/left_menu.html' %}
+                </ul>
+            </aside>
+            <div class="toggle-aside-btn"></div>
+        </div>
+
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>Rules and Security</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            <div  class="sub-page-wrapper">
+                <div class="sub-page-container account-balance-block col" style="margin-top:0;">
+                        Rules and Security
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

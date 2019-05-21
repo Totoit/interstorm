@@ -1,0 +1,41 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load menu_tags %}
+{% block content %}
+    {% include "home/submenu.html" with mode='profile' %}
+    {% if documents %}
+        <ul>
+            {% for document in documents %}
+                {% for doc in document %}
+                    {{ doc.creditnumber }}
+                    <li><a href="{{ doc.docfile.url }}">
+                        <img src="{{ doc.docfile.url }}" alt="{{ doc.docfile.mode }}">
+                    </a></li>
+                {% endfor %}
+
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}
+
+    <!-- Upload form. Note enctype attribute! -->
+    <form action="{% url "img" %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ photo_form.non_field_errors }}</p>
+        <p>{% trans 'LANG_IDCARD_OR_PASSPORT' %}</p>
+        <p>
+            {{ photo_form.docfile.errors }}
+            {{ photo_form.docfile }}
+            {{ photo_form.mode }}
+        </p>
+        <input type="text" id="reffile" value="{% static 'images/ocr_a_reference.png' %}">
+        <p><input type="submit" value="Upload"/></p>
+
+    </form>
+
+
+
+{% endblock %}

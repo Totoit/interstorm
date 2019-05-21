@@ -1,0 +1,10 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+
+{% block content %}
+    {% include "dashboard/game/game-box.html" with id="games-list-new" info="games-info-new" gamescreen="game-screen" gamemode="all" %}
+    {% include "dashboard/game/game-box.html" with id="games-list-pop" info="games-info-pop" gamescreen="game-screen" gamemode="pop" %}
+{% endblock %}

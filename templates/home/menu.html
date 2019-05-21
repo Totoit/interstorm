@@ -1,0 +1,183 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load menu_tags %}
+{% url 'login' as login_url %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+{% load cms_tags %}
+<!-- Category navigator (Top-menu) -->
+<nav id="main-menu">
+    <div class="single-item">
+
+        <a href="/promotions" class="slick-slide slick-active promotions" menu-active="promotions" group-active="">
+            <div class="re-skew">
+                <div class="menu-5">
+                    <div class="menu-icon">
+                        <img src="{% static 'images/menu/icons/promotionsIcon.png' %}" align="center">
+                    </div>
+                    <font>{% trans 'LANG_PROMOTIONS' %}</font>
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'vip' %}" class="slick-slide slick-active vip" menu-active="vip" group-active="">
+            <div class="re-skew">
+                <div class="menu-2">
+                    <div class="menu-icon">
+                        <img src="{% static 'images/menu/icons/vipIcon.png' %}" align="center">
+                    </div>
+                    <font>{% trans 'LANG_VIP' %}</font>
+                </div>
+            </div>
+        </a>
+
+        <a href="/" class="active slick-slide slick-active home" menu-active="" group-active="">
+            <div class="re-skew">
+                <div class="menu-1">
+                    <div class="menu-icon">
+                        <img src="{% static 'images/menu/icons/popularGameIcon.png' %}" align="center">
+                    </div>
+                    <font>{% trans 'LANG_GAMES' %}</font>
+                </div>
+            </div>
+        </a>
+
+        <a href="/support/faq/" class="slick-slide slick-active support" menu-active="faq" group-active="support">
+            <div class="re-skew">
+                <div class="menu-3">
+                    <div class="menu-icon">
+                        <img src="{% static 'images/menu/icons/supportIcon.png' %}" align="center">
+                    </div>
+                    <font>{% trans 'LANG_SUPPORT' %}</font>
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'about-us' %}" class="slick-slide slick-active about-us" menu-active="about-us" group-active="">
+            <div class="re-skew">
+                <div class="menu-5">
+                    <div class="menu-icon">
+                        <img src="{% static 'images/menu/icons/aboutUsIcon.png' %}" align="center">
+                    </div>
+                    <font>{% trans 'LANG_ABOUT_US' %}</font>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</nav>
+
+<script type="text/javascript" src="{% static 'libs/slick/slick.min.js' %}"></script>
+<script>
+
+$('.single-item').slick({
+    dots: false,
+    centerMode: true,
+    slidesToShow: 6,
+});
+
+var onloadCallback = function() {
+    grecaptcha.render('captcha_place_holder', {'sitekey': publicKey, 'theme': 'light'});
+};
+
+$(document).ready(function(){
+    var currentPageURL = location.pathname;
+    var str = currentPageURL.substring(0, currentPageURL.length-1);
+    var n = str.lastIndexOf('/');
+    var lastPath = str.substring(n + 1);
+    var parts = currentPageURL.split("/");
+
+    console.log('lastPath == '+lastPath);
+
+    $("#main-menu .slick-slide").removeClass('active');
+    if(parts[1] == 'support' || parts[2] == 'support') {
+        $('#main-menu').find('.support').addClass('active');
+    } else {
+        if(lastPath == window._EM.language_code || lastPath == ''){
+            $('#main-menu').find('.home').addClass('active');
+        }else{
+            var inputs_mainmenu = $("#main-menu .slick-slide");
+            inputs_mainmenu.each(function(){
+                menu_active = $(this).attr('menu-active');
+
+                if(menu_active == lastPath){
+                    $(this).addClass('active');
+                }
+            });
+        }
+    }
+
+    // var parts = currentPageURL.split("/");
+    // var current = parts.length > 3 ? parts[2] : parts[parts.length - 2];
+    // console.log('parts.length > '+parts.length );
+    // // var current = ['en', 'lt', 'ru'].indexOf(parts[1]) > -1 ? parts[3] : parts[2];
+
+    // if(lastPath){
+    //     $('.'+lastPath+' a').addClass('active');
+    // }
+
+    // var inputs_mainmenu = $("#main-menu .slick-slide");
+    // var menu_active;
+    // var group_current ;
+
+    // console.log('parts[1] == '+parts[1]);
+    // if(parts[1] == 'support'){
+    //     group_current = 'support';
+    // }
+    
+    // $("#main-menu .slick-slide").removeClass('active');
+    // inputs_mainmenu.each(function(){
+    //     menu_active = $(this).attr('menu-active');
+    //     group_active = $(this).attr('group-active');
+    //     if(menu_active == current){
+    //         $(this).addClass('active');
+    //     }
+    //     console.log('group_active == '+group_active);
+    //     if(group_active == group_current){
+    //         $(this).addClass('active');
+    //     }
+    // });
+
+    // if(current == 'account'){
+    //     var a_menu = $(".submenu-bar .tab-bar a");
+    //     var attr;
+    //     a_menu.each(function(){
+    //         attr = $(this).attr('sub-active');
+    //         if (typeof attr !== typeof undefined && attr !== false) {
+    //             if(attr == current){
+    //                 $(this).addClass('active');
+    //             }
+    //         }
+    //     });
+    // }
+    // console.log('current!!! == '+current);
+    
+    // var cateTXT;
+    // var a_cate = $('.choose-game .nav-link');
+    // if(current == 'tablegames'){
+    //     cateTXT = 'Table Games';
+    // }else if (current == 'allgames'){
+    //     cateTXT = 'All Games';
+    // }else if (current == ''){
+    //     cateTXT = 'Popular Games';
+    // }else if (current == 'slotgames'){
+    //     cateTXT = 'Slot Games';
+    // }else if (current == 'favorites'){
+    //     cateTXT = 'My Favorites';
+    // }
+    
+    // $('#choose-game font').text(cateTXT);
+    // a_cate.each(function(){
+    //     a_active = $(this).attr('cate-active')
+    //     if(a_active == current){
+    //         $(this).addClass('active');
+    //     }
+    // });
+    
+});
+
+$('#mobile-foot-chat').css('display','none');
+
+</script>

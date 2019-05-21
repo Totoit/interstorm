@@ -1,0 +1,25 @@
+{{#each consent}}
+    <div class="user-consent-popup mgbt-12">
+        {{#ifvalue title value="termsandconditions" }}
+            <label class="block-checkbox">{{ trans 'LANG_JS_TERMS_AND_CONDITIONS' }}&nbsp;&nbsp;&nbsp;
+        {{/ifvalue}}
+
+        {{#ifvalue title value="emailmarketing" }}
+            <label class="block-checkbox">{{ trans 'LANG_EMAIL_MARKETING' }}&nbsp;&nbsp;&nbsp;
+        {{/ifvalue}}
+
+        {{#ifvalue title value="sms" }}
+            <label class="block-checkbox">{{ trans 'LANG_SMS' }}&nbsp;&nbsp;&nbsp;
+        {{/ifvalue}}
+
+        {{#ifvalue title value="3rdparty" }}
+            <label class="block-checkbox">{{ trans 'LANG_THIRDPARTY' }}&nbsp;&nbsp;&nbsp;
+        {{/ifvalue}}
+            <input class="form-input" id="consent-{{code}}" name="{{code}}" data-accept="{{#if mustAccept}}true{{else}}false{{/if}}"  type="checkbox">
+            <span class="checkmark"></span>
+        </label>
+        {{#if mustAccept}}
+            <div id="{{code}}-error" style="font-size: 14px;color:red;margin-bottom: 5px;"></div>
+        {{/if}}
+    </div>
+{{/each}}

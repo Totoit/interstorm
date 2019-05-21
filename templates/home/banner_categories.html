@@ -1,0 +1,55 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% url 'login' as login_url %}
+{% load thumbnail %}
+{% load casino_campaigns_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+<script type="text/javascript">
+    var slug = "{{ slug }}";
+    // $('.loading').show();
+</script>
+<div class="banner">
+    <div class="banner-slide mb-0">
+        {% show_slide as campaign_list %}
+        {% for campaign in campaign_list %}
+            {% if campaign.landing_page|lower == 'false' and campaign.language_code == LANGUAGE_CODE %}
+            <div class='square-box box-auto'>
+                <div class="banner-topic">
+                    <h1>{{campaign.topic}}</h1>
+                    <p>{{campaign.subtopic}}</p>
+                </div>
+                <div class='square-content'>
+                    <div class="square-thumbnail">
+                        <img src="{{ campaign.image.url }}" alt="{{ campaign.title }}" class="hide" />
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <div class="banner-categories-slide text-center bg-dark">
+        {% include "dashboard/home/game-slide.html" %}
+    </div>
+</div>
+
+<script>
+    jQuery(function () {
+        if($('.banner-slide').children().length != 0){
+            jQuery('.banner-slide').slick({
+                autoplay: true,
+                dots: true,
+                dotsClass: 'banner-indicator',
+                prevArrow: '<a href="javascript: void(0)" class="slick-prev"></a>',
+                nextArrow: '<a href="javascript: void(0)" class="slick-next"></a>',
+                customPaging : function(slider, i) {
+                    console.log(slider);
+                    var thumb = $(slider.$slides[i]).data();
+                    return '<a></a>';
+                },
+            });
+        }
+    });
+</script>

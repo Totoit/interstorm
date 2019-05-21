@@ -1,0 +1,64 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% block content %}
+<link href="{% static 'css/deposit_withdraw/deposit_withdraw.css' %}" rel="stylesheet">
+<style>
+    
+</style>
+
+<div class="height-full">
+        <div class="row height-full">
+            {% include "home/submenu.html" with mode='profile'%}
+            <div class="sub-page-content col-md-9">
+                <div class="sub-page-header">
+                    <div class="bg-winner">
+                        <font>{% trans 'LANG_WITHDRAW_MONEY' %}</font>
+                        <div class="winner-bar"></div>
+                    </div>
+                </div>
+
+                <div class="line-gradient" style="margin-top:10px;"></div>
+                <div class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="background-color:#fff;margin:0;">
+                        <div class="panel panel-default">
+                            
+                            <div id="withdraw-step-1">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 pls">
+                                        <div id="withdraw-form" style="margin-bottom: 10px;width:250px;">
+                                            <p style="margin-bottom:4px;">{% trans 'LANG_CURRENCY' %}</p>
+                                            <div class="col-md-12 pd-lr-0">
+                                                <select id="ddlCurrency" class="form-control input-text">
+                                                    <option value="EUR">{% trans 'LANG_EUR' %}</option>
+                                                    <option value="GBP">{% trans 'LANG_GBP' %}</option>
+                                                    <option value="NOK">{% trans 'LANG_NOK' %}</option>
+                                                    <option value="SEK">{% trans 'LANG_SEK' %}</option>
+                                                </select>
+                                            </div>
+                                            <p style="margin-bottom:4px;margin-top: 15px;">{% trans 'LANG_AMOUNT' %}</p>
+                                            <div class="col-md-12 pd-lr-0">
+                                                <input class="form-control input-text" id="amount" name="amount" type="text"> 
+                                            </div>
+                                           
+                                            <button type="button" class="btn" id="submit-withdraw-step-1" style="margin-top:15px;width:120px;">{% trans 'LANG_SUBMIT' %}</button>
+                                        </div>
+                                        <div id="withdraw-i-box" class="hidden" style="margin-bottom: 10px;width:100%;">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+<script src="{% static 'js/dashboard/withdraw.js' %}"></script>
+
+{% endblock %}

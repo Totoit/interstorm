@@ -1,0 +1,82 @@
+{% extends "normal_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% load cms_tags %}
+{% load menu_tags %}
+
+{% block title %}{% page_attribute "page_title" %} | {{ block.super }}{% endblock %}
+
+{% block menu %}
+    {% include "home/menu.html" %}
+{% endblock menu %}
+
+{% block content %}
+
+<div class="height-full">
+    <div class="row height-full">
+        <!-- {#% include "home/submenu_support.html" with mode='profile'%#} -->
+        <div class="sub-page-aside submenu-bar col-md-3" style="background: url({% static 'images/sub-menu-bg2.jpg' %}); padding-right: 0;">
+            <aside>
+                <ul>
+                    {% show_menu_below_id 'support' 0 100 100 100 'cms_templates/left_menu.html' %}
+                </ul>
+            </aside>
+            <div class="toggle-aside-btn"></div>
+        </div>
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>{% trans 'LANG_CONTACT_US' %}</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+            <div  class="sub-page-wrapper">
+                <div class="sub-page-container account-balance-block col" style="margin-top:0;">
+                    <div class="row" style="padding:0;">
+                        <div class="col-md-5" style="align-self:unset;">
+                            <h5 style="margin-bottom: 25px;">Customer Support</h5>
+                            <p style="margin-bottom: 5px;"><img src="/static/images/footer/tel.png" style="margin-right:8px;">+000 000 0000</p>
+                            <p style="margin-bottom: 5px;"><img src="/static/images/footer/mail.png" style="margin-right:8px;">support@aurumpalace.com</p>
+                            <p style="margin-bottom: 5px;"><img src="/static/images/footer/open.png" style="margin-right:8px;">Mon-Fri 10.00-2.00, Sat-Sun 10.00-20.00</p>
+                        </div>
+                        <div id="contact-form" class="col-md-7" style="align-self:unset;">
+                            <h5 style="margin-bottom: 25px;">Send us a message</h5>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+                            <div class="col-md-12 col-12 pd-lr-0" style="margin-bottom:10px;">
+                                <p style="margin-bottom:4px;">Full name</p>
+                                <div class="col-md-12 pd-lr-0">
+                                    <input class="form-control input-text" id="full-name" name="full-name" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-12 pd-lr-0" style="margin-bottom:10px;">
+                                <p style="margin-bottom:4px;">Email</p>
+                                <div class="col-md-12 pd-lr-0">
+                                    <input class="form-control input-text" id="email" name="email" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-12 pd-lr-0" style="margin-bottom:15px;">
+                                <p style="margin-bottom:4px;">Your message</p>
+                                <div class="col-md-12 pd-lr-0">
+                                    <textarea class="form-control input-text" id="message" name="message" rows="5"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-12 pd-lr-0">
+                                <button class="btn">Send</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

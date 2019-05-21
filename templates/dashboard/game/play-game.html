@@ -1,0 +1,114 @@
+{% load i18n %}
+<style>
+    .game-body {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+</style>
+
+<div class="modal fade gameplay" id="popupGamePlay" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <!-- CLOSE BUTTON -->
+    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+        <span class="closeIcon"></span>
+    </a> 
+    <div class="modal-dialog game-ratio">
+        <div class="modal-content">
+            <!-- GAME CONTAINER -->
+            <div class="gameplay__container">
+                <!-- GAME WRAPPER -->
+                <div class="gameplay__wrapper has-1" id="ShowFrame" ></div>
+
+                <!-- BOTTOM BUTTONS -->
+                <div class="gameplay__bottom-group-btn">
+                    <ul class="gameplay__group-btn">
+                        <li onclick="renderframeGame(1)"><span class="oneScnIcon"></span></li>
+                        <li onclick="renderframeGame(2)"><span class="twoScnIcon"></span></li>
+                        <li onclick="renderframeGame(4)"><span class="fourScnIcon"></span></li>
+                    </ul>
+            
+                    <ul class="gameplay__group-btn">
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade select-game-modal" id="gameSelectPopup" tabindex="-1" window-no="" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header" style="margin: 0; padding: 0; border-bottom: 0;">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="bg-winner">
+                    <h5 class="modal-title create-step1" id="exampleModalLabel">
+                        <font>Choose game</font>
+                    </h5>
+                    <div class="winner-bar">
+                        <div class="close-box" style="padding: 8px;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="filter-game-select">
+              
+                <span class="search-section">
+                    <input class="game-search-name" placeholder="Search for game" box-id="gameSelectPopup" category="">
+                    <button class="go-game-search-popup" box-id="gameSelectPopup" category=""></button>
+                </span>
+                
+                <span class="category-section">
+                    <select box-id="gameSelectPopup">
+                        <option value="">Category</option>
+                    </select>
+                </span>
+                <span class="vendor-section" style="margin-left: 20px;">
+                    <select box-id="gameSelectPopup">
+                        <option value="">Vendors</option>
+                    </select>
+                </span>
+          </div>
+          <div id="game-select">
+                <!-- {% include "dashboard/game/game-box.html" with id="games-list" gamescreen="game-screen casino"%} -->
+
+                <div id="game-select-Box" style="overflow:hidden;padding-top: 35px;padding-left: 10px; padding-right: 10px;">
+                    <div class="game-body col-md-12">
+                        <div class="game-board {{ gamescreen }}">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row-btn-load-more-game hidden" align="center">
+                    <div style="overflow:hidden;">
+                        <button class="plus-button plus-button--large loadmore_btn" box-id="game-select-Box"></button>
+                    </div>
+                    <div style="overflow:hidden;">
+                        <span
+                            style="text-transform:uppercase;color:#b48061;font-size: 10px;font-weight: 600;line-height: 0;cursor: pointer;"
+                            class="loadmore_btn" box-id="game-select-Box">more games</span>
+                    </div>
+                </div>
+
+          </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            readGamesOnfile('game-select','game-select');
+
+            $('#popupGamePlay .close').click(function () {
+                $('#gameframe1').attr('src','');
+                $('#gameframe2').attr('src','');
+                $('#gameframe3').attr('src','');
+                $('#gameframe4').attr('src','');
+            });
+        });
+    </script>

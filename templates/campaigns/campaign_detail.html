@@ -1,0 +1,369 @@
+{% extends "cms_templates/base.html" %}
+{% load i18n %}
+{% load thumbnail %}
+{% load cms_tags %}
+{% load menu_tags %}
+{% block cms_content %}
+{% get_current_language as LANGUAGE_CODE %}
+<style>
+  /* .btn-cta-image{
+    color: #000;
+    background-color: #FBBF00;
+    border-color: #FBBF00;
+    position: absolute;
+    top: 75%;
+    left: 10%;
+    text-transform: uppercase;
+    font-weight: 600;
+    min-width: 15rem;
+  }
+  .content-sub,.content-footer{
+    background: #FBBF00;
+  }
+  .promotions-main .content .content-title {
+      padding: 30px 2rem;
+  }
+  .promotions-main .content .content-title.landing {
+      padding: 60px 0;
+  }
+  .whole-landing{
+      cursor: pointer;
+  }
+  .btn-cta-image:focus{
+      outline: none;
+      box-shadow: none;
+  }
+  .btn-cta-image.landing{
+    left: auto;
+    right: 10%;
+  }
+  p {
+      word-wrap: break-word;
+  } */
+
+  @font-face {
+            font-family: Glyphicons Halflings;
+            src: url("/static/fonts/glyphicons-halflings-regular.eot");
+            src: url("/static/fonts/glyphicons-halflings-regular.eot?#iefix")
+                    format("embedded-opentype"),
+                url("/static/fonts/glyphicons-halflings-regular.woff") format("woff"),
+                url("/static/fonts/glyphicons-halflings-regular.ttf") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+        }
+    
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: pointer;
+        }
+    
+        .glyphicon-triangle-right:before {
+            content: "\e250";
+        }
+    
+        .glyphicon-triangle-left:before {
+            content: "\e251";
+        }
+    
+        .glyphicon-remove-circle:before {
+            content: "\e088";
+        }
+    
+        .glyphicon-ok-circle:before {
+            content: "\e089";
+        }
+    
+        .glyphicon-time:before {
+            content: "\e023";
+        }
+    
+        .glyphicon-calendar:before {
+            content: "\e109";
+        }
+
+  
+.panel-heading {
+    padding: 0;
+    border:0;
+}
+
+.panel-title>a{
+    display:block;
+    color:#1da5d2; 
+    text-decoration:none;
+}
+
+.panel-heading.active h4 a{
+    color:#595d68;  
+}
+
+.panel-heading a:before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    transition: all 0.5s;
+    font-weight: 200;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.panel-heading.active a:before {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+} 
+
+#promotion-accordion .panel-body {
+    margin-top: 15px;
+}
+
+.btn-older {
+    background-image: url('/static/images/reg_widget_cta.png');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-color: transparent;
+    border: 0;
+    width: 264px;
+    height: 62px;
+    margin: 0 auto;
+    color: #3c362a !important;
+    line-height: 52px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    border-radius: 12px !important;
+}
+
+</style>
+
+
+<div class="promotions-main">
+  <div class="col-md-12 m-0 p-1 sub-page-content">
+    <div class="sub-page-header">
+        <span>{{ campaign.title }}</span>
+    </div>
+    <div class="sub-page-wrapper">
+        <div class="sub-page-container col d-flex flex-column" style="margin:10px 0 0 0;padding: 0;border-radius: 4px 4px 0 0;">
+          <div class='square-box box-2-1'>
+            <div class='square-content'>
+              <div class="square-thumbnail" style="border-radius: 4px 4px 0 0;">
+                <img src="{{ campaign.image.url }}" alt="{{ campaign.title }}"  class="hide" />
+              </div>
+            </div>
+          </div>
+
+          <!-- <div>
+            {{ campaign.summary }}
+          </div> -->
+
+          <div class="text-cta" style="text-align: center;padding: 25px;">
+            <a data-toggle="modal" data-target="#registerModal">
+                <input type="button" class="btn btn-older landing btnRegister" value="Register">
+            </a>
+          </div>
+      </div>
+    </div>
+  
+    <div id="promotion-accordion" style="padding: 15px 35px; margin-top: 3px;box-shadow: 0 0 20px rgba(0, 0, 1, 0.1);">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title mg-bt0">
+                  <a role="button" data-toggle="collapse" data-parent="#promotion-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <span class="custom-title-page mg-bt0" style="font-size: 16px;">Terms and conditions</span>
+                  </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse in collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#promotion-accordion">
+                <div class="panel-body">
+                  <p>.............</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sub-page-wrapper">
+      <div class="sub-page-container col d-flex flex-column" style="padding: 0;border-radius: 0 0 4px 4px;height: 58px;margin-top:3px;">
+
+      </div>
+    </div>
+
+    <button class="btn btn-white-yellow" style="width:180px;margin-top:20px;">Back</button>
+
+  </div>
+</div>
+{% comment %} <div class="promotions-main">
+  <div class="col-md-12 m-0 p-1">
+    <div class="content">
+      <div class="content-cover">
+        <div class='square-box box-2-1'>
+          <div class='square-content'>
+            {% if not request.user.is_authenticated and campaign.landing_page %}
+            <div class="square-thumbnail whole-landing" data-toggle="modal" data-target="#registerModal">
+            {% else %}  
+            <div class="square-thumbnail whole-landing" style="cursor: auto;">
+            {% endif %}
+                <img src="{{ campaign.image.url }}" alt="{{ campaign.title }}"  class="hide" />
+                
+                {% if campaign.cta and not request.user.is_authenticated and campaign.landing_page %}
+                <div class="text-cta">
+                  <input type="button" class="btn btn-cta-image landing btnRegister" value="Register">
+                </div>
+                {% endif %}
+            </div>
+          </div>
+        </div>    
+      </div>
+      {% if campaign.landing_page %}
+      <div style="background:#020202;">
+         {% include "pwr_campaigns/campaign_landinglist.html" %}
+      </div>
+      <div class="content-title campaigns" style="height: auto !important;padding:30px 2rem;">
+      
+        
+        {% if campaign.landing_page  %}
+          <div class="col-12" style="background:#020202;">
+              {{ campaign.summary }}
+          </div>
+        {% endif %}
+  
+        <h3>{{ campaign.title }}</h3>
+      </div>
+      <div class="content-detail">
+        <span>{{ campaign.summary }}</span>
+      </div>
+      <div class="content-footer" style="margin-bottom:30px">
+        <div class="row m-0 p-0">
+            <div  class="col-md-6 col-12 p-0">
+              <div  class="content-sub">
+                  <div  class="content-sub-title">
+                      <h3>{{ campaign.subtitle }}</h3>
+                  </div>
+                  <div  class="content-sub-detail">
+                      <span>{{ campaign.subdetail }}</span>
+                  </div>
+                  <div class="content-sub-cta text-center">
+                      {% if not request.user.is_authenticated %}
+                        {% if campaign.cta %}
+                          <a data-toggle="modal" data-target="#registerModal" class="btn btn-footer-cta">{{campaign.cta}}</a>
+                        {% else %}
+                          <a data-toggle="modal" data-target="#registerModal" class="btn btn-footer-cta">{% trans 'LANG_JOIN_NOW'|upper %}</a>
+                        {% endif %}
+                      {% else %}
+                          <a href="/account/deposit" class="btn btn-footer-cta">{% trans 'LANG_DEPOSIT'|upper %}</a>
+                      {% endif %}
+                  </div>
+              </div>
+            </div>
+            <div  class="col-md-6 col-12  p-0">
+              <div  class="content-wheel-bosus">
+                  <div class='square-box box-2-1'>
+                      <div class='square-content'>
+                        <div class="square-thumbnail">
+                            <img src="/static/images/promotions_wheel.png" alt="{{ campaign.subtitle }}"  class="hide" />
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      {% endif %}
+      {% if campaign.landing_page|lower == 'false' %}
+      {% if campaign.landing_page %}
+      <div class="content-title landing" style="height: auto !important;background:white;text-align:center;">
+        <h1 class="title_landing" style="color:black;font-weight:bold;">{{ campaign.title }}</h1>
+       
+        {% if campaign.landing_page  %}
+          <div class="col-12" style="background:#020202;">
+              {{ campaign.summary }}
+              "{{ campaign.category }}"
+          </div>
+        {% endif %}
+     
+      </div>
+      {% else %}
+      <div class="content-title campaigns" style="height: auto !important;">
+          <h3>{{ campaign.title }}</h3>
+
+          {% if campaign.landing_page  %}
+            <div class="col-12" style="background:#020202;">
+                {{ campaign.summary }}
+            </div>
+          {% endif %}
+  
+        </div>
+        <div class="content-detail">
+          <span>{{ campaign.summary }}</span>
+        </div>
+      {% endif %}
+      <div class="content-footer">
+        <div class="row m-0 p-0">
+            <div  class="col-md-6 col-12 p-0">
+              <div  class="content-sub">
+                  <div  class="content-sub-title">
+                      <h3>{{ campaign.subtitle }}</h3>
+                  </div>
+                  <div  class="content-sub-detail">
+                      <span>{{ campaign.subdetail }}</span>
+                  </div>
+                  <div class="content-sub-cta text-center">
+                      {% if not request.user.is_authenticated %}
+                        {% if campaign.cta %}
+                          <a data-toggle="modal" data-target="#registerModal" class="btn btn-footer-cta">{{campaign.cta}}</a>
+                        {% else %}
+                          <a data-toggle="modal" data-target="#registerModal" class="btn btn-footer-cta">{% trans 'LANG_JOIN_NOW'|upper %}</a>
+                        {% endif %}
+                      {% else %}
+                          <a href="/account/deposit" class="btn btn-footer-cta">{% trans 'LANG_DEPOSIT'|upper %}</a>
+                      {% endif %}
+                  </div>
+              </div>
+            </div>
+            <div  class="col-md-6 col-12  p-0">
+              <div  class="content-wheel-bosus">
+                  <div class='square-box box-2-1'>
+                      <div class='square-content'>
+                        <div class="square-thumbnail">
+                            <img src="/static/images/promotions_wheel.png" alt="{{ campaign.subtitle }}"  class="hide" />
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      {% endif %}
+      {% if campaign.landing_page%}
+      {% include "campaigns/campaign_landingbox.html" %}
+      {% endif %}
+    </div>
+  </div>
+</div> {% endcomment %}
+<script>
+$(document).ready(function(){
+ $('.panel-collapse').on('show.bs.collapse', function () {
+    $(this).siblings('.panel-heading').addClass('active');
+  });
+
+  $('.panel-collapse').on('hide.bs.collapse', function () {
+    $(this).siblings('.panel-heading').removeClass('active');
+  });
+
+  
+});
+</script>
+{% endblock %}

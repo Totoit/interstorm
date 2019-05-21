@@ -1,0 +1,107 @@
+{% load cms_tags menu_tags %}
+{% load staticfiles %}
+{% for child in children %}
+
+<style>
+.sub-page-aside.submenu-bar {
+    padding-left: 0;
+}
+</style>
+
+    <li class="tab-bar {{ child.slug }}" >
+    {% if child.is_leaf_node %}
+
+        <a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}" sub-active="{{ child.slug }}" menu-active="{{ child.slug }}" group-active="support">
+
+            {% if child.slug == "about-us" %}
+        
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+            height="16px" viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve" class="about-icon">
+                <g id="Layer_2"> </g>
+                <g id="Layer_2_copy"> </g>
+                <g id="Layer_1">
+                    <g>
+                        <path fill="#808080" d="M60,14c25.364,0,46,20.636,46,46s-20.636,46-46,46S14,85.364,14,60S34.636,14,60,14 M60,0C26.863,0,0,26.863,0,60c0,33.137,26.863,60,60,60c33.137,0,60-26.863,60-60C120,26.863,93.137,0,60,0L60,0z"/>
+                        <g>
+                            <path fill="#808080" d="M60,91.125c-13.233,0-24-10.71-24-23.875V36h10v31.25c0,7.65,6.28,13.875,14,13.875S74,74.788,74,67V36h10v31C84,80.303,73.233,91.125,60,91.125z"/>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+
+            {% else %}
+
+                {% if child.menu_icon_image %}
+                    <img src="{{ child.menu_icon_image.url }}">
+                {% elif child.menu_icon_url %}
+                    <img src="{{ child.menu_icon_url }}">
+                {% endif %}
+            
+            {% comment %} {% elif child.menu_icon_font_awesome %}<i class="fa margin-right {{ child.menu_icon_font_awesome }}"></i> {% endcomment %}
+            {% comment %} {% elif child.menu_level != 0 %}<i class="fa margin-right fa-fw"></i> {% endcomment %}
+
+            {% endif %}
+
+            {{ child.get_menu_title }}
+
+        </a>
+
+    {% else %}
+
+        {% if child.slug != "rules-security" %}
+        <a href="#">
+        {% else %}
+        <p>
+        {% endif %}    
+
+            {% if child.slug == 'about-us' %}
+            
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="16px" height="16px" viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve"
+                class="about-icon">
+                <g id="Layer_2"> </g>
+                <g id="Layer_2_copy"> </g>
+                <g id="Layer_1">
+                    <g>
+                        <path fill="#808080" d="M60,14c25.364,0,46,20.636,46,46s-20.636,46-46,46S14,85.364,14,60S34.636,14,60,14 M60,0C26.863,0,0,26.863,0,60c0,33.137,26.863,60,60,60c33.137,0,60-26.863,60-60C120,26.863,93.137,0,60,0L60,0z" />
+                        <g>
+                            <path fill="#808080" d="M60,91.125c-13.233,0-24-10.71-24-23.875V36h10v31.25c0,7.65,6.28,13.875,14,13.875S74,74.788,74,67V36h10v31C84,80.303,73.233,91.125,60,91.125z" />
+                        </g>
+                    </g>
+                </g>
+            </svg>
+            
+            {% else %}
+
+                {% if child.menu_icon_image %}
+                    <img src="{{ child.menu_icon_image.url }}">
+                {% elif child.menu_icon_url %}
+                    <img src="{{ child.menu_icon_url }}">
+
+                {% elif child.menu_icon_font_awesome %}
+                    <i class="fa margin-right fa-fw {{ child.menu_icon_font_awesome }}"></i>
+                {% else %}
+                    {% if child.menu_level != 0 %}
+                        <i class="fa margin-right fa-fw"></i>
+                    {% endif %}
+
+                {% endif %}
+
+            {% endif %}
+            {{ child.get_menu_title }}
+
+        {% if child.slug != "rules-security" %}
+        </a>
+        {% else %}
+        </p>
+        {% endif %}  
+
+    {% endif %}
+    {% if child.children %}
+        <ul class="dropdown">
+            {% show_menu 0 100 100 100 "cms_templates/left_menu.html" "" "" child %}
+        </ul>
+    {% endif %}
+    </li>
+{% endfor %}
+

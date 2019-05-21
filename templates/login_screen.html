@@ -1,0 +1,13 @@
+{% extends "normal_screen.html" %}
+{% block head %}
+    {% if not request.user.is_authenticated %}
+        <script>
+            document.location.href = "/";
+        </script>
+    {% else %}
+        <script>
+            var publicKey = "{{ CAPTCHA_KEY }}";
+        </script>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% load i18n %}
+{% load staticfiles %}
+<style>
+.date-dropdowns {
+    overflow: hidden;
+}
+
+.regis-txt-error {
+    font-size: 10px;
+    color:red;
+    text-transform: uppercase;
+    height: 14.4px;
+}
+</style>
+
+<!-- Modal -->
+<div class="modal fade regiser-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            
+      <div class="modal-content">
+
+        <div class="sub-page-header">
+            <div class="bg-winner">
+                <font>{% trans 'LANG_REGISTRATION' %}</font>
+                <div class="winner-bar">
+                    <div class="close-box">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+
+    <div class="modal-body">
+      <!-- Message Box -->
+      <div class="account-message">
+        <span class="messages-error"></span>
+    </div>
+    <!--End Message -->
+    <!-- Step 1 -->
+    <form class="mobile-forms form-horizontal">
+        {% csrf_token %}
+        <div class="msg"></div>
+        <div class="row outer">
+            <div class="col-md-12">
+                <div class="create-step1">
+                    <div class="headerTitle">
+                        <h5>{% trans 'LANG_ACCOUNT_INFORMATION' %}</h5>
+                    </div>
+                    <div class="line-gradient"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="account-register">
+                                <p style="margin-bottom:4px;">{% trans 'LANG_USERNAME' %}</p>
+                                <div class="col-md-12 pd-lr-0">
+                                    <input class="form-control input-text create-step1" id="create-username" txt-err="please enter a username" name="username" type="text">
+                                </div>
+                                <div class="col-md-12 pd-lr-0">
+                                    <div id="create-username-error" class="regis-txt-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="account-register">
+                                <p style="margin-bottom:4px;">{% trans 'LANG_EMAIL_ADDRESS' %}</p>
+                                <div class="col-md-12 pd-lr-0">
+                                    <input class="form-control input-text create-step1" id="create-email" name="email" txt-err="please enter a email" type="text">
+                                </div>
+                                <div class="col-md-12 pd-lr-0">
+                                    <div id="create-email-error" class="regis-txt-error"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+
+                </div>
+                </div>
+           
+            </div>
+
+        </form>
+    </div>
+</div>
+</div>
+</div>
+

@@ -1,0 +1,254 @@
+{% extends "login_screen.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% block content %}
+<script type="text/javascript">
+    var slug = "{{ slug }}";
+</script>
+<script src="{% static 'js/dashboard/deposit_screen.js' %}"></script>
+<link href="{% static 'css/deposit_withdraw/deposit_withdraw.css' %}" rel="stylesheet">
+
+<style>
+    @media only screen  and (max-width: 768px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+        #step2 .picker .col-md-4 {
+            padding: 5px 15px !important;
+        }
+
+        #step2 .for-5-col {
+            width: 33.33%;
+            float: left;
+            padding: 5px;
+        }
+
+        .btn, input[type=button], input[type=submit], button {
+            min-width: unset;
+        }
+    }
+
+    @media only screen  and (max-width: 767px){
+        button.back-step , button.next-step {
+            width: 100%;
+        }
+    }
+
+</style>
+
+<div class="height-full">
+    <div class="row height-full">
+        {% include "home/submenu.html" with mode='profile'%}
+
+        <div class="sub-page-content col-md-9">
+            <div class="sub-page-header">
+                <div class="bg-winner">
+                    <font>Deposit Money</font>
+                    <div class="winner-bar"></div>
+                </div>
+            </div>
+
+
+            <form id="depositForm-step2">
+                <div id="step2">
+                    <div class="line-gradient"></div>
+                    <div class="sub-page-wrapper">
+                        <div class="sub-page-container col d-flex flex-column" style="margin:0;">
+                            <div class="ConfirmationPageText">
+                                <span>2</span>
+                                <p>Enter your bonus code</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-page-wrapper">
+                        <div class="sub-page-container col d-flex flex-column" style="margin:3px 0 0 0;">
+                        
+                            <div class="mg-bt-30 payment-logo">
+                            </div>
+                            <div class="row picker">
+                                <div class="col-md-12" style="margin-bottom: 25px;">
+                                    <div>
+                                        <input type="radio" id="bonus-choice-dont-want" onchange="depositBonusChoose(1)" name="deposit-bonus-choice" checked>
+                                        <label for="bonus-choice-dont-want" style="margin-bottom:0;cursor: pointer;">I donn't want any bonus</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-bottom: 25px;">
+                                    <div>
+                                        <input type="radio" id="bonus-choice-have-code" onchange="depositBonusChoose(2)" name="deposit-bonus-choice">
+                                        <label for="bonus-choice-have-code" style="margin-bottom:0;cursor: pointer;">I have a bonus code</label>
+                                    </div>
+                                    <!-- TAB 2 :: I have a bonus code -->
+                                    <div style="padding-left: 44px;">
+                                        <div id="bonus-content-2" class="bonus-content hidden" style="padding-top: 10px;">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-12 p-0">
+                                                    <input class="form-control input-text" name="bonusCode" type="text" style="width: 200px;" placeholder="Enter bonus code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-bottom: 25px;">
+                                    <div>
+                                        <input type="radio" id="bonus-choice-select-bonus" onchange="depositBonusChoose(3)" name="deposit-bonus-choice">
+                                        <label for="bonus-choice-select-bonus" style="margin-bottom:0;cursor: pointer;">Select a bonus</label>
+                                    </div>
+                                    <!-- TAB 3 :: Select a bonus -->
+                                    <div style="padding-left: 44px;margin-left: -15px;">
+                                        <div id="bonus-content-3" class="bonus-content hidden" style="padding-top: 10px;">
+                                            <div class="col-md-12" style="margin-bottom: 15px;">
+                                                <div>
+                                                    <input type="radio" value="10" id="select-bonus-choice-10" name="select-bonus-choice" checked>
+                                                    <label for="select-bonus-choice-10" style="margin-bottom:0;cursor: pointer;">$10</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin-bottom: 15px;">
+                                                <div>
+                                                    <input type="radio" value="50" id="select-bonus-choice-50" name="select-bonus-choice">
+                                                    <label for="select-bonus-choice-50" style="margin-bottom:0;cursor: pointer;">$50</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin-bottom: 15px;">
+                                                <div>
+                                                    <input type="radio" value="100" id="select-bonus-choice-100" name="select-bonus-choice">
+                                                    <label for="select-bonus-choice-100" style="margin-bottom:0;cursor: pointer;">$100</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin-bottom: 15px;">
+                                                <div>
+                                                    <input type="radio" value="300" id="select-bonus-choice-300" name="select-bonus-choice">
+                                                    <label for="select-bonus-choice-300" style="margin-bottom:0;cursor: pointer;">$300</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width:100%;background: #b48061;height: 1px;"></div>
+                            
+                            <div id="CreditCardBox" style="width:100%;padding-top: 15px;" class="hidden">
+                                <div class="row picker">
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <div>
+                                            <input type="radio" id="CreditCard-choice-1" onchange="CreditCardBoxChoose(1)" name="CreditCard-choice" checked>
+                                            <label for="CreditCard-choice-1" style="margin-bottom:0;cursor: pointer;">Select a bank account</label>
+                                        </div>
+                                    
+                                        <div style="padding-left: 44px;margin-left: -15px;">
+                                            <div id="CreditCardBoxChoose-1" class="CreditCardBoxChoose" style="padding-top: 10px;">
+                                                <!-- start loop for bank no. -->
+                                                <!-- <div class="col-md-12" style="margin-bottom: 15px;">
+                                                    <div>
+                                                        <input type="radio" value="BK0-12-345-6789" id="old-bank-1" name="old-bank-choice">
+                                                        <label for="old-bank-bank-1" style="margin-bottom:0;cursor: pointer;">BK0-12-345-6789</label>
+                                                    </div>
+                                                </div> -->
+                                                <!-- end loop for bank no. -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <div>
+                                            <input type="radio" id="CreditCard-choice-2" onchange="CreditCardBoxChoose(2)" name="CreditCard-choice">
+                                            <label for="CreditCard-choice-2" style="margin-bottom:0;cursor: pointer;">Register new bank account</label>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+
+                            <div class="row detail mg-t-20 active">
+                                <div class="form-group">
+                                    <div class="col-md-6 col-12">
+                                        <input id="step-2-amount" name="amount" class="form-control input-text" type="text" placeholder="Enter amount">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <button type="button" class="next-step" data-current-step="2">Next step</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div id="step3" class="hidden">
+                <div class="line-gradient"></div>
+                <div class="sub-page-wrapper">
+                    <div class="sub-page-container col d-flex flex-column" style="margin:0;">
+                        <div class="ConfirmationPageText">
+                            <span>3</span>
+                            <p>Confirmation</p>
+                        </div>
+                    </div>
+                </div>
+                <form name="depositPrepareForm">
+                    <div class="sub-page-wrapper">
+                        <div class="sub-page-container col d-flex flex-column" style="margin:3px 0 0 0;">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="col-md-6 col payment-logo">
+                                    </div>
+                                    <div class="col-md-6 col">
+                                        <p class="mg-bt0">Amount:</p>
+                                        <p class="confirm-deposit-amount mg-bt0">-</p>
+                                        <input type="hidden" name="pid" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <p class="note">* note note note note note note note note note note note note note note note note note.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <button class="back-step">Back</button>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <button type="button" class="next-step" data-current-step="3">Confirm</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function depositBonusChoose(choose){
+        console.log(choose);
+        $('.bonus-content').addClass('hidden');
+        $('#bonus-content-'+choose).removeClass('hidden');
+    }
+
+    function CreditCardBoxChoose(choose){
+        console.log(choose);
+        $('.CreditCardBoxChoose').addClass('hidden');
+        $('#CreditCardBoxChoose-'+choose).removeClass('hidden');
+    }
+    
+
+    $(document).ready(function(){
+
+        $("body").on( "click", ".btn-choice-main", function() {
+            var choose = $(this).attr('data-choose');
+            $('.btn-choice-main').removeClass('active');
+            $(this).addClass('active');
+            $('.detail').removeClass('active');
+            $('.detail.choose-'+choose).addClass('active');
+        });
+
+        $("body").on( "click", ".btn-choice", function() {
+            $('.btn-choice').removeClass('active');
+            $(this).addClass('active');
+        });
+
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,22 @@
+{% extends "cms_templates/base_sidebar.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+
+{% block header %}
+{% endblock header %}
+{% block title %}{% trans "LANG_DASHBOARD" %} - {{ request.site.name }}{% trans "LANG_CASINO" %} {% endblock %}
+{% block wrapperclass %}dashboard{% endblock %}
+{% block sidebar-block %}
+    {% include "home/slidebar.html" %}
+{% endblock sidebar-block %}
+
+{% block cms_submenu %}
+{% endblock %}
+
+{% block cms_content %}
+    {% block dashboard %}
+
+    {% endblock %}
+{% endblock %}
+

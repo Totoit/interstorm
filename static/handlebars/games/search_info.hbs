@@ -1,0 +1,31 @@
+{{#each games}}
+    <div class="search-info-data" id="search-info-{{slug}}" style="background-image:url('{{backgroundImage}}');display:none;">
+        <div class="item">
+            <div class="game-info-title">
+                <div><h1>{{name}}</h1></div>
+                <div class="ml-auto"><img src="/static/images/CTAPlayClosewindow.png" style="width:2rem;cursor:pointer;" onclick="search_closeInfo('{{slug}}')"></div>
+            </div>
+            <div class="game-info-description">
+                <p>{{description}}</p>
+            </div>
+            <div class="game-info-footer">
+                {{#ifCond ../languagecode  'en'}}
+                 <a data-slug="{{slug}}"  style="cursor:pointer;" onclick="return popupLoginGames('/game/{{slug}}?mode=real')">
+                {{else}}
+                 <a data-slug="{{slug}}"  style="cursor:pointer;" onclick="return popupLoginGames('/{{../languagecode}}/game/{{slug}}?mode=real')">
+                {{/ifCond}}
+                    <img src="/static/images/CTAPlayforrealGrey.png">
+                    <img src="/static/images/CTAPlayforrealYellow.png" class="image-hover">
+                </a>
+                {{#ifCond ../languagecode  'en'}}
+                <a data-slug="{{slug}}" href="/game/{{slug}}">
+                {{else}}
+                <a data-slug="{{slug}}" href="/{{../languagecode}}/game/{{slug}}">
+                {{/ifCond}}
+                    <img src="/static/images/CTAPlayForfunGrey.png">
+                    <img src="/static/images/CTAPlayforfunYellow.png" class="image-hover">
+                </a>
+            </div>
+        </div>
+    </div>
+{{/each}}
