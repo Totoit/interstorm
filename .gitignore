@@ -1,0 +1,63 @@
+locale/*
+
+### JetBrains template
+*.iml
+
+## Directory-based project format:
+.idea/
+*_initial*
+*migrations*
+
+### JIRA plugin
+atlassian-ide-plugin.xml
+
+
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+### DB
+*.sqlite3
+
+
+### Project
+/willy/settings_*.py
+/media
+#/static/css/out
+
+
+### Codekit
+/static/config.codekit
+/static/.codekit-cache
+
+
+### Sass template
+.sass-cache
+*.css.map
+
+
+### Bower
+/bower_components
+
+
+### Vagrant
+/.vagrant
+*.log
+sourcetree.txt
+
+###file translation
+*.mo
+
+templates/dashboard/auth/login_popup.html.modal
+pwr/settings.py
+assets/contracts/*
+*.po
+
+
+node_modules
+
+*.min.js
+
