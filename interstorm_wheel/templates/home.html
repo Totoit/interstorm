@@ -1,0 +1,84 @@
+{% load i18n %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}">
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script> -->
+    <!-- <script src="{% static 'js/utilities.js' %}?t={{time}}"></script> -->
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+</head>
+<style>
+    /* .swal-overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 0;
+        overflow-y: auto;
+        background-color: rgba(0, 0, 0, .4);
+        z-index: 10000;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity .3s
+    }
+    
+    .swal-overlay:before {
+        content: " ";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%
+    }
+    
+    .swal-overlay--show-modal {
+        opacity: 1;
+        pointer-events: auto
+    }
+    
+    .swal-overlay--show-modal .swal-modal {
+        opacity: 1;
+        pointer-events: auto;
+        box-sizing: border-box;
+        -webkit-animation: showSweetAlert .3s;
+        animation: showSweetAlert .3s;
+        will-change: transform
+    } */
+    .wheel-button{
+        position: absolute;
+    }
+</style>
+<!-- Custom styles for this template-->
+<body>
+    <div class="container full-width p-0">
+        <div class="row p-0 m-0">
+            <div class="col-md-12 p-0">
+                <div class="content-wrapper">
+                    {% block content %}
+                        <div id="wheel-game" align="center">
+                            <div class="clearfix">
+                                <div class="wheel">
+                                    <div class="wheel-inner wheel-blue ">
+                                        <img class="wheel-reward-img" src="{% static 'images/wheel/wheel-desktop_LV1.png'%}" id="wheel-blue" />
+                                        <a id="wheel-blue-spin-button">
+                                            <img src="{% static 'images/wheel/point-desktop_LV1.png' %}" class="wheel-button wheel-button-img" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/wheel.js' %}?t={{time}}" type=" text/javascript"> </script>
+</body>
+
+</html>
