@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'interstorm_wheel',
+    'site_config'
     
 ]
 
@@ -127,3 +128,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
+
+
+MEDIA_URL = "/mediafile/"
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafile")

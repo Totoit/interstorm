@@ -62,6 +62,22 @@ var WHEEL = (function () {
     // get user session from everymatrix
     jQuery(function () {
         // c.doCall(initUserSession);
+        $.ajax({
+            url: '/api/get_bonus_code',
+            type: 'POST',
+            method: 'POST',
+            data: {
+                // user_id: userID
+            },
+            success: function (result) {
+                // inbox_result.list = JSON.parse(result);
+                console.log('inbox_result',result)
+                // setDataShowInbox(inbox_result);
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(err);
+            }
+        });
     });
 
     function getAvailableSpins(newTransactions, callback) {
@@ -908,7 +924,32 @@ var WHEEL = (function () {
 //         WHEEL.showGame(true);
 //     })
 // });
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 jQuery(function () {
+    var csrftoken = getCookie('csrftoken');
+     $('[name="csrfmiddlewaretoken"]').val(csrftoken)
+     $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
     var winWidth = $(window).width();
     var winHeight = $(window).height();
     var navHeight = $('.fixed-nav.bg-dark').height();

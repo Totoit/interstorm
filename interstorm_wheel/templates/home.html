@@ -1,9 +1,17 @@
 {% load i18n %}
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}">
+<html>
 
 <head>
+    {% if EVERYMATRIX %}
+    <script type="text/javascript">
+        window._EM = {
+            url: '{{ EVERYMATRIX.url|escapejs }}',
+            domain: '{{ EVERYMATRIX.domain|escapejs }}',
+        }
+    </script>
+    {% endif %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script> -->
     <!-- <script src="{% static 'js/utilities.js' %}?t={{time}}"></script> -->
