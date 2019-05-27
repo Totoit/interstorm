@@ -17,16 +17,17 @@ atlassian-ide-plugin.xml
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
 
 ### DB
 *.sqlite3
 
 
 ### Project
-/willy/settings_*.py
+# /willy/settings_*.py
 /media
 #/static/css/out
+
 
 
 ### Codekit
@@ -52,7 +53,7 @@ sourcetree.txt
 *.mo
 
 templates/dashboard/auth/login_popup.html.modal
-pwr/settings.py
+# pwr/settings.py
 assets/contracts/*
 *.po
 
@@ -60,4 +61,5 @@ assets/contracts/*
 node_modules
 
 *.min.js
+
 

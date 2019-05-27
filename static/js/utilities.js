@@ -95,13 +95,13 @@ window.c = (function (em) {
             self.userCountry = result.kwargs.userCountry;
             if (!result.kwargs.isAuthenticated) {
                 console.log('c')
-                showTablogin()
-                calllogout(function (res) {
-                if (res.result) {
-                    window.location.href = "/";
-                    // location.reload();
-                }
-            });
+                // showTablogin()
+            //     calllogout(function (res) {
+            //     if (res.result) {
+            //         window.location.href = "/";
+            //         // location.reload();
+            //     }
+            // });
             }else{
                 console.log('d')
             }
@@ -112,31 +112,31 @@ window.c = (function (em) {
     AutoBahnSingleton.prototype.checkIdentity = function (session, callback) { //Checks if the user is logged in
         session.subscribe('/sessionStateChange', function (args, kwargs, details) {
             console.log('Event is fired with data = %o', kwargs);
-            if (kwargs.code == 0){ isLogin = true; showTablogin();getUserGlobal();callGetMoney(); } else { isLogin = false; setFrameSport('Anonymous');setCookie('pwr_ss','',36500);}
+            if (kwargs.code == 0){ isLogin = true;  } else { isLogin = false;}
             if (kwargs.code > 0 && kwargs.code != 2) {
                 // alert('>0')
-                calllogout(function (res) {
-                    if (res.result) {
-                        $('#loginModal').modal({
-                            show:true,
-                            backdrop:'static'
-                          }
-                        );
-                        $('#loginModal').on('hidden.bs.modal', function () {
-                        //   location.reload();
-                            window.location.href = "/";
-                        })
-                    }
-                });
+                // calllogout(function (res) {
+                //     if (res.result) {
+                //         // $('#loginModal').modal({
+                //         //     show:true,
+                //         //     backdrop:'static'
+                //         //   }
+                //         // );
+                //         // $('#loginModal').on('hidden.bs.modal', function () {
+                //         // //   location.reload();
+                //         //     window.location.href = "/";
+                //         // })
+                //     }
+                // });
             } else if (kwargs.code == 2) {
                 // alert('2')
-                calllogout(function (res) {
-                        if (res.result) {
-                            // location.reload();
-                            window.location.href = "/";
-                        }
-                    }
-                );
+                // calllogout(function (res) {
+                //         if (res.result) {
+                //             // location.reload();
+                //             window.location.href = "/";
+                //         }
+                //     }
+                // );
             }
         });
         callback(session);
@@ -193,9 +193,9 @@ window.c = (function (em) {
                 }, 1);
             }
         } catch (err) {
-            calllogout(function(res){
-                window.location.href = "/";
-            });
+            // calllogout(function(res){
+            //     window.location.href = "/";
+            // });
         }
     };
     //Wraps all calls in a verification, so that users won't have to log in multiple times
@@ -236,34 +236,6 @@ window.c = (function (em) {
     return new AutoBahnSingleton();
 })
 (window._EM);
-//Special willy modal for handling errors ETC.
-window.willyModal = (function () {
-    var gettext = window.gettext || function (s) {
-            return s;
-        }; // Gettext
-    var modal = "";
-
-    function WillyModal() {
-    }
-
-    WillyModal.prototype.findModal = function () {
-        modal = $('#willymodal');
-    };
-    WillyModal.prototype.show = function () {
-        modal.modal('show');
-    };
-    WillyModal.prototype.alert = function (title, description) {
-        modal.find('.modal-title').text(title);
-        modal.find('.modal-body').html(description);
-        this.show();
-    };
-    WillyModal.prototype.error = function (errormsg) {
-        modal.find('.modal-title').text(gettext("Error"));
-        modal.find('.modal-body').html(errormsg);
-        this.show();
-    };
-    return new WillyModal();
-})();
 
 //Creates a verfication url. Used to send a verification mail in auth.js and forgotpassword.js
 function fetchMailUrl(url) {
@@ -275,17 +247,17 @@ $(document).ready(function () {
         session.call("/user#getSessionInfo", []).then(function (result) {
             //console.log("isAuthenticated", result.kwargs.isAuthenticated);
             if (!result.kwargs.isAuthenticated) {
-                $('.banner .btnRegister').show();
-                $('.banner .btnDeposit').hide();
-                calllogout(function (res) {
-                    if (res.result) {
-                        // location.reload();
-                        window.location.href = "/";
-                    }
-                });
+                // $('.banner .btnRegister').show();
+                // $('.banner .btnDeposit').hide();
+                // calllogout(function (res) {
+                //     if (res.result) {
+                //         // location.reload();
+                //         window.location.href = "/";
+                //     }
+                // });
             }else{
-                $('.banner .btnRegister').hide();
-                $('.banner .btnDeposit').show();
+                // $('.banner .btnRegister').hide();
+                // $('.banner .btnDeposit').show();
             }
 
         });
