@@ -101,9 +101,10 @@ class WheelAdminBonus(admin.ModelAdmin):
 
 @admin.register(WheelImageLevel)
 class WheelAdminImageLevel(admin.ModelAdmin):
-    fields = ('image','level')
-    list_display = ('level','image')
+    # fields = ('image','level')
+    list_display = ('level','image_tag')
     ordering = ('level',)
+    readonly_fields = ['image_tag']
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -111,10 +112,10 @@ class WheelAdminImageLevel(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(WheelAdminImageLevel, self).get_queryset(request)
         if request.user.is_superuser:
-            self.list_display = ('level','image','vendor')
+            self.list_display = ('level','image_tag','vendor')
             # self.fields = ['name', 'detail','create_by']
             # self.readonly_fields = ['create_by']
-            self.search_fields = ('vendor')
+            self.search_fields = ('level','vendor')
             return qs
         return qs.filter(vendor=request.user.id)
 
@@ -122,4 +123,7 @@ class WheelAdminImageLevel(admin.ModelAdmin):
         obj.vendor = User(id=request.user.id)
         obj.save()
 
+# list_display = ('title','image_tag')
+#     #fields = ['image_tag']
+#     readonly_fields = ['image_tag']
     
