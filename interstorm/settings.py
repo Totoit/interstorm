@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'interstorm_wheel',
-    'site_config'
+    'site_config',
+    'interstorm_vendor',
     
 ]
 

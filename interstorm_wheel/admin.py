@@ -25,7 +25,6 @@ class test_data_Admin(admin.ModelAdmin):
 
 
 
-
 # class test_data_Admin(admin.ModelAdmin):
 #     def get_queryset(self, request):
 #         qs = super().get_queryset(request)
