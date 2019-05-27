@@ -13,17 +13,39 @@ import datetime
 import json
 import dateutil.parser
 from interstorm import settings
+from django.views.decorators.csrf import csrf_protect
+from interstorm_vendor.models import InterStormUserVendor
+from site_config.models import SiteConfig
 # Create your views here.
 @never_cache
 def index(request):
 	template = './home.html'
 	context = {}
-	context['time'] = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-	context['EVERYMATRIX'] = {
-		'url':'api-stage.everymatrix.com/v2',
-		'domain':'http://www.exclusiveclubcasino.com',
-	}
-	return render(request, template, context)
+	# import pprint
+	# pp = pprint.PrettyPrinter(indent=4)
+	# pp.pprint(request.GET)
+	userid = request.GET.get('userid')
+	usercode = request.GET.get('usercode')
+	print(userid,usercode)
+	if(InterStormUserVendor.objects.filter(usercode = usercode).exists()):
+		print("exists")
+		domain = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = usercode).user_id).domain)
+		url = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = usercode).user_id).url)
+		print(domain,url)
+		apiKey = {
+			'url' : url,
+			'domain' : domain
+    	}
+		context['time'] = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+		context['EVERYMATRIX'] = apiKey
+		return render(request, template, context)
+	else:
+		return HttpResponse("no user code or userid")
+	# domain = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).domain)
+    # url = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).url)
+
+	
+	
 
 
 @csrf_exempt
@@ -193,20 +215,23 @@ def get_client_ip(request):
 def get_bonus_code(request):
 		if request.method == 'POST':
 			print(request)
-			csrf_invalid = CsrfViewMiddleware().process_view(request, None, (), {})
-			if csrf_invalid:
-				response = {
-					'error' : 'invalid CSRF Token'
-				}
-				return JsonResponse(response)
-			else :
+			# csrf_invalid = CsrfViewMiddleware().process_view(request, None, (), {})
+			# print(csrf_invalid)
+			# if csrf_invalid:
+			# 	response = {
+			# 		'error' : 'invalid CSRF Token'
+			# 	}
+			# 	return JsonResponse(response)
+			# else :
 				# user_id = request.POST.get('user_id');
-				response = WheelBonusCode.objects.all()
-				json_res = []
+			response = WheelBonusCode.objects.all()
+			json_res = []
 
-				for record in response: 
-					json_obj = record.bonus_code
-					json_res.append(json_obj)
-				print(json_res)
-				# response_serialized = serializers.serialize('json', response,fields=('bonus_code'))
-				return JsonResponse(json_res,safe=False)
+			for record in response: 
+				json_obj = record.bonus_code
+				json_res.append(json_obj)
+			print(json_res)
+			# response_serialized = serializers.serialize('json', response,fields=('bonus_code'))
+			return JsonResponse(json_res,safe=False)
+		else:
+			return HttpResponse("USER ONLY POST")
