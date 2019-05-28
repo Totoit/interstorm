@@ -15,7 +15,7 @@ atlassian-ide-plugin.xml
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
+# *.py[cod]
 *$py.class
 *.pyc
 
@@ -60,6 +60,6 @@ assets/contracts/*
 
 node_modules
 
-*.min.js
+# *.min.js
 
 
