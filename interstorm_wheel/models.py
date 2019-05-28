@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from interstorm_vendor.models import InterStormUserVendor
 # Create your models here.
 class test_db (models.Model):
     class Meta:
@@ -75,10 +76,32 @@ class WheelBonusCode(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
 
 class WheelImageLevel(models.Model):
+
+    ALL_LEVEL = (
+        (1, 'LEVEL 1'),
+        (2, 'LEVEL 2'),
+        (3, 'LEVEL 3'),
+    )   
+
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
     image = models.ImageField(upload_to = 'interstorm', default = 'mediafile/interstorm/no-img.jpg', null=True, blank=True)
-    level = models.CharField(max_length=50)
+    level =  models.IntegerField(choices=ALL_LEVEL,blank=False)
     created_date = models.DateTimeField(default=timezone.now)
+    class Meta:
+        unique_together = (("level", "vendor",),)
+
 
     def image_tag(self):
         return mark_safe('<img src="/mediafile/%s" width="100" height="100" />' % (self.image))
+
+class WheelLevelManage(models.Model):
+
+    ALL_LEVEL = (
+        (1, 'LEVEL 1'),
+        (2, 'LEVEL 2'),
+        (3, 'LEVEL 3'),
+    )   
+
+    vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
+    level = models.IntegerField(choices=ALL_LEVEL,blank=False)
+    deposit = models.FloatField("Deposit Less Than",blank=False)
