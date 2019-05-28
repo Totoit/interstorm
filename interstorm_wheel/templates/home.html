@@ -22,6 +22,15 @@
             var session_id = 'Anonymous'
         </script>
     {% endif %}
+    {% if vendor %}
+        <script>
+            var vendor = '{{vendor}}';
+        </script>
+    {% else %}
+        <script>
+            var session_id = 'Anonymous'
+        </script>
+    {% endif %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script>
     <script src="{% static 'js/utilities.js' %}?t={{time}}"></script>

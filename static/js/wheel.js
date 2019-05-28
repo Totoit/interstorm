@@ -86,42 +86,43 @@ var WHEEL = (function () {
             $('.loading').hide();
             return;
         }
-
+        
         var transactions = newTransactions || {};
 
         $.ajax({
-            url: '/wheel/get_spins',
+            url: '/api/get_spins',
             type: 'POST',
             method: 'POST',
             data: {
                 user_id: userId,
                 transactions: JSON.stringify(transactions),
-                game_type: deposit_lv
+                vendor:vendor,
+                // game_type: deposit_lv
             },
             success: function (result) {
-                // console.log('result',result);
+                console.log('result',result);
                 // $('#circle_spin').hide();
-                availableSpins = result.spins;
-                console.log('dp', deposit_lv)
-                console.log('availableSpins', availableSpins)
-                showSpinsText();
-                gameIsAvailable = canPlayWheel() ? true : false;
-                console.log('gameIsAvailable', gameIsAvailable)
-                if (gameIsAvailable) {
-                    if (availableSpins['level_' + deposit_lv] > 1) {
-                        $('.txt-available').find('span').html(gettext('You have ') + availableSpins['level_' + deposit_lv] + ' ' + gettext('spins'))
-                    } else {
-                        $('.txt-available').find('span').html(gettext('You have ') + availableSpins['level_' + deposit_lv] + ' ' + gettext('spin'))
-                    }
-                }
+                // availableSpins = result.spins;
+                // console.log('dp', deposit_lv)
+                // console.log('availableSpins', availableSpins)
+                // showSpinsText();
+                // gameIsAvailable = canPlayWheel() ? true : false;
+                // console.log('gameIsAvailable', gameIsAvailable)
+                // if (gameIsAvailable) {
+                //     if (availableSpins['level_' + deposit_lv] > 1) {
+                //         $('.txt-available').find('span').html(gettext('You have ') + availableSpins['level_' + deposit_lv] + ' ' + gettext('spins'))
+                //     } else {
+                //         $('.txt-available').find('span').html(gettext('You have ') + availableSpins['level_' + deposit_lv] + ' ' + gettext('spin'))
+                //     }
+                // }
 
-                if (gameIsAvailable && result.show_game) {
-                    showGame(true)
-                }
+                // if (gameIsAvailable && result.show_game) {
+                //     showGame(true)
+                // }
 
-                if (typeof callback === 'function') {
-                    callback();
-                }
+                // if (typeof callback === 'function') {
+                //     callback();
+                // }
             },
             error: function (xhr, errmsg, err) {
                 $('.loading').hide();
@@ -226,9 +227,9 @@ var WHEEL = (function () {
 
             console.log('login true');
             getTransactions(session, function (newTransactions) {
-                // getAvailableSpins(newTransactions, function () {
+                getAvailableSpins(newTransactions, function () {
                     // showCurrentWheel(session,newTransactions);
-                // });
+                });
             });
         };
 
@@ -342,23 +343,24 @@ var WHEEL = (function () {
     function getTransactions(session, callback) {
 
         // first we check when the last transaction was logged
-        // $.ajax({
-        //     url: '/wheel/get_last_transaction',
-        //     type: 'POST',
-        //     method: 'POST',
-        //     data: {
-        //         user_id: userId
-        //     },
-        //     success: function (transaction) {
-        //         var transactionStartTime = (transaction.transaction_date === null) || (typeof transaction.transaction_date === 'undefined') ? '2016-09-15T00:00:00.000Z' : transaction.transaction_date;
-        //         getTransactionFromAPI(session, transactionStartTime);
-        //     },
-        //     error: function (xhr, errmsg, err) {
-        //         $('.loading').hide();
-        //     }
-        // });
-        var transactionStartTime = '2016-09-15T00:00:00.000Z';
-        getTransactionFromAPI(session, transactionStartTime);
+        $.ajax({
+            url: '/api/get_last_transaction',
+            type: 'POST',
+            method: 'POST',
+            data: {
+                user_id: userId,
+                vendor:vendor
+            },
+            success: function (transaction) {
+                var transactionStartTime = (transaction.transaction_date === null) || (typeof transaction.transaction_date === 'undefined') ? '2016-09-15T00:00:00.000Z' : transaction.transaction_date;
+                getTransactionFromAPI(session, transactionStartTime);
+            },
+            error: function (xhr, errmsg, err) {
+                $('.loading').hide();
+            }
+        });
+        // var transactionStartTime = '2016-09-15T00:00:00.000Z';
+        // getTransactionFromAPI(session, transactionStartTime);
 
         // get new transactions from everymatrix
         function getTransactionFromAPI(session, transactionStartTime) {
@@ -374,7 +376,7 @@ var WHEEL = (function () {
             session.call("/user#getTransactionHistory", [], parameters).then(function (result) {
                 var response = result.kwargs;
                 console.log('trrassad',response)
-                // callback(response);
+                callback(response);
                 return;
 
                 // temp stuff, need real data. Remove this when we have real data
