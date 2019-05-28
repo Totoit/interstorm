@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from interstorm_vendor import views as InterStoremVenderViews
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     url(r'', include('interstorm_wheel.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^get_game_api/', InterStoremVenderViews.get_game_api),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

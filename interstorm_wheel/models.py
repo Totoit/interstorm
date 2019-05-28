@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 # Create your models here.
 class test_db (models.Model):
     class Meta:
@@ -75,6 +76,9 @@ class WheelBonusCode(models.Model):
 
 class WheelImageLevel(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
-    image = models.ImageField(upload_to = 'mediafile/interstorm', default = 'mediafile/interstorm/no-img.jpg', null=True, blank=True)
+    image = models.ImageField(upload_to = 'interstorm', default = 'mediafile/interstorm/no-img.jpg', null=True, blank=True)
     level = models.CharField(max_length=50)
     created_date = models.DateTimeField(default=timezone.now)
+
+    def image_tag(self):
+        return mark_safe('<img src="/mediafile/%s" width="100" height="100" />' % (self.image))
