@@ -7,7 +7,7 @@ from django.middleware.csrf import CsrfViewMiddleware
 from django.views.decorators.cache import never_cache
 from django.core import serializers
 from interstorm_wheel.game_logic import Game, GameAccess
-from interstorm_wheel.models import WheelTransaction, WheelAccessLog,  WheelGames, WheelBonusCode,WheelLevelManage
+from interstorm_wheel.models import WheelTransaction, WheelAccessLog,  WheelGames, WheelBonusCode,WheelLevelManage,WheelImageLevel
 from site_config.models import SiteConfig
 import datetime
 import json
@@ -277,8 +277,10 @@ def get_wheel_image(request):
 		vendor = request.POST.get('vendor')
 		# userid = request.POST.get('userid')
 		level = request.POST.get('level')
+		print('level=',level,' vendor = ',vendor)
 		WheelImageLevelTemp = WheelImageLevel.objects.filter(level=level ,vendor_id = InterStormUserVendor.objects.get(usercode = vendor).user_id)
-		imagaPath = WheelImageLevel[0].image.path
+		print(WheelImageLevelTemp)
+		imagaPath = WheelImageLevelTemp[0].image.url
 		return HttpResponse(imagaPath)
 
 	else:

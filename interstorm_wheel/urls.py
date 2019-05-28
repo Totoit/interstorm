@@ -9,5 +9,6 @@ urlpatterns = [
         url(r'^get_spins$', views.get_spins, name='get_spins'),
         url(r'^get_last_transaction$', views.get_last_transaction, name='get_last_transaction'),
         url(r'^get_bonus_code$', views.get_bonus_code, name='get_bonus_code'),
+        url(r'^get_wheel_image$', views.get_wheel_image, name='get_wheel_image'),
     ]))
 ]
