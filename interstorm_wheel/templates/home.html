@@ -10,7 +10,17 @@
             url: '{{ EVERYMATRIX.url|escapejs }}',
             domain: '{{ EVERYMATRIX.domain|escapejs }}',
         }
+        
     </script>
+    {% endif %}
+    {% if userid %}
+        <script>
+            var session_id = '{{userid}}';
+        </script>
+    {% else %}
+        <script>
+            var session_id = 'Anonymous'
+        </script>
     {% endif %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script>
@@ -19,6 +29,7 @@
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    
 </head>
 <style>
     /* .swal-overlay {

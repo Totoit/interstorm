@@ -61,23 +61,23 @@ var WHEEL = (function () {
 
     // get user session from everymatrix
     jQuery(function () {
-        // c.doCall(initUserSession);
-        $.ajax({
-            url: '/api/get_bonus_code',
-            type: 'POST',
-            method: 'POST',
-            data: {
-                // user_id: userID
-            },
-            success: function (result) {
-                // inbox_result.list = JSON.parse(result);
-                console.log('inbox_result',result)
-                // setDataShowInbox(inbox_result);
-            },
-            error: function (xhr, errmsg, err) {
-                console.log(err);
-            }
-        });
+        c.doCall(initUserSession);
+        // $.ajax({
+        //     url: '/api/get_bonus_code',
+        //     type: 'POST',
+        //     method: 'POST',
+        //     data: {
+        //         // user_id: userID
+        //     },
+        //     success: function (result) {
+        //         // inbox_result.list = JSON.parse(result);
+        //         console.log('inbox_result',result)
+        //         // setDataShowInbox(inbox_result);
+        //     },
+        //     error: function (xhr, errmsg, err) {
+        //         console.log(err);
+        //     }
+        // });
     });
 
     function getAvailableSpins(newTransactions, callback) {
@@ -224,10 +224,10 @@ var WHEEL = (function () {
             userId = userData.userID;
             userEmail = userData.email;
 
-
+            console.log('login true');
             getTransactions(session, function (newTransactions) {
                 // getAvailableSpins(newTransactions, function () {
-                    showCurrentWheel(session,newTransactions);
+                    // showCurrentWheel(session,newTransactions);
                 // });
             });
         };
@@ -237,10 +237,29 @@ var WHEEL = (function () {
             userId = null;
             userEmail = null;
             gameIsAvailable = false;
+            console.log('login fales')
         };
-
+        
+        if(session_id != 'Anonymous'){
+            var parameters = {
+                'sessionID': session_id
+            };
+            console.log('param',parameters)
+            session.call("/user#loginWithCmsSessionID", [],parameters).then(
+                function (result) {
+                    // console.log('result',result)
+                    checkAuthentication(session, authCallback, noAuthCallback);
+                },
+                function (err) {
+                    // console.log('err',err)
+                    checkAuthentication(session, authCallback, noAuthCallback);
+                }
+            );
+        }else{
+            checkAuthentication(session, authCallback, noAuthCallback);
+        }
         // check authentication. With callbacks to handle result
-        checkAuthentication(session, authCallback, noAuthCallback);
+        // checkAuthentication(session, authCallback, noAuthCallback);
     }
 
     // check user session
@@ -323,21 +342,23 @@ var WHEEL = (function () {
     function getTransactions(session, callback) {
 
         // first we check when the last transaction was logged
-        $.ajax({
-            url: '/wheel/get_last_transaction',
-            type: 'POST',
-            method: 'POST',
-            data: {
-                user_id: userId
-            },
-            success: function (transaction) {
-                var transactionStartTime = (transaction.transaction_date === null) || (typeof transaction.transaction_date === 'undefined') ? '2016-09-15T00:00:00.000Z' : transaction.transaction_date;
-                getTransactionFromAPI(session, transactionStartTime);
-            },
-            error: function (xhr, errmsg, err) {
-                $('.loading').hide();
-            }
-        });
+        // $.ajax({
+        //     url: '/wheel/get_last_transaction',
+        //     type: 'POST',
+        //     method: 'POST',
+        //     data: {
+        //         user_id: userId
+        //     },
+        //     success: function (transaction) {
+        //         var transactionStartTime = (transaction.transaction_date === null) || (typeof transaction.transaction_date === 'undefined') ? '2016-09-15T00:00:00.000Z' : transaction.transaction_date;
+        //         getTransactionFromAPI(session, transactionStartTime);
+        //     },
+        //     error: function (xhr, errmsg, err) {
+        //         $('.loading').hide();
+        //     }
+        // });
+        var transactionStartTime = '2016-09-15T00:00:00.000Z';
+        getTransactionFromAPI(session, transactionStartTime);
 
         // get new transactions from everymatrix
         function getTransactionFromAPI(session, transactionStartTime) {
@@ -352,7 +373,8 @@ var WHEEL = (function () {
 
             session.call("/user#getTransactionHistory", [], parameters).then(function (result) {
                 var response = result.kwargs;
-                callback(response);
+                console.log('trrassad',response)
+                // callback(response);
                 return;
 
                 // temp stuff, need real data. Remove this when we have real data

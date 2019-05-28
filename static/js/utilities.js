@@ -88,56 +88,56 @@ window.c = (function (em) {
             console.log(err);
             console.log('RPC call failed, error = ' + err.desc);
         });
-        session.call("/user#getSessionInfo", []).then(function (result) {
-            // console.log("isAuthenticated", result.kwargs);
-            self.currency = result.kwargs.currency;
-            self.ipCountry = result.kwargs.ipCountry;
-            self.userCountry = result.kwargs.userCountry;
-            if (!result.kwargs.isAuthenticated) {
-                console.log('c')
-                // showTablogin()
-            //     calllogout(function (res) {
-            //     if (res.result) {
-            //         window.location.href = "/";
-            //         // location.reload();
-            //     }
-            // });
-            }else{
-                console.log('d')
-            }
-            // showTablogin()
-        });
+        // session.call("/user#getSessionInfo", []).then(function (result) {
+        //     // console.log("isAuthenticated", result.kwargs);
+        //     self.currency = result.kwargs.currency;
+        //     self.ipCountry = result.kwargs.ipCountry;
+        //     self.userCountry = result.kwargs.userCountry;
+        //     if (!result.kwargs.isAuthenticated) {
+        //         console.log('c')
+        //         // showTablogin()
+        //     //     calllogout(function (res) {
+        //     //     if (res.result) {
+        //     //         window.location.href = "/";
+        //     //         // location.reload();
+        //     //     }
+        //     // });
+        //     }else{
+        //         console.log('d')
+        //     }
+        //     // showTablogin()
+        // });
 
     };
     AutoBahnSingleton.prototype.checkIdentity = function (session, callback) { //Checks if the user is logged in
         session.subscribe('/sessionStateChange', function (args, kwargs, details) {
             console.log('Event is fired with data = %o', kwargs);
-            if (kwargs.code == 0){ isLogin = true;  } else { isLogin = false;}
-            if (kwargs.code > 0 && kwargs.code != 2) {
-                // alert('>0')
-                // calllogout(function (res) {
-                //     if (res.result) {
-                //         // $('#loginModal').modal({
-                //         //     show:true,
-                //         //     backdrop:'static'
-                //         //   }
-                //         // );
-                //         // $('#loginModal').on('hidden.bs.modal', function () {
-                //         // //   location.reload();
-                //         //     window.location.href = "/";
-                //         // })
-                //     }
-                // });
-            } else if (kwargs.code == 2) {
-                // alert('2')
-                // calllogout(function (res) {
-                //         if (res.result) {
-                //             // location.reload();
-                //             window.location.href = "/";
-                //         }
-                //     }
-                // );
-            }
+            // if (kwargs.code == 0){ isLogin = true;  } else { isLogin = false;}
+            // if (kwargs.code > 0 && kwargs.code != 2) {
+            //     // alert('>0')
+            //     // calllogout(function (res) {
+            //     //     if (res.result) {
+            //     //         // $('#loginModal').modal({
+            //     //         //     show:true,
+            //     //         //     backdrop:'static'
+            //     //         //   }
+            //     //         // );
+            //     //         // $('#loginModal').on('hidden.bs.modal', function () {
+            //     //         // //   location.reload();
+            //     //         //     window.location.href = "/";
+            //     //         // })
+            //     //     }
+            //     // });
+            // } else if (kwargs.code == 2) {
+            //     // alert('2')
+            //     // calllogout(function (res) {
+            //     //         if (res.result) {
+            //     //             // location.reload();
+            //     //             window.location.href = "/";
+            //     //         }
+            //     //     }
+            //     // );
+            // }
         });
         callback(session);
     };

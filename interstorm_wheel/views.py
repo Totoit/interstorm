@@ -38,6 +38,7 @@ def index(request):
     	}
 		context['time'] = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 		context['EVERYMATRIX'] = apiKey
+		context['userid'] = userid
 		return render(request, template, context)
 	else:
 		return HttpResponse("no user code or userid")
