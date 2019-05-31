@@ -120,7 +120,7 @@ class WheelAdminImageLevel(admin.ModelAdmin):
             self.search_fields = ('level','vendor')
             self.readonly_fields = ['',]
             return qs
-        return qs.filter(vendor=request.user.id)
+        return qs.filter(vendor_id=request.user.id)
 
     # def save_model(self, request, obj, form, change): 
     #     obj.vendor = User(id=request.user.id)
