@@ -84,7 +84,7 @@ class WheelImageLevel(models.Model):
     )   
 
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
-    image = models.ImageField(upload_to = 'interstorm', default = 'mediafile/interstorm/no-img.jpg', null=True, blank=True)
+    image = models.ImageField(upload_to = 'interstorm', default = 'media/interstorm/no-img.jpg', null=True, blank=True)
     level =  models.IntegerField(choices=ALL_LEVEL,blank=False)
     created_date = models.DateTimeField(default=timezone.now)
     class Meta:
@@ -92,7 +92,7 @@ class WheelImageLevel(models.Model):
 
 
     def image_tag(self):
-        return mark_safe('<img src="/mediafile/%s" width="100" height="100" />' % (self.image))
+        return mark_safe('<img src="/media/%s" width="100" height="100" />' % (self.image))
 
 class WheelLevelManage(models.Model):
 
