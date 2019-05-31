@@ -4,7 +4,8 @@ var WHEEL = (function () {
         blueWheel = null;
 
     var userId = null,
-        userEmail = null;
+        userEmail = null,
+        level=1;
 
 
     // positions for the wheel for the various winnings
@@ -101,6 +102,9 @@ var WHEEL = (function () {
             },
             success: function (result) {
                 console.log('result',result);
+                level = result['level']
+                console.log('level',level)
+                // alert('level',level)
                 // $('#circle_spin').hide();
                 // availableSpins = result.spins;
                 // console.log('dp', deposit_lv)
@@ -120,13 +124,42 @@ var WHEEL = (function () {
                 //     showGame(true)
                 // }
 
-                // if (typeof callback === 'function') {
-                //     callback();
-                // }
+                if (typeof callback === 'function') {
+                    callback();
+                }
             },
             error: function (xhr, errmsg, err) {
+                alert('l')
                 $('.loading').hide();
                 gameIsAvailable = false;
+            }
+        });
+    }
+
+    function setImageLevel(){
+        $.ajax({
+            url: '/api/get_wheel_image',
+            type: 'POST',
+            method: 'POST',
+            data: {
+                level: level,
+                vendor:vendor
+            },
+            success: function (result) {
+                // inbox_result.list = JSON.parse(result);
+                console.log('inbox_result',result)
+                // setDataShowInbox(inbox_result);
+                if ($('.wheel-reward-img').length > 0) {
+                    $('.wheel-reward-img').attr('src', result);
+                    // $('.wheel-button-img').attr('src', cdn_link + '/static/images/wheel/point-desktop_LV' + deposit_lv + '.png');
+                }
+                $('.wheel-reward-img').show();
+                // $('.wheel-button-img').show();
+                $('#wheel-game').show();
+                $('.loading').hide();
+            },
+            error: function (xhr, errmsg, err) {
+                console.log(err);
             }
         });
     }
@@ -218,6 +251,7 @@ var WHEEL = (function () {
     // wrapper for handling the user session, returned by everymatrix
     function initUserSession(session) {
         $('.loading').show();
+        
         // $('#circle_spin').show();
         userSession = session;
         // logged in
@@ -228,6 +262,8 @@ var WHEEL = (function () {
             console.log('login true');
             getTransactions(session, function (newTransactions) {
                 getAvailableSpins(newTransactions, function () {
+                    console.log('ssss',level)
+                    setImageLevel()
                     // showCurrentWheel(session,newTransactions);
                 });
             });
@@ -239,6 +275,7 @@ var WHEEL = (function () {
             userEmail = null;
             gameIsAvailable = false;
             console.log('login fales')
+            setImageLevel()
         };
         
         if(session_id != 'Anonymous'){
@@ -452,6 +489,7 @@ var WHEEL = (function () {
     // run a spin
     function run() {
         // if (isWheelRunning || availableSpins[activeWheel] < 1) {
+            console.log(isWheelRunning)
         if (isWheelRunning) {
             return;
         }
@@ -459,10 +497,36 @@ var WHEEL = (function () {
         isWheelRunning = true;
 
         var el = getWheelElement();
-        var spinFullRound = 360,
+        var spinFullRound = 360,lastRotation = 0,
             nextRotation = spinFullRound;
+            // var test1 = new TweenMax();
+            // var test2 = new TweenMax();
 
-        TweenMax.to(el, 2, { rotation: nextRotation, ease: Power1.easeIn, onComplete: runLoop });
+            var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
+            })})
+            
+            var test2 = TweenMax.to(el, 2, { rotation: nextRotation, ease: Power1.easeIn,onUpdate: (
+            function(){    
+              currentRotation = Math.round(this.target._gsTransform.rotation);    //_gsTransform: current position of the wheel
+              tolerance = currentRotation - lastRotation;
+              
+                // console.log("lastRot: "+lastRotation);
+                // console.log("currentRot: "+currentRotation);
+                // console.log("tol: "+tolerance);
+                // console.log(test1.progress());
+                // console.log("spinwheelprogress: "+test2.progress());
+                // console.log('target',this.target._gsTransform.rotation)
+              
+              if(Math.round(currentRotation) % (360/7) <= tolerance){
+                if(test1.progress() > .2 || test1.progress() === 0){
+                  test1.play(0);
+                }
+              }
+              lastRotation = currentRotation;
+            }
+            ), onComplete: runLoop });
+        // TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut})
 
         var spinResult = null;
         // play the spin on the server
@@ -514,12 +578,39 @@ var WHEEL = (function () {
 
                     // give it a few more spins and calc the final position
                     nextRotation += spinFullRound * rotations + winningAngle;
-
-
-                    var rotationTween = TweenMax.to(el, 5, { rotation: nextRotation, ease: Linear.easeNone });
+                    console.log('nextRotation',nextRotation)
+                    console.log('winningAngle',winningAngle)
+                    var test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                        TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
+                    })})
+                    var rotationTween = TweenMax.to(el, 5, { rotation: nextRotation, ease: Linear.easeNone,onUpdate: (
+                        function(){    
+                          currentRotation = Math.round(this.target._gsTransform.rotation);    //_gsTransform: current position of the wheel
+                          tolerance = currentRotation - lastRotation;
+                          
+                            // console.log("lastRot: "+lastRotation);
+                            // console.log("currentRot: "+currentRotation);
+                            // console.log("tol: "+tolerance);
+                            // console.log(test1.progress());
+                            // console.log("spinwheelprogress: "+rotationTween.progress());
+                            // console.log('target',this.target._gsTransform.rotation)
+                            // console.log((Math.round(currentRotation) % (360/7) <= tolerance))
+                          if(Math.round(currentRotation) % (360/7) <= tolerance){
+                            if(test1.progress() > .2 || test1.progress() === 0){
+                                console.log('tess')
+                              test1.play(0);
+                            }
+                          }
+                          lastRotation = currentRotation;
+                        }
+                        ) });
 
                     // slow down to stop at final position
                     TweenLite.delayedCall(2.5, function () {
+                        // console.log('nextRotation2',nextRotation)
+                        test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                            TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
+                        })})
                         TweenLite.to(rotationTween, 6, {
                             progress: 1, ease: Power1.easeOut, onComplete: function () {
                                 onComplete(spinResult, winningAngle);
@@ -542,6 +633,7 @@ var WHEEL = (function () {
             } else {
                 // rotate the wheel while we wait for the server response
                 nextRotation += spinFullRound;
+                console.log('nextRotation',nextRotation)
 
                 TweenMax.to(el, 0.5, {
                     rotation: nextRotation, ease: Linear.easeNone, onComplete: function () {

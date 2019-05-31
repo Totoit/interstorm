@@ -1,6 +1,7 @@
 from django.conf import settings
 import random
-from interstorm_wheel.models import WheelAccess, WheelAccessLog, WheelGames, WheelPercentage, WheelBonusCode
+from interstorm_wheel.models import WheelAccess, WheelAccessLog, WheelGames, WheelPercentage, WheelBonusCode,WheelTransaction,WheelLevelManage
+from django.db.models import Sum
 from django.utils import timezone
 from django.utils.timezone import localtime, now
 from interstorm_vendor.models import InterStormUserVendor
@@ -20,7 +21,7 @@ class Game:
 		self.win_bonus = ''
 		self.bonus_machine = ''
 		self.vendor = ''
-
+		self.level = 1
 		self.user_access_record = GameAccess(user_id,vendor, ip)
 		
 	def play(self):
@@ -246,46 +247,6 @@ class GameBlueWheel(GameWheel):
 
 		self.bonus = win
 
-
-# Gold game wheel
-class GameGoldWheel(GameWheel):
-	def __init__(self, user_id):
-		GameWheel.__init__(self, user_id)
-
-		# possible winning. The value is the type of bonus code given when winning
-		self.winnings = {
-			'50': '50_bonus_code',
-			'500': '500_bonus_code',
-			'5000': '5000_bonus_code',
-			'trip': '',
-		}
-
-	def play(self):
-		number_of_spins = self.get_total_wheel_spins('gold')
-
-		# the amount of spins required for a 'full round'. Meaning all wins have been triggered
-		full_round_spins = 25000
-
-		# calc the number of times we have completed a full round (up to winning a trip)
-		reached_max_times = number_of_spins // full_round_spins
-
-		# remove the number of times we completed the round from the number of spins
-		# that way we only use spins from the current round to determine the next win
-		spin_calc = number_of_spins - (full_round_spins * reached_max_times);
-
-		# calc the winning based on calc. The number will be zero when a round is completed
-		# make sure the first spin doesn't trigger a trip win
-		if number_of_spins > 0 and spin_calc == 0:
-			win = 'trip'
-		elif spin_calc == 20000:
-			win = '5000'
-		elif spin_calc == 10000:
-			win = '500'
-		else:
-			win = '50'
-
-		self.win = win
-
 # handle bonus codes
 class GameBonusCode:
 	def __init__(self, user_id, bonus_code, level_id):
@@ -375,6 +336,41 @@ class GameAccess:
 
 		return user_access_record;
 
+	def get_level(self):
+		level_1 = 0
+		level_2 = 0
+		level_3 = 0
+		# sumary monney
+		totalTransactions = 0
+		deposit_euro = 0
+		totalTransactionsQuery = WheelTransaction.objects.filter(user_id=self.user_id,vendor_id=self.vendor).aggregate(Sum('amount'))
+		totalTransactions = totalTransactionsQuery.get('amount__sum')
+		
+		totalTransactionsCount = WheelTransaction.objects.filter(user_id=self.user_id,vendor_id=self.vendor).count()
+		
+		#---------------- change
+		
+		# vendor_id = '3'
+		level1 = WheelLevelManage.objects.filter(level = 1,vendor_id = self.vendor)
+		level2 = WheelLevelManage.objects.filter(level = 2,vendor_id = self.vendor)
+		level3 = WheelLevelManage.objects.filter(level = 3,vendor_id = self.vendor)
+		
+		# print(level1[0].deposit,leve2[0].deposit,leve3[0].deposit)
+		
+		#test Data
+		
+		deposit_euro = totalTransactions
+		# find level
+		deposit_level = 1
+		
+	
+		if deposit_euro < level1[0].deposit:
+			deposit_level  = 1
+		elif deposit_euro >= level1[0].deposit and deposit_euro < level2[0].deposit:
+			deposit_level = 2
+		else:
+			deposit_level = 3
+		return deposit_level
 
 	def add_spins(self, game_type, spins, reason):
 		level_1 = 0;
@@ -422,20 +418,20 @@ class GameAccess:
 	# 	# print(self.access_record.level_3)
 	# 	return number_of_spins_left > 0
 
-	# def get_spin_count(self):
-	# 	data = {}
-	# 	data['level_1'] = self.access_record.level_1
-	# 	data['level_2'] = self.access_record.level_2
-	# 	data['level_3'] = self.access_record.level_3
-	# 	return data
+	def get_spin_count(self):
+		data = {}
+		data['level_1'] = self.access_record.level_1
+		data['level_2'] = self.access_record.level_2
+		data['level_3'] = self.access_record.level_3
+		return data
 
-	# def use_spin(self, game_type):
-	# 	if game_type == '1':
-	# 		# self.access_record.blue_spins -= 1
-	# 		self.access_record.level_1 -= 1
-	# 	elif game_type == '2':
-	# 		self.access_record.level_2 -= 1
-	# 	elif game_type == '3':
-	# 			self.access_record.level_3 -= 1
+	def use_spin(self, game_type):
+		if game_type == '1':
+			# self.access_record.blue_spins -= 1
+			self.access_record.level_1 -= 1
+		elif game_type == '2':
+			self.access_record.level_2 -= 1
+		elif game_type == '3':
+				self.access_record.level_3 -= 1
 			
-	# 	self.access_record.save()
+		self.access_record.save()

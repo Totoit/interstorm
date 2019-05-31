@@ -111,28 +111,31 @@ def get_spins(request):
 			ip = get_client_ip(request)
 			game_access = GameAccess(user_id, get_client_ip(request),vendor)
 			show_game = False
+			level = 1
 
 			# give free spins based on transactions, if necessary
 			handle_transactions(game_access, transactions)
-
-			# check_spin = game_access.get_spin_count();
-			# if game_type == '3':
-			# 	if check_spin['level_1']  >  0 :
-			# 		for i in range(check_spin['level_1']):
-			# 			game_access.add_spins('3', 1, 'plus from level 1 ')
-			# 			game_access.use_spin('1')
-			# 	if check_spin['level_2']  >  0 :
-			# 		for i in range(check_spin['level_2']):
-			# 			game_access.add_spins('3', 1, 'plus from level 2 ')
-			# 			game_access.use_spin('2')
-			# elif game_type == '2':
-			# 	if check_spin['level_1']  >  0 :
-			# 		for i in range(check_spin['level_1']):
-			# 			game_access.add_spins('2', 1, 'plus from level 1 ')
-			# 			game_access.use_spin('1')
+			level = game_access.get_level()
+			check_spin = game_access.get_spin_count();
+			if level == '3':
+				if check_spin['level_1']  >  0 :
+					for i in range(check_spin['level_1']):
+						game_access.add_spins('3', 1, 'plus from level 1 ')
+						game_access.use_spin('1')
+				if check_spin['level_2']  >  0 :
+					for i in range(check_spin['level_2']):
+						game_access.add_spins('3', 1, 'plus from level 2 ')
+						game_access.use_spin('2')
+			elif level == '2':
+				if check_spin['level_1']  >  0 :
+					for i in range(check_spin['level_1']):
+						game_access.add_spins('2', 1, 'plus from level 1 ')
+						game_access.use_spin('1')
 			response = {
-				# 'spins': game_access.get_spin_count(),
-				'show_game': show_game
+				'spins': game_access.get_spin_count(),
+				'level':level,
+				'show_game': show_game,
+
 			}
 
 			#'totalTransactions': totalTransactions.get('amount__sum'),

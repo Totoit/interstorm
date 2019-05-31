@@ -38,9 +38,18 @@
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
-    
+
+    <!-- <link rel="stylesheet" type="text/css" href="{% static  'libs/loading/jquery.loading.min.css' %}"/>
+    <script src="{% static 'libs/loading/jquery.loading.min.js' %}"></script> -->
 </head>
 <style>
+    body { 
+        background: url({% static 'images/wheel/background.jpg' %}) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
     /* .swal-overlay {
         position: fixed;
         top: 0;
@@ -80,22 +89,165 @@
     .wheel-button{
         position: absolute;
     }
+    .loading {
+        display: none;
+        position: fixed;
+        z-index: 9997;
+        height: 2em;
+        width: 2em;
+        overflow: show;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0; }
+
+        /* Transparent Overlay */
+        .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        z-index: 9998;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+        /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0; }
+
+        .loading:not(:required):after {
+        content: '';
+        display: block;
+        z-index: 9999;
+        position: absolute;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        margin-top: -0.5em;
+        -webkit-animation: spinner 1500ms infinite linear;
+        -moz-animation: spinner 1500ms infinite linear;
+        -ms-animation: spinner 1500ms infinite linear;
+        -o-animation: spinner 1500ms infinite linear;
+        animation: spinner 1500ms infinite linear;
+        border-radius: 0.5em;
+        -webkit-box-shadow: #ffc107 1.5em 0 0 0, #ffc107 1.1em 1.1em 0 0, #ffc107 0 1.5em 0 0, #ffc107 -1.1em 1.1em 0 0, #ffc107 -1.5em 0 0 0, #ffc107 -1.1em -1.1em 0 0, #ffc107 0 -1.5em 0 0, #ffc107 1.1em -1.1em 0 0;
+        box-shadow: #ffc107 1.5em 0 0 0, #ffc107 1.1em 1.1em 0 0, #ffc107 0 1.5em 0 0, #ffc107 -1.1em 1.1em 0 0, #ffc107 -1.5em 0 0 0, #ffc107 -1.1em -1.1em 0 0, #ffc107 0 -1.5em 0 0, #ffc107 1.1em -1.1em 0 0; 
+    }
+    .sWheel-marker{
+        border-spacing: 90px;
+        width: 16%;
+        height: 14%;
+        position: absolute;
+        left: 50%;
+        top: -18%;
+        margin-top: 15%;
+        margin-left: -8%;
+        -webkit-transition: 0.2 rotate linear;
+        transition: 0.2 rotate linear;
+        z-index: 1;
+        display: block;
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transform-origin: 50% 35%;
+        transform-origin: 50% 35%;
+    }
+    .sWheel-marker>svg{
+        height: 100%;
+    }
+
+    /* Animation */
+    @-webkit-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg); 
+            }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg); 
+            } 
+    }
+    @-moz-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg); 
+            }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg); 
+            } 
+    }
+    @-o-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg); 
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg); 
+            } 
+    }
+    @keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg); 
+            }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg); 
+            } 
+    }
 </style>
 <!-- Custom styles for this template-->
 <body>
     <div class="container full-width p-0">
+        <div class="loading">Loading&#8230;</div>
         <div class="row p-0 m-0">
             <div class="col-md-12 p-0">
                 <div class="content-wrapper">
                     {% block content %}
-                        <div id="wheel-game" align="center">
+                        <div id="wheel-game" align="center" style="display:none">
                             <div class="clearfix">
                                 <div class="wheel">
                                     <div class="wheel-inner wheel-blue ">
-                                        <img class="wheel-reward-img" src="{% static 'images/wheel/wheel-desktop_LV1.png'%}" id="wheel-blue" />
                                         <a id="wheel-blue-spin-button">
-                                            <img src="{% static 'images/wheel/point-desktop_LV1.png' %}" class="wheel-button wheel-button-img" />
+                                        <img class="wheel-reward-img" src="{% static 'images/wheel/wheel-desktop_LV1.png'%}" id="wheel-blue" />
+                                            <!-- <img src="{% static 'images/wheel/point-desktop_LV1.png' %}" class="wheel-button wheel-button-img" /> -->
                                         </a>
+                                    </div>
+                                    <div class="sWheel-marker" style="transform: rotate(0deg);">
+                                        <img src="{% static 'images/wheel/sl_pin.png' %}">
                                     </div>
                                 </div>
                             </div>
