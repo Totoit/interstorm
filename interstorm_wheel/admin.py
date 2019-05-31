@@ -44,11 +44,11 @@ class WheelAdmin(admin.ModelAdmin):
     list_display = ('rewards','level', 'percentage')
     ordering = ('-percentage','level')
 
-    def has_add_permission(self, request, obj=None):
-        return False
+    # def has_add_permission(self, request, obj=None):
+    #     return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
     def get_readonly_fields(self, request, obj=None):
         return ['percent_id','rewards','level']
@@ -76,11 +76,11 @@ class WheelAdminBonus(admin.ModelAdmin):
     fields = ('winning_key','level','bonus_key', 'bonus_code')
     list_display = ('winning_key','level','bonus_key', 'bonus_code')
 
-    def has_add_permission(self, request, obj=None):
-        return False
+    # def has_add_permission(self, request, obj=None):
+    #     return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
     def get_readonly_fields(self, request, obj=None):
         return ['winning_key','level','bonus_key']
