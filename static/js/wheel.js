@@ -575,6 +575,7 @@ var WHEEL = (function () {
                     console.log('possibleStopPositions',possibleStopPositions)
                     var rotations = 10,
                         winningAngle = possibleStopPositions[Math.floor(Math.random() * possibleStopPositions.length)];
+                        // winningAngle = 343
 
                     // give it a few more spins and calc the final position
                     nextRotation += spinFullRound * rotations + winningAngle;
@@ -609,7 +610,7 @@ var WHEEL = (function () {
                     TweenLite.delayedCall(2.5, function () {
                         // console.log('nextRotation2',nextRotation)
                         test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                            TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
+                            TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
                         })})
                         TweenLite.to(rotationTween, 6, {
                             progress: 1, ease: Power1.easeOut, onComplete: function () {
