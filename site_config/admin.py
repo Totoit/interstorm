@@ -7,11 +7,11 @@ class SiteConfig(admin.ModelAdmin):
     fields = ('url','domain')
     list_display = ('url','domain')
 
-    def has_add_permission(self, request, obj=None):
-        return False
+    # def has_add_permission(self, request, obj=None):
+    #     return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     return False
 
     def get_queryset(self, request):
         qs = super(SiteConfig, self).get_queryset(request)
