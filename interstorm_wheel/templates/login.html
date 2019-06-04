@@ -1,0 +1,156 @@
+{% load i18n %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% if EVERYMATRIX %}
+    <script type="text/javascript">
+        window._EM = {
+            url: '{{ EVERYMATRIX.url|escapejs }}',
+            domain: '{{ EVERYMATRIX.domain|escapejs }}',
+        }
+        
+    </script>
+    {% endif %}
+    {% if vendor %}
+        <script>
+            var vendor = '{{vendor}}';
+        </script>
+    {% else %}
+        <script>
+            var session_id = 'Anonymous'
+        </script>
+    {% endif %}
+    <script >
+        var isLogin = false;
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script>
+    <script src="{% static 'js/login.js' %}?t={{time}}" type=" text/javascript"> </script>
+    <script src="{% static 'js/utilities.js' %}?t={{time}}"></script>
+    <script type="text/javascript" src="{% static 'js/sweetalert/sweetalert.min.js' %}"></script>
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sweetalert/sweetalert.css' %}" rel="stylesheet" />
+
+
+</head>
+<!-- Custom styles for this template-->
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <form class="form-inline my-2 my-lg-0" id="loginFrm">
+                <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" id="username">
+                <input class="form-control mr-sm-2" type="password" placeholder="Password" name="password" id="password">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="login" >Login</button>
+            </form>
+            <div class="welcome" style="display:none">
+                <span class="txtWelcome"></span>
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="button" id="logout" onclick="logMeOut()" >Logout</button>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="container full-width p-0">
+        <div class="row p-0 m-0">
+            <div class="col-md-12 p-0">
+                <div class="content-wrapper"> -->
+                    {% block content %}
+                    <iframe
+                        name="iframeBetting"
+                        id="iframeBetting"
+                        src=""
+                        width="100%"
+                        height="945"
+                        frameborder="0"
+                        scrolling="no" allowTransparency="true"
+                        style="width:100%"
+                    ></iframe>
+                    {% endblock %}
+                <!-- </div>
+            </div>
+        </div>
+    </div> -->
+
+<script>
+    function setFrameSport(cmsSessionID){
+        if ( $('#iframeLiveBetting').length > 0 || $('#iframeBetting').length > 0  ){
+
+                if ( $('#iframeLiveBetting').length > 0) {
+                    $('#iframeLiveBetting').prop('src', '/game?usercode='+vendor+'&userid='+cmsSessionID);
+                } else if ( $('#iframeBetting').length > 0) {   
+                    $('#iframeBetting').prop('src', '/game?usercode='+vendor+'&userid='+cmsSessionID);
+                }
+                setTimeout(function (e) {
+                    resizeIframe();
+                }, 1000);
+        }
+        }
+        function resizeIframe() {
+            console.log("==resizeIframe==");
+            if (typeof $("iframe").contents().find('html').height() != 'undefined'){
+                // console.log('ssss');
+                // console.log($("iframe").contents().find('html').height())
+                if ($("iframe").contents().find('html').height() > 100) {
+                    console.log("==iframeBetting resizeIframe==");
+                    $('#iframeBetting').height(  $("iframe").contents().find('html').height()  + 'px') ;
+                } else {
+                    console.log("==iframeBetting resizeIframe2==");
+                    setTimeout(function (e) {
+                        resizeIframe();
+                    }, 50);
+                }
+            }
+        }
+        
+        $(function () {
+            // if ( getCookie("pwr_ss") == null || getCookie("pwr_ss") == ''){
+                setFrameSport('Anonymous');
+                setTimeout(function (e) {
+                    resizeIframe();
+                }, 1000);
+            // } else {
+            //     setTimeout(function (e) {
+            //         if (!isLogin){
+            //         setCookie('pwr_ss','',36500);
+            //         setFrameSport('Anonymous');
+            //         }
+            //     }, 5000);
+            // }
+        
+            $(window).resize(function() {
+                $("#iframeBetting").css("width", '100%');
+            });
+        
+        
+        });
+function logMeOut() {
+    // gettext = window.gettext || function (s) { return s; };
+    // $('.loading').show();
+    c.doCall(logUserOut);
+}
+
+function logUserOut(session) {
+    try {
+        session.call("/user#logout", []).then(
+            function (result) {
+                c.conn.close();
+                window.location.reload()
+            }, function (err) {
+                $('.loading').hide();
+            });
+    } catch (ex) {
+        //window.location = redirect;
+    }
+}
+</script>
+</body>
+
+</html>

@@ -502,11 +502,9 @@ var WHEEL = (function () {
             // var test1 = new TweenMax();
             // var test2 = new TweenMax();
 
-            var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
-            })})
             
-            var test2 = TweenMax.to(el, 2, { rotation: nextRotation, ease: Power1.easeIn,onUpdate: (
+            
+            TweenMax.to(el, 2, { rotation: nextRotation, ease: Power1.easeIn,onUpdate: (
             function(){    
               currentRotation = Math.round(this.target._gsTransform.rotation);    //_gsTransform: current position of the wheel
               tolerance = currentRotation - lastRotation;
@@ -514,15 +512,25 @@ var WHEEL = (function () {
                 // console.log("lastRot: "+lastRotation);
                 // console.log("currentRot: "+currentRotation);
                 // console.log("tol: "+tolerance);
-                // console.log(test1.progress());
+                // console.log('progress = ',test1.progress());
                 // console.log("spinwheelprogress: "+test2.progress());
                 // console.log('target',this.target._gsTransform.rotation)
-              
-              if(Math.round(currentRotation) % (360/7) <= tolerance){
-                if(test1.progress() > .2 || test1.progress() === 0){
-                  test1.play(0);
-                }
-              }
+              var tmp_pot = [10,65,120,175,230,285,340]
+            //   if(Math.round(currentRotation) % (360/7) <= tolerance){
+            //       console.log('Ohhhhhhhh')
+            //     var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+            //         // TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+            //     })})
+            //     // if(test1.progress() > .2 || test1.progress() === 0){
+            //     //   test1.play(0);
+            //     // }
+            //   }
+            if(tmp_pot.includes(Math.round(currentRotation))){
+                // console.log('Osllllllllll')
+                var test1 = TweenMax.to($('.sWheel-marker'), 0.5, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                        TweenMax.to($('.sWheel-marker'), .1, {rotation: 0, ease:Power4.easeOut})
+                    })})
+            }
               lastRotation = currentRotation;
             }
             ), onComplete: runLoop });
@@ -596,10 +604,12 @@ var WHEEL = (function () {
                             // console.log("spinwheelprogress: "+rotationTween.progress());
                             // console.log('target',this.target._gsTransform.rotation)
                             // console.log((Math.round(currentRotation) % (360/7) <= tolerance))
+                            var tmp_pot = [10,65,120,175,230,285,340]
                           if(Math.round(currentRotation) % (360/7) <= tolerance){
-                            if(test1.progress() > .2 || test1.progress() === 0){
-                                console.log('tess')
-                              test1.play(0);
+                            // if(tmp_pot.filter(n => n>= tolerance)){
+                                if(test1.progress() > .25 || test1.progress() === 0){
+                                    // console.log(test1.progress())
+                                test1.play(0);
                             }
                           }
                           lastRotation = currentRotation;
@@ -607,16 +617,47 @@ var WHEEL = (function () {
                         ) });
 
                     // slow down to stop at final position
+                    // test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                    //     TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+                    // })})
                     TweenLite.delayedCall(2.5, function () {
                         // console.log('nextRotation2',nextRotation)
-                        test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                            TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
-                        })})
+                        currentRotation = Math.round($('.wheel-reward-img')[0]._gsTransform.rotation);
+                        console.log('currentRotation',currentRotation%360)
+                        test1 = TweenMax.to($('.sWheel-marker'), .2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                                                TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+                                            })})
                         TweenLite.to(rotationTween, 6, {
-                            progress: 1, ease: Power1.easeOut, onComplete: function () {
+                            progress: 1, ease: Power1.easeOut,onUpdate: (
+                                function(){
+                                //   currentRotation = Math.round($('.wheel-reward-img')[0]._gsTransform.rotation);    //_gsTransform: current position of the wheel
+                                //   tolerance = currentRotation - lastRotation;
+                                //   var tmp_pot = [10,65,120,175,230,285,340]
+                                // //   console.log('currentRotation',lastRotation%360)
+                                // //   tmp_pot.filter(n => n>=(lastRotation%360))
+                                //   if(tmp_pot.includes(lastRotation%360)){
+                                //         // console.log(test1.progress())
+                                //         // if(test1.progress() > .25 || test1.progress() === 0){
+                                //             // test1.play(0);
+                                //             test1 = TweenMax.to($('.sWheel-marker'), .2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                                //                     TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+                                //                 })})
+                                //             test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})    
+                                //         // }
+                                //         // var test1 = TweenMax.to($('.sWheel-marker'), 0.2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                                //         //         TweenMax.to($('.sWheel-marker'), .1, {rotation: 0, ease:Power4.easeOut})
+                                //         //     })})
+                                //     }
+                                }
+                                ), onComplete: function () {
                                 onComplete(spinResult, winningAngle);
                             }
                         });
+                        // TweenLite.to(test1, 6, {
+                        //     progress: 1, ease: Power1.easeOut, onComplete: function () {
+                        //         // onComplete(spinResult, winningAngle);
+                        //     }
+                        // });
                     });
 
                 } else {
@@ -1130,6 +1171,7 @@ jQuery(function () {
 
     $('#wheel-game').css('height', fixHeight);
     $('.wheel-inner.wheel-blue').css('height', fixHeight);
+    $('.sWheel-marker > img').css('height', fixHeight/5);
     $('#wheel-blue').css('height', paddingHeight);
     $('#wheel-blue').css('margin-top', paddingTop);
     $('.wheel-button').css('width', paddingHeight);
@@ -1230,7 +1272,8 @@ jQuery(function () {
         halfPaddingHeight = paddingHeight / 2;
 
         $('#wheel-game').css('height', fixHeight);
-        $('.wheel-inner.wheel-blue').css('height', fixHeight);
+        $('.sWheel-marker > img').css('height', fixHeight);
+        $('.wheel-inner.wheel-blue').css('height', fixHeight/5);
         $('#wheel-blue').css('height', paddingHeight);
         $('#wheel-blue').css('margin-top', paddingTop);
         $('.wheel-button').css('width', paddingHeight);

@@ -3,7 +3,8 @@ from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt
 from . import views
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.login),
+    url(r'^game', views.index),
     url((r'^api/'),include([
         url(r'^spin$', csrf_exempt(views.spin), name='spin'),
         url(r'^get_spins$', views.get_spins, name='get_spins'),
