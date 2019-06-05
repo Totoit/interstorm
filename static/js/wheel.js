@@ -129,7 +129,7 @@ var WHEEL = (function () {
                 }
             },
             error: function (xhr, errmsg, err) {
-                alert('l')
+                // alert('l')
                 $('.loading').hide();
                 gameIsAvailable = false;
             }
