@@ -298,7 +298,7 @@ def get_bonus_code(request):
 		else:
 			return HttpResponse("USER ONLY POST")
 
-# @csrf_exempt
+@csrf_exempt
 def get_wheel_image(request):
 	if(request.method == 'POST'):
 		level = 1
