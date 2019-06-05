@@ -484,7 +484,8 @@ var WHEEL = (function () {
     var bonusPrize = '',
         winBonusCode = '',
         winnings = '',
-        freeSpinsOnMachine = '';
+        freeSpinsOnMachine = '',indicator = '',
+        spinWheel = '';
 
     // run a spin
     function run() {
@@ -495,12 +496,87 @@ var WHEEL = (function () {
         }
         reset();
         isWheelRunning = true;
-
+        
+        
         var el = getWheelElement();
-        var spinFullRound = 360,lastRotation = 0,
-            nextRotation = spinFullRound;
+        var spinFullRound = 720,lastRotation = 0,
+            nextRotation = spinFullRound,wheel = $(".wheel-blue"),
+            active = $(".sWheel-marker");
+                console.log(typeof indicator);
+                var temp_arr = [];
             // var test1 = new TweenMax();
             // var test2 = new TweenMax();
+            // if(typeof spinWheel === 'string'){
+            //      indicator = new TimelineMax();
+            //      spinWheel = new TimelineMax();
+            //     console.log(typeof indicator);
+            //     indicator.to(active, .13, {rotation: -10, transformOrigin:"50% 50%", ease:Power1.easeOut})
+            //         .to(active, .13, {rotation: 0, ease:Power4.easeOut})
+            //         .add("end");
+                
+            // //  Luckywheel animation
+            //     spinWheel.to(wheel, 5, {rotation: spinFullRound, transformOrigin:"50% 50%", ease:Power4.easeOut, onUpdate: (
+            //     function(){    
+            //     currentRotation = Math.round(this.target[0]._gsTransform.rotation);    //_gsTransform: current position of the wheel
+            //     tolerance = currentRotation - lastRotation;
+                
+            //         // console.log("lastRot: "+lastRotation);
+            //         // console.log("currentRot: "+currentRotation);
+            //         // console.log("tol: "+tolerance);
+            //         // console.log("modRound",(currentRotation%360))
+            //         // console.log(indicator.progress());
+            //         // console.log("spinwheelprogress: "+spinWheel.progress());
+            //         var tmp_pot = [10,65,120,175,230,285,340]
+            //         // Math.round(currentRotation) % (360/7) <= tolerance
+            //     // if(tmp_pot.filter(n => n>= tolerance) ){
+            //         var ss = Math.round(currentRotation/360);
+            //         if(!temp_arr.includes(ss)){
+            //             // temp_arr.push(ss);
+            //             temp_arr[ss] = [];
+            //         }
+            //         if(currentRotation > 15 || (currentRotation%360) > 15){
+            //             // console.log('a ',Math.round(currentRotation) % (330/6),' <=  ',tolerance)
+            //             // console.log('s ',Math.round(currentRotation) % (55),' <=  ',tolerance)
+            //             if(Math.round(currentRotation) % (55) <= tolerance){    
+            //                 // for(var i = 0;i<tmp_pot.length;i++){
+            //                 //     if(currentRotation>tmp_pot[i]){
+                                    
+            //                 //         if(!temp_arr[ss].includes(tmp_pot[i])){
+            //                 //             temp_arr[ss].push(tmp_pot[i])
+            //                 //             console.log(indicator.progress());
+            //                 //         // console.log(tmp_pot[i]);
+            //                 //             // indicator.play(0);
+                                        
+            //                 //             // temp_arr[ss][i] = temp_arr[i]
+            //                 //             // console.log(temp_arr)
+            //                 //             // console.log("lastRot: "+lastRotation);
+            //                 //         }
+            //                 //     }
+            //                 // }
+            //                 // var test = tmp_pot.filter((n) => {return currentRotation>n})
+            //                 // if(temp_arr[ss].includes()){
+
+            //                 // }
+                            
+            //                 // console.log('tolerance',tolerance)
+            //                 // console.log(indicator.progress());
+            //                 if(indicator.progress() > .2 || indicator.progress() === 0){
+            //                 indicator.play(0);
+            //                 }
+            //             }
+            //         }else{
+            //             console.log('ss',currentRotation)
+            //         }
+                
+            //     lastRotation = currentRotation;
+            //     }
+            //     ),onComplete:(function(){isWheelRunning = false;lastRotation=0})});
+            //     spinWheel.add("end");
+            // }else{
+            //     indicator.timeScale(0.2).seek(0.5);
+            //     spinWheel.timeScale(0.2).seek(0.5);
+            // }
+        
 
             
             
@@ -1272,8 +1348,8 @@ jQuery(function () {
         halfPaddingHeight = paddingHeight / 2;
 
         $('#wheel-game').css('height', fixHeight);
-        $('.sWheel-marker > img').css('height', fixHeight);
-        $('.wheel-inner.wheel-blue').css('height', fixHeight/5);
+        $('.wheel-inner.wheel-blue').css('height', fixHeight);
+        $('.sWheel-marker > img').css('height', fixHeight/5);
         $('#wheel-blue').css('height', paddingHeight);
         $('#wheel-blue').css('margin-top', paddingTop);
         $('.wheel-button').css('width', paddingHeight);
