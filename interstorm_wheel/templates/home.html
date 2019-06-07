@@ -37,11 +37,15 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="{% static 'libs/autobahn/autobahn.min.js' %}"></script>
     <script src="{% static 'js/utilities.js' %}?t={{time}}"></script>
+    <script type="text/javascript" src="{% static 'js/sweetalert/sweetalert.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+    
     <!-- Bootstrap core CSS-->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/wheel.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sweetalert/sweetalert.css' %}" rel="stylesheet" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+   
 
     <!-- <link rel="stylesheet" type="text/css" href="{% static  'libs/loading/jquery.loading.min.css' %}"/>
     <script src="{% static 'libs/loading/jquery.loading.min.js' %}"></script> -->

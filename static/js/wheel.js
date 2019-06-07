@@ -93,7 +93,7 @@ var WHEEL = (function () {
                 console.log('level',level)
                 // alert('level',level)
                 // $('#circle_spin').hide();
-                // availableSpins = result.spins;
+                availableSpins = result.spins;
                 // console.log('dp', deposit_lv)
                 // console.log('availableSpins', availableSpins)
                 // showSpinsText();
@@ -101,9 +101,9 @@ var WHEEL = (function () {
                 // console.log('gameIsAvailable', gameIsAvailable)
                 // if (gameIsAvailable) {
                 //     if (availableSpins['level_' + deposit_lv] > 1) {
-                //         $('.txt-available').find('span').html(gettext('You have ') + availableSpins['level_' + deposit_lv] + ' ' + gettext('spins'))
+                //         $('.txt-available').find('span').html(('You have ') + availableSpins['level_' + deposit_lv] + ' ' + ('spins'))
                 //     } else {
-                //         $('.txt-available').find('span').html(gettext('You have ') + availableSpins['level_' + deposit_lv] + ' ' + gettext('spin'))
+                //         $('.txt-available').find('span').html(('You have ') + availableSpins['level_' + deposit_lv] + ' ' + ('spin'))
                 //     }
                 // }
 
@@ -321,10 +321,10 @@ var WHEEL = (function () {
         if (bonusCode === '') {
             hideInfoBox();
             swal({
-                title: gettext("Warning!"),
-                text: gettext("Don't have bonus code. Could you contact PWR.bet"),
+                title: ("Warning!"),
+                text: ("Don't have bonus code. Could you contact PWR.bet"),
                 icon: "warning",
-                button: gettext("OK"),
+                button: ("OK"),
             });
             return;
         }
@@ -343,20 +343,20 @@ var WHEEL = (function () {
                 hideInfoBox();
                 console.log(err)
                 swal({
-                    title: gettext("Warning!"),
-                    text: err.kwargs.desc + ' ' + gettext('Could you contact PWR.bet'),
+                    title: ("Warning!"),
+                    text: err.kwargs.desc + ' ' + ('Could you contact PWR.bet'),
                     icon: "warning",
-                    button: gettext("OK"),
+                    button: ("OK"),
                 });
             });
         } catch (e) {
             $('.waiting-api').css('display', 'none');
             hideInfoBox();
             swal({
-                title: gettext("Warning!"),
-                text: gettext('Error giving bonus code') + e + ' ' + gettext('Could you contact PWR.bet'),
+                title: ("Warning!"),
+                text: ('Error giving bonus code') + e + ' ' + ('Could you contact PWR.bet'),
                 icon: "warning",
-                button: gettext("OK"),
+                button: ("OK"),
             });
             // console.log('error giving bonus code', e);
         }
@@ -726,10 +726,10 @@ var WHEEL = (function () {
                 } else {
                     // alert('An error occurred. Game cancelled.');
                     swal({
-                        title: gettext("Error!"),
-                        text: gettext('An error occurred. Game cancelled.'),
+                        title: ("Error!"),
+                        text: ('An error occurred. Game cancelled.'),
                         icon: "warning",
-                        button: gettext("OK"),
+                        button: ("OK"),
                     });
                     reset();
                     isWheelRunning = false;
@@ -1029,9 +1029,9 @@ var WHEEL = (function () {
         //     $('#reward-box').addClass('show');
         //     $('#reward-box img').css('display', 'inline');
         //     if (reward == 'jackpot') {
-        //         $('.text-reward').html(gettext('Congratulations to ' + reward +  '<br> Please contact to pwr for claim jackpot <br> You can check the bonus in the inbox.'));
+        //         $('.text-reward').html(('Congratulations to ' + reward +  '<br> Please contact to pwr for claim jackpot <br> You can check the bonus in the inbox.'));
         //     } else {
-        //         $('.text-reward').html(gettext('Congratulations to ' + reward +  '<br> You can check the bonus in the inbox.'));
+        //         $('.text-reward').html(('Congratulations to ' + reward +  '<br> You can check the bonus in the inbox.'));
         //     }
         // }
 
