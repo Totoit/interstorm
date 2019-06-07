@@ -112,7 +112,7 @@ window.c = (function (em) {
     AutoBahnSingleton.prototype.checkIdentity = function (session, callback) { //Checks if the user is logged in
         session.subscribe('/sessionStateChange', function (args, kwargs, details) {
             console.log('Event is fired with data = %o', kwargs);
-            // if (kwargs.code == 0){ isLogin = true;  } else { isLogin = false;}
+            if (kwargs.code == 0){ isLogin = true;  getUserGlobal();} else { isLogin = false;}
             // if (kwargs.code > 0 && kwargs.code != 2) {
             //     // alert('>0')
             //     // calllogout(function (res) {
@@ -242,6 +242,25 @@ function fetchMailUrl(url) {
     var originURL = location.origin.replace(/([a-zA-Z+.\-]+):\/\/([^\/]+):([0-9]+)\//, "$1://$2/"); // http or https
     return originURL + "/" + url + "/?key=";
 }
+function getUserGlobal(){
+    if (isLogin){
+      c.doCall(function (session) {
+          session.call("/user/account#getProfile", [], { }).then(function (result) {
+              console.log(result.kwargs)
+              $('#loginFrm').hide();
+              $('.welcome').show();
+              $('.txtWelcome').html('Welcome '+result.kwargs.fields.firstname+' !');
+
+          });
+          session.call("/user#getCmsSessionID", [], { }).then(function (result) {
+            //   setCookie('pwr_ss',result.kwargs.cmsSessionID,36500);
+            //   setFrameSport( getCookie("pwr_ss") );
+          });
+      });
+    }else{
+
+    }
+  }
 $(document).ready(function () {
     function getSessionInfo(session) {
         session.call("/user#getSessionInfo", []).then(function (result) {

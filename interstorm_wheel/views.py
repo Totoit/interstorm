@@ -46,8 +46,34 @@ def index(request):
 	# domain = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).domain)
     # url = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).url)
 
-	
-	
+@never_cache
+def login(request):
+	template = './login.html'
+	context = {}
+	# import pprint
+	# pp = pprint.PrettyPrinter(indent=4)
+	# pp.pprint(request.GET)
+	# userid = request.GET.get('userid')
+	usercode = request.GET.get('usercode')
+	# print(userid,usercode)
+	if(InterStormUserVendor.objects.filter(usercode = usercode).exists()):
+		print("exists")
+		domain = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = usercode).user_id).domain)
+		url = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = usercode).user_id).url)
+		print(domain,url)
+		apiKey = {
+			'url' : url,
+			'domain' : domain
+    	}
+		context['time'] = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+		context['EVERYMATRIX'] = apiKey
+		# context['userid'] = userid
+		context['vendor'] = usercode
+		return render(request, template, context)
+	else:
+		return HttpResponse("no user code or userid")
+	# domain = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).domain)
+    # url = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).url)
 
 
 @csrf_exempt
@@ -272,7 +298,7 @@ def get_bonus_code(request):
 		else:
 			return HttpResponse("USER ONLY POST")
 
-# @csrf_exempt
+@csrf_exempt
 def get_wheel_image(request):
 	if(request.method == 'POST'):
 		level = 1

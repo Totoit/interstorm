@@ -358,12 +358,13 @@ class GameAccess:
 		# print(level1[0].deposit,leve2[0].deposit,leve3[0].deposit)
 		
 		#test Data
+		if totalTransactions is not None:
+			deposit_euro = totalTransactions
 		
-		deposit_euro = totalTransactions
 		# find level
 		deposit_level = 1
 		
-	
+		# print(deposit_euro)
 		if deposit_euro < level1[0].deposit:
 			deposit_level  = 1
 		elif deposit_euro >= level1[0].deposit and deposit_euro < level2[0].deposit:
