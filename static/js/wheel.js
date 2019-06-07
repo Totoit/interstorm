@@ -38,17 +38,20 @@ var WHEEL = (function () {
         jQuery('#wheel-blue-spin-button, #wheel-gold-spin-button')
             .off('click')
             .on('click', function () {
-                run();
-                // if (gameIsAvailable) {
-                //     if (isLogin) {
-                //         if (gameIsAvailable) {
-                //             run();
-                //         }
-                //     } else {
-                //         $('#loginModal').modal('show');
-                //         return false;
-                //     }
-                // }
+                // run();
+                if (gameIsAvailable) {
+                    // if (isLogin) {
+                        // if (gameIsAvailable) {
+                            run();
+                        // }
+                    // } else {
+                        // alert('No avariable')
+                        // $('#loginModal').modal('show');
+                        // return false;
+                    // }
+                }else{
+                    alert('No available')
+                }
             });
 
     }
@@ -63,22 +66,6 @@ var WHEEL = (function () {
     // get user session from everymatrix
     jQuery(function () {
         c.doCall(initUserSession);
-        // $.ajax({
-        //     url: '/api/get_bonus_code',
-        //     type: 'POST',
-        //     method: 'POST',
-        //     data: {
-        //         // user_id: userID
-        //     },
-        //     success: function (result) {
-        //         // inbox_result.list = JSON.parse(result);
-        //         console.log('inbox_result',result)
-        //         // setDataShowInbox(inbox_result);
-        //     },
-        //     error: function (xhr, errmsg, err) {
-        //         console.log(err);
-        //     }
-        // });
     });
 
     function getAvailableSpins(newTransactions, callback) {
@@ -110,7 +97,7 @@ var WHEEL = (function () {
                 // console.log('dp', deposit_lv)
                 // console.log('availableSpins', availableSpins)
                 // showSpinsText();
-                // gameIsAvailable = canPlayWheel() ? true : false;
+                gameIsAvailable = canPlayWheel() ? true : false;
                 // console.log('gameIsAvailable', gameIsAvailable)
                 // if (gameIsAvailable) {
                 //     if (availableSpins['level_' + deposit_lv] > 1) {
@@ -592,21 +579,21 @@ var WHEEL = (function () {
                 // console.log("spinwheelprogress: "+test2.progress());
                 // console.log('target',this.target._gsTransform.rotation)
               var tmp_pot = [10,65,120,175,230,285,340]
-            //   if(Math.round(currentRotation) % (360/7) <= tolerance){
-            //       console.log('Ohhhhhhhh')
-            //     var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-            //         // TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
-            //     })})
-            //     // if(test1.progress() > .2 || test1.progress() === 0){
-            //     //   test1.play(0);
-            //     // }
-            //   }
-            if(tmp_pot.includes(Math.round(currentRotation))){
-                // console.log('Osllllllllll')
-                var test1 = TweenMax.to($('.sWheel-marker'), 0.5, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                        TweenMax.to($('.sWheel-marker'), .1, {rotation: 0, ease:Power4.easeOut})
-                    })})
-            }
+              if(Math.round(currentRotation) % (360/7) <= tolerance){
+                  console.log('Ohhhhhhhh')
+                var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                    TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+                })})
+                if(test1.progress() > .2 || test1.progress() === 0){
+                  test1.play(0);
+                }
+              }
+            // if(tmp_pot.includes(Math.round(currentRotation))){
+            //     // console.log('Osllllllllll')
+            //     var test1 = TweenMax.to($('.sWheel-marker'), 0.5, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+            //             TweenMax.to($('.sWheel-marker'), .1, {rotation: 0, ease:Power4.easeOut})
+            //         })})
+            // }
               lastRotation = currentRotation;
             }
             ), onComplete: runLoop });
@@ -614,40 +601,40 @@ var WHEEL = (function () {
 
         var spinResult = null;
         // play the spin on the server
-        // $.ajax({
-        //     url: '/wheel/spin',
-        //     type: 'POST',
-        //     method: 'POST',
-        //     data: {
-        //         wheel: deposit_lv,
-        //         user_id: userId,
-        //         user_email: userEmail,
-        //         lv: deposit_lv
-        //     },
-        //     success: function (json) {
-        //         console.log("Spin :", json)
-        //         spinResult = json;
-        //         setWinnings(json.winning, json.bonus, json.bonuscode, json.free_spins_machine);
+        $.ajax({
+            url: '/wheel/spin',
+            type: 'POST',
+            method: 'POST',
+            data: {
+                wheel: level,
+                user_id: userId,
+                vendor: vendor,
+                // lv: deposit_lv
+            },
+            success: function (json) {
+                console.log("Spin :", json)
+                spinResult = json;
+                setWinnings(json.winning, json.bonus, json.bonuscode, json.free_spins_machine);
 
-        //     },
-        //     error: function (xhr, errmsg, err) {
-        //         spinResult = {
-        //             error: err
-        //         };
-        //         console.log("error :", err);
-        //     }
-        // });
-        setTimeout(function(){
-            spinResult = {
-                data:'ssss'
+            },
+            error: function (xhr, errmsg, err) {
+                spinResult = {
+                    error: err
+                };
+                console.log("error :", err);
             }
-            data_win = ['giftbox', 'money', 'shift','jackpot']
-            // Math.floor(Math.random() * 4) + 1  ;
-            // possibleBonuses
-            random_bonus = data_win[(Math.floor(Math.random() * data_win.length) + 1)-1]
-            console.log('rand bonus',random_bonus)
-            setWinnings(random_bonus,'','','')
-        },1000)
+        });
+        // setTimeout(function(){
+        //     spinResult = {
+        //         data:'ssss'
+        //     }
+        //     data_win = ['giftbox', 'money', 'shift','jackpot']
+        //     // Math.floor(Math.random() * 4) + 1  ;
+        //     // possibleBonuses
+        //     random_bonus = data_win[(Math.floor(Math.random() * data_win.length) + 1)-1]
+        //     console.log('rand bonus',random_bonus)
+        //     setWinnings(random_bonus,'','','')
+        // },1000)
 
         // the spinning loop
         function runLoop() {
@@ -773,7 +760,7 @@ var WHEEL = (function () {
             // } else {
             //     completeRun(result);
             // }
-            // completeRun(result);
+            completeRun(result);
             setTimeout(function () {
                 isWheelRunning = false;
             }, 100);
@@ -783,10 +770,10 @@ var WHEEL = (function () {
 
     // the spin is done
     function completeRun(spinResult) {
-        if (winBonusCode != '') {
+        // if (winBonusCode != '') {
             showInfoBox(spinResult);
-        }
-        giveUserBonusCode(winBonusCode);
+        // }
+        // giveUserBonusCode(winBonusCode);
         getAvailableSpins();
 
         setTimeout(function () {
@@ -1017,35 +1004,36 @@ var WHEEL = (function () {
     
 
     function showInfoBox(result) {
-        var reward = result.winning;
-        // reward = 'jackpot';
-        //  var bonuscode = 'FFFACAAD'
-        if (reward) {
-            $('.show-reward img').attr('class', '');
-            if (reward == 'giftbox') {
-                $('.show-reward img').addClass('nomal-cal');
-                $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/box2.png');
-            } else if (reward == 'money') {
-                $('.show-reward img').addClass('nomal-cal');
-                $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/coins2.png');
-            } else if (reward == 'shift') {
-                $('.show-reward img').addClass('nomal-cal');
-                $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/chips2.png');
-            } else {
-                $('.show-reward img').addClass('jp-cal');
-                $('.swal-overlay').css('background-color', 'rgba(0,0,0,.6)');
-                $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/jackpot3.gif');
-            }
-            $('#reward-box').css('display', 'inline');
-            $('#reward-box').removeClass('hide');
-            $('#reward-box').addClass('show');
-            $('#reward-box img').css('display', 'inline');
-            if (reward == 'jackpot') {
-                $('.text-reward').html(gettext('Congratulations to ' + reward +  '<br> Please contact to pwr for claim jackpot <br> You can check the bonus in the inbox.'));
-            } else {
-                $('.text-reward').html(gettext('Congratulations to ' + reward +  '<br> You can check the bonus in the inbox.'));
-            }
-        }
+        $('.reward-box').show();
+        // var reward = result.winning;
+        // // reward = 'jackpot';
+        // //  var bonuscode = 'FFFACAAD'
+        // if (reward) {
+        //     $('.show-reward img').attr('class', '');
+        //     if (reward == 'giftbox') {
+        //         $('.show-reward img').addClass('nomal-cal');
+        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/box2.png');
+        //     } else if (reward == 'money') {
+        //         $('.show-reward img').addClass('nomal-cal');
+        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/coins2.png');
+        //     } else if (reward == 'shift') {
+        //         $('.show-reward img').addClass('nomal-cal');
+        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/chips2.png');
+        //     } else {
+        //         $('.show-reward img').addClass('jp-cal');
+        //         $('.swal-overlay').css('background-color', 'rgba(0,0,0,.6)');
+        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/jackpot3.gif');
+        //     }
+        //     $('#reward-box').css('display', 'inline');
+        //     $('#reward-box').removeClass('hide');
+        //     $('#reward-box').addClass('show');
+        //     $('#reward-box img').css('display', 'inline');
+        //     if (reward == 'jackpot') {
+        //         $('.text-reward').html(gettext('Congratulations to ' + reward +  '<br> Please contact to pwr for claim jackpot <br> You can check the bonus in the inbox.'));
+        //     } else {
+        //         $('.text-reward').html(gettext('Congratulations to ' + reward +  '<br> You can check the bonus in the inbox.'));
+        //     }
+        // }
 
     }
 
@@ -1060,11 +1048,12 @@ var WHEEL = (function () {
         //     showCurrentWheel();
         //     showGame(false);
         // }
-        $('#reward-box').removeClass('show');
-        $('#reward-box').addClass('hide');
-        $('#reward-box , #bg-jackpot-box , #bg-jackpot , #reward-box img').css({
-            'display': 'none'
-        });
+        $('.reward-box').hide();
+        // $('#reward-box').removeClass('show');
+        // $('#reward-box').addClass('hide');
+        // $('#reward-box , #bg-jackpot-box , #bg-jackpot , #reward-box img').css({
+        //     'display': 'none'
+        // });
 
     }
 
