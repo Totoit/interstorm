@@ -9,22 +9,23 @@ from interstorm_vendor.models import InterStormUserVendor
 # class controls game mechanics
 class Game:
 
-	def __init__(self, user_id, ip,vendor ,game_type):
+	def __init__(self, user_id, ip,vendor):
 		self.ip = ip
 		self.winning = ''
 		self.has_access = False
-		self.game_type = game_type
+		# self.game_type = game_type
 		self.user_id = user_id
 		self.error = ''
 		self.win_result = ''
 		self.win_bonuscode = ''
 		self.win_bonus = ''
 		self.bonus_machine = ''
-		self.vendor = ''
+		self.vendor = vendor
 		self.level = 1
-		self.user_access_record = GameAccess(user_id,vendor, ip)
+		self.user_access_record = GameAccess(user_id, ip, vendor)
+		self.game_type = self.user_access_record.get_level()
 		
-	def play(self):
+	def play(self,vendor):
 		if self.user_access_record.can_spin(self.game_type):	
 			wheel = None;
 			# if self.game_type == 'blue':
@@ -53,7 +54,8 @@ class Game:
 
 	def log(self):
 		# log the results
-		WheelGames.objects.create(user_id=self.user_id, ip=self.ip, wheel_type=self.game_type, win_result=self.win_result, win_bonus=self.win_bonus, win_bonuscode=self.win_bonuscode)
+		print(self.user_access_record.vendor)
+		WheelGames.objects.create(user_id=self.user_id, ip=self.ip, wheel_type=self.game_type, win_result=self.win_result, win_bonus=self.win_bonus, win_bonuscode=self.win_bonuscode,vendor_id = self.user_access_record.vendor)
 
 
 	def result(self):
@@ -88,7 +90,7 @@ class GameWheel:
 		for win in probabilities:
 			current_probability += probabilities[win]
 
-			print('Rolled: ' + str(win_probability) + '. ' + win + ' requires at most: ' + str(current_probability))
+			# print('Rolled: ' + str(win_probability) + '. ' + win + ' requires at most: ' + str(current_probability))
 
 			# check if rolled number is within the limits of the current winnings
 			if win_probability <= current_probability:
@@ -162,13 +164,14 @@ class GameBlueWheel(GameWheel):
 			# 'shift': 'shift_bonus_code',
 			# 'jackpot':  'jackpot_bonus_code'
 		}
-		self.winnings = suffle_price(self.winnings)
+		# self.winnings = suffle_price(self.winnings)
 		# print('datasssss')
 		# print(game_type)
 		get_winning = WheelBonusCode.objects.filter(level=game_type);
 		for item in get_winning:
 				# data_test = {'item.rewards':item['percent']}
 				self.winnings[item.winning_key]  = item.bonus_key
+		self.winnings = suffle_price(self.winnings)
 		# print("get_winning = "+str(self.winnings))
 		# the probabilities of winning. Must amount to 100
 		self.probabilities = {
@@ -196,22 +199,22 @@ class GameBlueWheel(GameWheel):
 		# }
 		#
 		# # the probabilities of winning a bonus. Must amount to 100. Most of these are calcuated based on number of spins
-		# self.bonus_probabilities = {
-		# 	'dud': 995,
-		# 	'60spins': 1,
-		# 	'50':1,
-		# 	'100':1,
-		# 	'200':1,
-		# 	'1000':1
-		# }
+		self.bonus_probabilities = {
+			'dud': 995,
+			'60spins': 1,
+			'50':1,
+			'100':1,
+			'200':1,
+			'1000':1
+		}
 
 		self.probabilities = suffle_price(self.probabilities)
 
 	def play(self):
 		self.win = self.calc_win(self.probabilities)
 		# print('win',self.win)
-		if self.win == 'bonus':
-			self.play_bonus()
+		# if self.win == 'bonus':
+		# 	self.play_bonus()
 
 		# check if there is still a valid bonuscode for this user
 		# otherwise they can't win...
@@ -272,7 +275,7 @@ class GameBonusCode:
 			self.real_bonus_codes[item.bonus_key]  = str(item.bonus_code)
 		# print("get_bonus_codes = "+str(self.real_bonus_codes))
 		# used to determine which machine the bonus code is valid for
-		self.bonus_code_machine = settings.WHEEL_FREE_SPINS_MACHINES
+		# self.bonus_code_machine = settings.WHEEL_FREE_SPINS_MACHINES
 
 
 	def get_real_bonus_code(self):
@@ -285,6 +288,7 @@ class GameBonusCode:
 		# print(self.real_bonus_codes)
 		# bonuscodes = self.real_bonus_codes[self.bonus_code]
 		bonuscode = self.real_bonus_codes[self.bonus_code]
+		# bonuscode = 'xxx'
 		return bonuscode
 
 		# print('bonus code'+str(bonuscodes))
@@ -336,7 +340,9 @@ class GameAccess:
 		else:
 			user_access_record = user_access_records[:1].get()
 			# print('user_access_records 2')
-			# print(user_access_records.values)
+			# print(user_access_records)
+			# for item in user_access_record:
+			# 	print(item)
 
 		return user_access_record;
 
@@ -404,22 +410,23 @@ class GameAccess:
 	# 	self.add_spins('level_1', 1, 'daily_free')
 	# 	#self.add_spins('gold', 1, 'daily_free')
 
-	# def can_spin(self, game_type):
-	# 	number_of_spins_left = 0;
-	# 	if game_type == '1':
-	# 		number_of_spins_left = self.access_record.level_1
-	# 	elif game_type == '2':
-	# 		number_of_spins_left = self.access_record.level_2
-	# 	elif game_type == '3':
-	# 			number_of_spins_left = self.access_record.level_3
+	def can_spin(self, game_type):
+		print("can spin : " ,game_type)
+		number_of_spins_left = 0;
+		if game_type == 1:
+			number_of_spins_left = self.access_record.level_1
+		elif game_type == 2:
+			number_of_spins_left = self.access_record.level_2
+		elif game_type == 3:
+				number_of_spins_left = self.access_record.level_3
 
-	# 	# print('spin left')
-	# 	# print(number_of_spins_left)
-	# 	# print('self.access_record')
-	# 	# print(self.access_record.level_1)
-	# 	# print(self.access_record.level_2)
-	# 	# print(self.access_record.level_3)
-	# 	return number_of_spins_left > 0
+		# print('spin left')
+		# print(number_of_spins_left)
+		# print('self.access_record')
+		# print(self.access_record.level_1)
+		# print(self.access_record.level_2)
+		# print(self.access_record.level_3)
+		return number_of_spins_left > 0
 
 	def get_spin_count(self):
 		data = {}
@@ -429,12 +436,13 @@ class GameAccess:
 		return data
 
 	def use_spin(self, game_type):
-		if game_type == '1':
+		print('Use Spin')
+		if game_type == 1:
 			# self.access_record.blue_spins -= 1
 			self.access_record.level_1 -= 1
-		elif game_type == '2':
+		elif game_type == 2:
 			self.access_record.level_2 -= 1
-		elif game_type == '3':
+		elif game_type == 3:
 				self.access_record.level_3 -= 1
 			
 		self.access_record.save()

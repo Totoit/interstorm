@@ -177,25 +177,25 @@ def spin(request):
 		vendor = request.POST.get('vendor')
 		response = {}
 
-		if csrf_invalid:
-			response = {
-				'error' : 'invalid CSRF Token'
-			}
-		else :
-			if user_id == None:
-				raise Exception('User ID is not valid')
-			else:
+		# if csrf_invalid:
+		# 	response = {
+		# 		'error' : 'invalid CSRF Token'
+		# 	}
+		# else :
+		if user_id == None:
+			raise Exception('User ID is not valid')
+		else:
 
-				# play the game
-				game = Game(user_id, get_client_ip(request),vendor, game_type);
-
-				game.play()
-
-				# get the results back
-				game_result = game.result()
-
-				# results
-				response = game_result
+			# play the game
+			game = Game(user_id, get_client_ip(request),vendor);
+			print('get Game Data')
+			game.play(vendor)
+			print('Play Game')
+			# get the results back
+			game_result = game.result()
+			print('get Game result')
+			# results
+			response = game_result
 				
 		return JsonResponse(response)
 
