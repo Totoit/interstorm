@@ -602,7 +602,7 @@ var WHEEL = (function () {
         var spinResult = null;
         // play the spin on the server
         $.ajax({
-            url: '/wheel/spin',
+            url: '/api/spin',
             type: 'POST',
             method: 'POST',
             data: {
