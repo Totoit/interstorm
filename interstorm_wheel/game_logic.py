@@ -162,6 +162,7 @@ class GameBlueWheel(GameWheel):
 			# 'shift': 'shift_bonus_code',
 			# 'jackpot':  'jackpot_bonus_code'
 		}
+		self.winnings = suffle_price(self.winnings)
 		# print('datasssss')
 		# print(game_type)
 		get_winning = WheelBonusCode.objects.filter(level=game_type);
@@ -176,6 +177,7 @@ class GameBlueWheel(GameWheel):
 			# 'money': 35,
 			# 'shift': 35
 		}
+		
 
 		get_percent = WheelPercentage.objects.filter(level=game_type);
 		for item in get_percent:
@@ -202,6 +204,8 @@ class GameBlueWheel(GameWheel):
 		# 	'200':1,
 		# 	'1000':1
 		# }
+
+		self.probabilities = suffle_price(self.probabilities)
 
 	def play(self):
 		self.win = self.calc_win(self.probabilities)
@@ -358,8 +362,6 @@ class GameAccess:
 		# print(level1[0].deposit,leve2[0].deposit,leve3[0].deposit)
 		
 		#test Data
-		if totalTransactions is not None:
-			deposit_euro = totalTransactions
 		
 		# find level
 		deposit_level = 1
@@ -436,3 +438,25 @@ class GameAccess:
 				self.access_record.level_3 -= 1
 			
 		self.access_record.save()
+
+
+def suffle_price(reward):
+
+	keys =  list(reward.keys()) 
+	random.shuffle(keys)
+	data = []
+	for key in keys:
+
+		data.append({key:reward[key]})
+
+	stringItem = ''
+	import json
+	for item in data:
+		# print(item)
+		stringItem = stringItem + str(item)
+	stringItem =stringItem.replace('}{',',')
+	stringItem =stringItem.replace("'", "\"")
+	json_data = json.loads(stringItem)
+	python_dict = json_data
+	# print(json_data)
+	return python_dict
