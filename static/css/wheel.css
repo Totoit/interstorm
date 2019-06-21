@@ -104,18 +104,23 @@ body {
     left: 50%;
     top: 0%;
     /* margin-top: 15%; */
-    margin-left: -8%;
+    /* margin-left: -8%; */
     -webkit-transition: 0.2 rotate linear;
     transition: 0.2 rotate linear;
     z-index: 1;
     display: block;
-    -webkit-transform: rotate(0deg);
+    /* -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
     -webkit-transform-origin: 50% 35%;
-    transform-origin: 50% 35%;
+    transform-origin: 50% 35%; */
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
 }
 .sWheel-marker>svg{
     height: 100%;
+}
+.sWheel-marker img{
+    width: 100%;
 }
 
 /* Animation */
@@ -282,4 +287,239 @@ body {
     text-align: center;
     transform: translate(-50%,-50%);
     padding: 20px;
+}
+.wheel{
+    max-width: 960px;
+    max-height: 960px;
+}
+.wheel-reward-img{
+    width: 100%;
+}
+
+.swal-footer{
+    text-align: center;
+}
+
+.full-width{
+    max-width: 100%;
+}
+
+.right-box,.left-box{
+    position: relative;
+    max-height: 960px;
+    height: calc(100%);
+    text-align: center;
+}
+.show-spin-top{
+    display: none ;
+}
+.show-spin{
+    position: absolute;
+    top: 50%;
+    /* display: flex; */
+    background: #ffffff;
+    width: 80%;
+    /* min-height: 450px; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    font-size: 4.5em;
+    /* text-align: center; */
+    border-radius: 4px;
+    -moz-box-shadow: inset 0 0 20px #ffffff;
+    -webkit-box-shadow: inset 0 0 20px #ffffff;
+    box-shadow: inset 0 0 20px #ffffff;
+}
+
+.how-to-play-bottom{
+    display: none ;
+}
+
+.how-to-play{
+    position: absolute;
+    top: 50%;
+    background: #ffffff;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    /* font-size: 2em; */
+    border-radius: 4px;
+    -moz-box-shadow: inset 0 0 20px #ffffff;
+    -webkit-box-shadow: inset 0 0 20px #ffffff;
+    box-shadow: inset 0 0 20px #ffffff;
+}
+.htp-title{
+    font-size: 2rem;
+}
+.htp-content{
+    text-align: left;
+}
+.text-amont-spin.has{
+    color: rgba(16, 173, 0, 0.8);
+}
+
+.text-amont-spin{
+    color: rgba(202, 0, 0, 0.5);
+}
+
+.text-spin{
+    color: whitesmoke;
+}
+@media (max-width: 576px){
+    .show-spin{
+        display: none;
+    }
+    .show-spin-top{
+        /*position: absolute; */
+        /* top: 50%; */
+        /* display: flex; */
+        background: #ffffff;
+        /* width: 80%; */
+        /* min-height: 450px; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%,-50%); */
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        font-size: 3.5em;
+        /* text-align: center; */
+        border-radius: 4px;
+        -moz-box-shadow: inset 0 0 20px #ffffff;
+        -webkit-box-shadow: inset 0 0 20px #ffffff;
+        box-shadow: inset 0 0 20px #ffffff;
+        display: inherit;
+    }
+    .how-to-play{
+        display: none;
+    }
+    .how-to-play-bottom{
+        /* position: absolute; */
+        top: 50%;
+        background: #ffffff;
+        /* width: 80%; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%,-50%); */
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        /* font-size: 2em; */
+        border-radius: 4px;
+        -moz-box-shadow: inset 0 0 20px #ffffff;
+        -webkit-box-shadow: inset 0 0 20px #ffffff;
+        box-shadow: inset 0 0 20px #ffffff;
+        display: inherit;
+    }
+}
+
+@media (min-width: 576px){
+    .show-spin{
+        display: none;
+    }
+    .show-spin-top{
+        /*position: absolute; */
+        /* top: 50%; */
+        /* display: flex; */
+        background: #ffffff;
+        /* width: 80%; */
+        /* min-height: 450px; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%,-50%); */
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        font-size: 3.5em;
+        /* text-align: center; */
+        border-radius: 4px;
+        -moz-box-shadow: inset 0 0 20px #ffffff;
+        -webkit-box-shadow: inset 0 0 20px #ffffff;
+        box-shadow: inset 0 0 20px #ffffff;
+        display: inherit;
+    }
+    .how-to-play{
+        display: none;
+    }
+    .how-to-play-bottom{
+        /* position: absolute; */
+        top: 50%;
+        background: #ffffff;
+        /* width: 80%; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%,-50%); */
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        /* font-size: 2em; */
+        border-radius: 4px;
+        -moz-box-shadow: inset 0 0 20px #ffffff;
+        -webkit-box-shadow: inset 0 0 20px #ffffff;
+        box-shadow: inset 0 0 20px #ffffff;
+        display: inherit;
+    }
+}
+
+@media (min-width: 768px){
+    .show-spin{
+        display: none;
+    }
+    .show-spin-top{
+        /*position: absolute; */
+        /* top: 50%; */
+        /* display: flex; */
+        background: #ffffff;
+        /* width: 80%; */
+        /* min-height: 450px; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%,-50%); */
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        font-size: 3.5em;
+        /* text-align: center; */
+        border-radius: 4px;
+        -moz-box-shadow: inset 0 0 20px #ffffff;
+        -webkit-box-shadow: inset 0 0 20px #ffffff;
+        box-shadow: inset 0 0 20px #ffffff;
+        display: inherit;
+    }
+    .how-to-play{
+        display: none;
+    }
+    .how-to-play-bottom{
+        /* position: absolute; */
+        top: 50%;
+        background: #ffffff;
+        /* width: 80%; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%,-50%); */
+        background: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        /* font-size: 2em; */
+        border-radius: 4px;
+        -moz-box-shadow: inset 0 0 20px #ffffff;
+        -webkit-box-shadow: inset 0 0 20px #ffffff;
+        box-shadow: inset 0 0 20px #ffffff;
+        display: inherit;
+    }
+}
+
+@media (min-width: 992px){
+    .show-spin{
+        display: inherit;
+        font-size: 3.5rem;
+    }
+    .show-spin-top{
+        display: none;
+    }
+    .how-to-play{
+        display: inherit ;
+    }
+    .how-to-play-bottom{
+        display: none;
+    }
 }

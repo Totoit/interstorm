@@ -59,27 +59,53 @@
         <div class="reward-content">
             <div class="overlay"></div>
             <div class="reward-bg">
-                <img src="/static/images/reward/coin1.png" >
+                <img src="" >
             </div>
             <div class="reward-img">
-                <img src="/static/images/reward/jackpot_lv1.png" >
+                <img src="" >
             </div>
             <div class="reward-txt-deposit">
-                <span>Deposit 0 - 499 </span>
+                <span>Waiting claim bonus</span>
                 <!-- <span class="txt-bonus">Prize of 25% bonus on deposit</span> -->
             </div>
             <div class="reward-txt-bonus">
                 <!-- <span class="txt-deposit">Deposit 0 - 499 </span> -->
-                <span>Prize of 25% bonus on deposit</span>
+                <span></span>
             </div>
-            
+            <!-- <div class="reward-claim-bonus">
+                <span>Waiting claim bonus</span>
+            </div> -->
         </div>
     </div>
     <div class="container full-width p-0">
         <div class="loading">Loading&#8230;</div>
         
         <div class="row p-0 m-0">
-            <div class="col-md-12 p-0">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="left-box" style="display:none">
+                    <div class="how-to-play">
+                        <div class="htp-title">
+                            <span>How to play</span>
+                        </div>
+                        <div class="htp-content">
+                            <p>1.Registeration and Login</p>
+                            <p>2.Deposit monney to goal</p>
+                            <p>3.Let's fun to spin</p>
+                            <p>4.Have fun for reward</p>
+                            <p>5.Play again</p>
+                        </div>
+                    </div>
+                    <div class="show-spin-top">
+                        <div class="text-amont-spin">
+                            <span>0</span>
+                        </div>
+                        <div class="text-spin">
+                            <span>Spin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 p-0">
                 <div class="content-wrapper">
                     {% block content %}
                         <div id="wheel-game" align="center" style="display:none">
@@ -91,13 +117,37 @@
                                             <!-- <img src="{% static 'images/wheel/point-desktop_LV1.png' %}" class="wheel-button wheel-button-img" /> -->
                                         </a>
                                     </div>
-                                    <div class="sWheel-marker" style="transform: rotate(0deg);">
+                                    <div class="sWheel-marker">
                                         <img src="{% static 'images/wheel/sl_pin.png' %}">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     {% endblock %}
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="right-box" style="display:none">
+                    <div class="show-spin">
+                        <div class="text-amont-spin">
+                            <span>0</span>
+                        </div>
+                        <div class="text-spin">
+                            <span>Spin</span>
+                        </div>
+                    </div>
+                    <div class="how-to-play-bottom">
+                        <div class="htp-title">
+                            <span>How to play</span>
+                        </div>
+                        <div class="htp-content">
+                            <p>1.Registeration and Login</p>
+                            <p>2.Deposit monney to goal</p>
+                            <p>3.Let's fun to spin</p>
+                            <p>4.Have fun for reward</p>
+                            <p>5.Play again</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

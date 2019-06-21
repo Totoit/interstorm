@@ -138,7 +138,9 @@ class GameWheel:
 	def get_bonuscode(self):
 		internal_bonuscode = ''
 		real_bonuscode = ''
-
+		# print('self')
+		# print(self.win)
+		# print(self.winnings)
 		if self.bonus != None:
 			internal_bonuscode = self.bonus_winnings[self.bonus]
 		else:
@@ -368,11 +370,13 @@ class GameAccess:
 		# print(level1[0].deposit,leve2[0].deposit,leve3[0].deposit)
 		
 		#test Data
+		if totalTransactions != None:
+			deposit_euro = totalTransactions
 		
 		# find level
 		deposit_level = 1
 		
-		# print(deposit_euro)
+		print(deposit_euro)
 		if deposit_euro < level1[0].deposit:
 			deposit_level  = 1
 		elif deposit_euro >= level1[0].deposit and deposit_euro < level2[0].deposit:

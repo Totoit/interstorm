@@ -72,6 +72,7 @@ class WheelBonusCode(models.Model):
     level = models.IntegerField()
     bonus_key = models.CharField(max_length=50)
     bonus_code = models.CharField(max_length=200)
+    bonus_detail = models.CharField(max_length=200,help_text="text show on reward")
     created_date = models.DateTimeField(default=timezone.now)
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
 
@@ -80,7 +81,7 @@ class WheelImageLevel(models.Model):
     ALL_LEVEL = (
         (1, 'LEVEL 1'),
         (2, 'LEVEL 2'),
-        (3, 'LEVEL 3'),
+        # (3, 'LEVEL 3'),
     )   
 
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
@@ -99,7 +100,7 @@ class WheelLevelManage(models.Model):
     ALL_LEVEL = (
         (1, 'LEVEL 1'),
         (2, 'LEVEL 2'),
-        (3, 'LEVEL 3'),
+        # (3, 'LEVEL 3'),
     )   
 
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)

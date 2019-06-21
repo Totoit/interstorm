@@ -11,15 +11,15 @@ var WHEEL = (function () {
     // positions for the wheel for the various winnings
     var positions = {
         blue: {
-            'giftbox': [42.5, 207.5],
-            'money': [152.5, 317.5],
-            'shift': [97.5, 262.5],
-            'jackpot': [0]
+            'prize_1': [[340, 295],[175,130]],
+            'prize_2': [[285,240], [120,75]],
+            'prize_3': [[230,185], [65,20]],
+            'bonus': [[360,350],[10,0]]
         },
 
     };
     // the posible values the bonus game can land on
-    var possibleBonuses = ['giftbox', 'monney', 'shift'];
+    var possibleBonuses = ['prize_1', 'prize_2', 'prize_3'];
     var gameIsAvailable = false;
     var availableSpins = {
         blue: 0,
@@ -39,18 +39,37 @@ var WHEEL = (function () {
             .off('click')
             .on('click', function () {
                 // run();
-                if (gameIsAvailable) {
-                    // if (isLogin) {
-                        // if (gameIsAvailable) {
-                            run();
+                if(!isWheelRunning){
+                    if (gameIsAvailable) {
+                        // if (isLogin) {
+                            // if (gameIsAvailable) {
+                                run();
+                            // }
+                        // } else {
+                            // alert('No avariable')
+                            // $('#loginModal').modal('show');
+                            // return false;
                         // }
-                    // } else {
-                        // alert('No avariable')
-                        // $('#loginModal').modal('show');
-                        // return false;
-                    // }
+                    }else{
+                        // alert('No available')
+                        const el = document.createElement('div')
+                        el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please deposit for play loyalty games</center>"
+                        swal({
+                            title: "No available!",
+                            content: el,
+                            // icon: "warning",
+                            button: "OK",
+                        });
+                    }
                 }else{
-                    alert('No available')
+                    const el = document.createElement('div')
+                    el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please wait for games running</center>"
+                    swal({
+                        title: "Games is running!",
+                        content: el,
+                        // icon: "warning",
+                        button: "OK",
+                    });
                 }
             });
 
@@ -95,17 +114,35 @@ var WHEEL = (function () {
                 // $('#circle_spin').hide();
                 availableSpins = result.spins;
                 // console.log('dp', deposit_lv)
-                // console.log('availableSpins', availableSpins)
+                console.log('availableSpins', availableSpins)
                 // showSpinsText();
                 gameIsAvailable = canPlayWheel() ? true : false;
                 // console.log('gameIsAvailable', gameIsAvailable)
-                // if (gameIsAvailable) {
-                //     if (availableSpins['level_' + deposit_lv] > 1) {
-                //         $('.txt-available').find('span').html(('You have ') + availableSpins['level_' + deposit_lv] + ' ' + ('spins'))
-                //     } else {
-                //         $('.txt-available').find('span').html(('You have ') + availableSpins['level_' + deposit_lv] + ' ' + ('spin'))
-                //     }
-                // }
+                if (gameIsAvailable) {
+                    $('.text-amont-spin').addClass('has');
+                    if (availableSpins['level_' + level] > 1) {
+                        // $('.txt-available').find('span').html(('You have ') + availableSpins['level_' + deposit_lv] + ' ' + ('spins'))
+                        $('.text-amont-spin').html(availableSpins['level_' + level]);
+                        $('.text-spin').html('Spins');
+                    } else {
+                        if(availableSpins['level_' + level] == 0 ){
+                            $('.text-amont-spin').removeClass('has');
+                            $('.text-amont-spin').html('0');
+                            $('.text-spin').html('Spin');
+                        }else{
+                            $('.text-amont-spin').html(availableSpins['level_' + level]);
+                            $('.text-spin').html('Spin');
+                        }
+                        
+                    }
+                    
+                }else{
+                    $('.text-amont-spin').removeClass('has');
+                    $('.text-amont-spin').html('0');
+                    $('.text-spin').html('Spin');
+                }
+                $('.right-box').show()
+                
 
                 // if (gameIsAvailable && result.show_game) {
                 //     showGame(true)
@@ -143,6 +180,7 @@ var WHEEL = (function () {
                 $('.wheel-reward-img').show();
                 // $('.wheel-button-img').show();
                 $('#wheel-game').show();
+                $('.left-box').show()
                 $('.loading').hide();
             },
             error: function (xhr, errmsg, err) {
@@ -178,8 +216,10 @@ var WHEEL = (function () {
     }
 
     function canPlayWheel() {
-        return availableSpins['level_3'] > 0 || availableSpins['level_2'] > 0 || availableSpins['level_1'] > 0;
+        console.log('can play level',level)
+        return availableSpins['level_'+level] > 0 ;
     }
+
 
     function showCurrentWheel(session,transaction) {
         var _totalDeposits = 0;
@@ -252,6 +292,16 @@ var WHEEL = (function () {
                     console.log('ssss',level)
                     setImageLevel()
                     // showCurrentWheel(session,newTransactions);
+                    if(!gameIsAvailable){
+                        const el = document.createElement('div')
+                        el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please deposit for play loyalty games</center>"
+                        swal({
+                            title: "No available! !",
+                            content: el,
+                            // icon: "warning",
+                            button: "OK",
+                        });
+                    }
                 });
             });
         };
@@ -263,6 +313,16 @@ var WHEEL = (function () {
             gameIsAvailable = false;
             console.log('login fales')
             setImageLevel()
+            const el = document.createElement('div')
+            el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please you login or signup for play loyalty games</center>"
+            swal({
+                title: "Not Login",
+                content: el,
+                // type:'warning',
+                // icon: "warning",
+                button: "OK",
+                // closeModal: false,
+            });
         };
         
         if(session_id != 'Anonymous'){
@@ -322,7 +382,7 @@ var WHEEL = (function () {
             hideInfoBox();
             swal({
                 title: ("Warning!"),
-                text: ("Don't have bonus code. Could you contact PWR.bet"),
+                text: ("Don't have bonus code. Could you contact support"),
                 icon: "warning",
                 button: ("OK"),
             });
@@ -344,7 +404,7 @@ var WHEEL = (function () {
                 console.log(err)
                 swal({
                     title: ("Warning!"),
-                    text: err.kwargs.desc + ' ' + ('Could you contact PWR.bet'),
+                    text: err.kwargs.desc + ' ' + ('Could you contact support'),
                     icon: "warning",
                     button: ("OK"),
                 });
@@ -354,7 +414,7 @@ var WHEEL = (function () {
             hideInfoBox();
             swal({
                 title: ("Warning!"),
-                text: ('Error giving bonus code') + e + ' ' + ('Could you contact PWR.bet'),
+                text: ('Error giving bonus code') + e + ' ' + ('Could you contact support'),
                 icon: "warning",
                 button: ("OK"),
             });
@@ -578,16 +638,16 @@ var WHEEL = (function () {
                 // console.log('progress = ',test1.progress());
                 // console.log("spinwheelprogress: "+test2.progress());
                 // console.log('target',this.target._gsTransform.rotation)
-              var tmp_pot = [10,65,120,175,230,285,340]
-              if(Math.round(currentRotation) % (360/7) <= tolerance){
-                  console.log('Ohhhhhhhh')
-                var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                    TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
-                })})
-                if(test1.progress() > .2 || test1.progress() === 0){
-                  test1.play(0);
-                }
-              }
+            //   var tmp_pot = [10,65,120,175,230,285,340]
+            //   if(Math.round(currentRotation) % (360/7) <= tolerance){
+            //       console.log('Ohhhhhhhh')
+            //     var test1 = TweenMax.to($('.sWheel-marker'), 2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+            //         TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+            //     })})
+            //     if(test1.progress() > .2 || test1.progress() === 0){
+            //       test1.play(0);
+            //     }
+            //   }
             // if(tmp_pot.includes(Math.round(currentRotation))){
             //     // console.log('Osllllllllll')
             //     var test1 = TweenMax.to($('.sWheel-marker'), 0.5, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
@@ -643,18 +703,20 @@ var WHEEL = (function () {
                 // we got the result back from the server
 
                 if (!spinResult.error) {
-                    console.log('possibleStopPositions',possibleStopPositions)
+                    console.log('possibleStopPositions',possibleStopPositions[1])
                     var rotations = 10,
-                        winningAngle = possibleStopPositions[Math.floor(Math.random() * possibleStopPositions.length)];
+                        indexWinningAngle = Math.floor(Math.random() * possibleStopPositions.length);
+                        winningAngle = Math.floor(Math.random() * (possibleStopPositions[indexWinningAngle][0]-possibleStopPositions[indexWinningAngle][1])) + possibleStopPositions[indexWinningAngle][1]
+                        console.log('winningAngle',winningAngle)
                         // winningAngle = 343
 
                     // give it a few more spins and calc the final position
                     nextRotation += spinFullRound * rotations + winningAngle;
                     console.log('nextRotation',nextRotation)
                     console.log('winningAngle',winningAngle)
-                    var test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                        TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
-                    })})
+                    // var test1 = TweenMax.to($('.sWheel-marker'), .13, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                    //     TweenMax.to($('.sWheel-marker'), .13, {rotation: 3, ease:Power4.easeOut})
+                    // })})
                     var rotationTween = TweenMax.to(el, 5, { rotation: nextRotation, ease: Linear.easeNone,onUpdate: (
                         function(){    
                           currentRotation = Math.round(this.target._gsTransform.rotation);    //_gsTransform: current position of the wheel
@@ -667,14 +729,14 @@ var WHEEL = (function () {
                             // console.log("spinwheelprogress: "+rotationTween.progress());
                             // console.log('target',this.target._gsTransform.rotation)
                             // console.log((Math.round(currentRotation) % (360/7) <= tolerance))
-                            var tmp_pot = [10,65,120,175,230,285,340]
-                          if(Math.round(currentRotation) % (360/7) <= tolerance){
-                            // if(tmp_pot.filter(n => n>= tolerance)){
-                                if(test1.progress() > .25 || test1.progress() === 0){
-                                    // console.log(test1.progress())
-                                test1.play(0);
-                            }
-                          }
+                        //     var tmp_pot = [10,65,120,175,230,285,340]
+                        //   if(Math.round(currentRotation) % (360/7) <= tolerance){
+                        //     // if(tmp_pot.filter(n => n>= tolerance)){
+                        //         if(test1.progress() > .25 || test1.progress() === 0){
+                        //             // console.log(test1.progress())
+                        //         test1.play(0);
+                        //     }
+                        //   }
                           lastRotation = currentRotation;
                         }
                         ) });
@@ -687,9 +749,9 @@ var WHEEL = (function () {
                         // console.log('nextRotation2',nextRotation)
                         currentRotation = Math.round($('.wheel-reward-img')[0]._gsTransform.rotation);
                         console.log('currentRotation',currentRotation%360)
-                        test1 = TweenMax.to($('.sWheel-marker'), .2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
-                                                TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
-                                            })})
+                        // test1 = TweenMax.to($('.sWheel-marker'), .2, {rotation: -10, transformOrigin:"65% 36%", ease:Power1.easeOut,onComplete:(function(){
+                        //                         TweenMax.to($('.sWheel-marker'), .13, {rotation: 0, ease:Power4.easeOut})
+                        //                     })})
                         TweenLite.to(rotationTween, 6, {
                             progress: 1, ease: Power1.easeOut,onUpdate: (
                                 function(){
@@ -761,24 +823,30 @@ var WHEEL = (function () {
             //     completeRun(result);
             // }
             completeRun(result);
-            setTimeout(function () {
-                isWheelRunning = false;
-            }, 100);
+            // setTimeout(function () {
+            //     isWheelRunning = false;
+            // }, 100);
 
         }
     }
 
     // the spin is done
     function completeRun(spinResult) {
-        // if (winBonusCode != '') {
-            showInfoBox(spinResult);
-        // }
-        // giveUserBonusCode(winBonusCode);
-        getAvailableSpins();
-
         setTimeout(function () {
-            isWheelRunning = false;
-        }, 100);
+            // if (winBonusCode != '') {
+                showInfoBox(spinResult);
+            // }
+        }, 1000);
+        
+        // giveUserBonusCode(winBonusCode);
+        getAvailableSpins({},function(){
+            setTimeout(function () {
+                isWheelRunning = false;
+                hideInfoBox()
+            }, 5000);
+        });
+
+        
     }
 
     // reset the game for next spin
@@ -1004,36 +1072,46 @@ var WHEEL = (function () {
     
 
     function showInfoBox(result) {
-        $('.reward-box').show();
-        // var reward = result.winning;
-        // // reward = 'jackpot';
-        // //  var bonuscode = 'FFFACAAD'
-        // if (reward) {
-        //     $('.show-reward img').attr('class', '');
-        //     if (reward == 'giftbox') {
-        //         $('.show-reward img').addClass('nomal-cal');
-        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/box2.png');
-        //     } else if (reward == 'money') {
-        //         $('.show-reward img').addClass('nomal-cal');
-        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/coins2.png');
-        //     } else if (reward == 'shift') {
-        //         $('.show-reward img').addClass('nomal-cal');
-        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/chips2.png');
-        //     } else {
-        //         $('.show-reward img').addClass('jp-cal');
-        //         $('.swal-overlay').css('background-color', 'rgba(0,0,0,.6)');
-        //         $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/jackpot3.gif');
-        //     }
-        //     $('#reward-box').css('display', 'inline');
-        //     $('#reward-box').removeClass('hide');
-        //     $('#reward-box').addClass('show');
-        //     $('#reward-box img').css('display', 'inline');
-        //     if (reward == 'jackpot') {
-        //         $('.text-reward').html(('Congratulations to ' + reward +  '<br> Please contact to pwr for claim jackpot <br> You can check the bonus in the inbox.'));
-        //     } else {
-        //         $('.text-reward').html(('Congratulations to ' + reward +  '<br> You can check the bonus in the inbox.'));
-        //     }
-        // }
+        console.log('result info',result)
+        // $('.reward-box').show();
+        var reward = result.winning;
+        // reward = 'jackpot';
+        //  var bonuscode = 'FFFACAAD'
+        if (reward) {
+            // $('.show-reward img').attr('class', '');
+            if (reward == 'bonus') {
+                // $('.show-reward img').addClass('nomal-cal');
+                $('.reward-bg img').attr('src','/static/images/reward/coin1.png')
+                $('.reward-img img').attr('src','/static/images/reward/jackpot_lv'+level+'.png');
+            } 
+            // else if (reward == 'money') {
+            //     $('.show-reward img').addClass('nomal-cal');
+            //     $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/coins2.png');
+            // } else if (reward == 'shift') {
+            //     $('.show-reward img').addClass('nomal-cal');
+            //     $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/chips2.png');
+            // } 
+            else {
+                // $('.show-reward img').addClass('jp-cal');
+                // $('.swal-overlay').css('background-color', 'rgba(0,0,0,.6)');
+
+                // $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/jackpot3.gif');
+                $('.reward-bg img').attr('src','/static/images/reward/coin2.png')
+                $('.reward-img img').attr('src', '/static/images/reward/prize_lv'+level+'.png');
+            }
+            // $('#reward-box').css('display', 'inline');
+            // $('#reward-box').removeClass('hide');
+            // $('.reward-box').addClass('show');
+            $('.reward-txt-bonus span').html('Congraturations');
+            $('.reward-box').show();
+            // $('.reward-box img').attr('src','')
+            // $('#reward-box img').css('display', 'inline');
+            // if (reward == 'jackpot') {
+            //     $('.text-reward').html(('Congratulations to ' + reward +  '<br> Please contact to pwr for claim jackpot <br> You can check the bonus in the inbox.'));
+            // } else {
+            //     $('.text-reward').html(('Congratulations to ' + reward +  '<br> You can check the bonus in the inbox.'));
+            // }
+        }
 
     }
 
@@ -1049,6 +1127,8 @@ var WHEEL = (function () {
         //     showGame(false);
         // }
         $('.reward-box').hide();
+        $('.reward-txt-bonus span').html('');
+        $('.reward-box img').attr('src','')
         // $('#reward-box').removeClass('show');
         // $('#reward-box').addClass('hide');
         // $('#reward-box , #bg-jackpot-box , #bg-jackpot , #reward-box img').css({
@@ -1173,189 +1253,189 @@ jQuery(function () {
             }
         }
     });
-    var winWidth = $(window).width();
-    var winHeight = $(window).height();
-    var navHeight = $('.fixed-nav.bg-dark').height();
-    var fixHeight = winHeight - navHeight;
-    var padding = 0;
-    var paddingTop = 0;
-    var paddingHeight = 0;
-    if (winWidth <= 2000 && winWidth > 1600) {
-        padding = 90;
-        paddingTop = padding / 2;
-    } else if (winWidth <= 1600 && winWidth > 1300) {
-        padding = 80;
-        paddingTop = padding / 2;
-    } else if (winWidth <= 1300 && winWidth > 768) {
-        padding = 60;
-        paddingTop = padding / 2;
-    } else if (winWidth <= 768 && winWidth > 414) {
-        fixHeight = fixHeight - 68;
-        padding = 50;
-        paddingTop = padding / 2;
-    } else if (winWidth <= 414 && winWidth > 375) {
-        fixHeight = fixHeight - 68;
-        padding = 50;
-        paddingTop = padding / 2;
-        if (window.orientation == 0) {
-            $('#wheel-blue').css('margin-left', '50px');
-        } else {
-            $('#wheel-blue').css('margin-left', '0px');
-        }
-    } else if (winWidth <= 375 && winWidth > 360) {
-        fixHeight = fixHeight - 68;
-        padding = 50;
-        paddingTop = padding / 2;
-        if (window.orientation == 0) {
-            $('#wheel-blue').css('margin-left', '50px');
-        } else {
-            $('#wheel-blue').css('margin-left', '0px');
-        }
-    } else if (winWidth <= 360 && winWidth > 320) {
-        fixHeight = fixHeight - 68;
-        padding = 50;
-        paddingTop = padding / 2;
-        if (window.orientation == 0) {
-            $('#wheel-blue').css('margin-left', '50px');
-        } else {
-            $('#wheel-blue').css('margin-left', '0px');
-        }
-    } else if (winWidth <= 320) {
-        fixHeight = fixHeight - 60.2;
-        padding = 50;
-        paddingTop = padding / 2;
-        if (window.orientation == 0) {
-            $('#wheel-blue').css('margin-left', '50px');
-        } else {
-            $('#wheel-blue').css('margin-left', '0px');
-        }
-    }
+    // var winWidth = $(window).width();
+    // var winHeight = $(window).height();
+    // var navHeight = $('.fixed-nav.bg-dark').height();
+    // var fixHeight = winHeight - navHeight;
+    // var padding = 0;
+    // var paddingTop = 0;
+    // var paddingHeight = 0;
+    // if (winWidth <= 2000 && winWidth > 1600) {
+    //     padding = 90;
+    //     paddingTop = padding / 2;
+    // } else if (winWidth <= 1600 && winWidth > 1300) {
+    //     padding = 80;
+    //     paddingTop = padding / 2;
+    // } else if (winWidth <= 1300 && winWidth > 768) {
+    //     padding = 60;
+    //     paddingTop = padding / 2;
+    // } else if (winWidth <= 768 && winWidth > 414) {
+    //     fixHeight = fixHeight - 68;
+    //     padding = 50;
+    //     paddingTop = padding / 2;
+    // } else if (winWidth <= 414 && winWidth > 375) {
+    //     fixHeight = fixHeight - 68;
+    //     padding = 50;
+    //     paddingTop = padding / 2;
+    //     if (window.orientation == 0) {
+    //         $('#wheel-blue').css('margin-left', '50px');
+    //     } else {
+    //         $('#wheel-blue').css('margin-left', '0px');
+    //     }
+    // } else if (winWidth <= 375 && winWidth > 360) {
+    //     fixHeight = fixHeight - 68;
+    //     padding = 50;
+    //     paddingTop = padding / 2;
+    //     if (window.orientation == 0) {
+    //         $('#wheel-blue').css('margin-left', '50px');
+    //     } else {
+    //         $('#wheel-blue').css('margin-left', '0px');
+    //     }
+    // } else if (winWidth <= 360 && winWidth > 320) {
+    //     fixHeight = fixHeight - 68;
+    //     padding = 50;
+    //     paddingTop = padding / 2;
+    //     if (window.orientation == 0) {
+    //         $('#wheel-blue').css('margin-left', '50px');
+    //     } else {
+    //         $('#wheel-blue').css('margin-left', '0px');
+    //     }
+    // } else if (winWidth <= 320) {
+    //     fixHeight = fixHeight - 60.2;
+    //     padding = 50;
+    //     paddingTop = padding / 2;
+    //     if (window.orientation == 0) {
+    //         $('#wheel-blue').css('margin-left', '50px');
+    //     } else {
+    //         $('#wheel-blue').css('margin-left', '0px');
+    //     }
+    // }
 
-    paddingHeight = fixHeight - padding;
-    halfPaddingHeight = paddingHeight / 2;
+    // paddingHeight = fixHeight - padding;
+    // halfPaddingHeight = paddingHeight / 2;
 
-    $('#wheel-game').css('height', fixHeight);
-    $('.wheel-inner.wheel-blue').css('height', fixHeight);
-    $('.sWheel-marker > img').css('height', fixHeight/5);
-    $('#wheel-blue').css('height', paddingHeight);
-    $('#wheel-blue').css('margin-top', paddingTop);
-    $('.wheel-button').css('width', paddingHeight);
-    $('.wheel-button').css('height', paddingHeight);
-    $('.wheel-button').css('top', '50%');
-    $('.wheel-button').css('left', '50%');
-    $('.wheel-button').css('margin-top', -halfPaddingHeight);
-    if (winWidth <= 414 && winWidth > 375) {
-        $('.wheel-button').css('margin-left', '-136px');
-    } else if (winWidth <= 375 && winWidth > 360) {
-        $('.wheel-button').css('margin-left', '-117px');
-    } else if (winWidth <= 360 && winWidth > 320) {
-        $('.wheel-button').css('margin-left', '-109px');
-    } else if (winWidth <= 320 && winWidth > 0) {
-        $('.wheel-button').css('margin-left', '-90px');
-    } else {
-        $('.wheel-button').css('margin-left', -halfPaddingHeight);
-    }
-    // $('#wheel-blue').css('display', 'inline');
-    // $('.wheel-button').css('display', 'inline');
+    // $('#wheel-game').css('height', fixHeight);
+    // $('.wheel-inner.wheel-blue').css('height', fixHeight);
+    // $('.sWheel-marker > img').css('height', fixHeight/5);
+    // $('#wheel-blue').css('height', paddingHeight);
+    // $('#wheel-blue').css('margin-top', paddingTop);
+    // $('.wheel-button').css('width', paddingHeight);
+    // $('.wheel-button').css('height', paddingHeight);
+    // $('.wheel-button').css('top', '50%');
+    // $('.wheel-button').css('left', '50%');
+    // $('.wheel-button').css('margin-top', -halfPaddingHeight);
+    // if (winWidth <= 414 && winWidth > 375) {
+    //     $('.wheel-button').css('margin-left', '-136px');
+    // } else if (winWidth <= 375 && winWidth > 360) {
+    //     $('.wheel-button').css('margin-left', '-117px');
+    // } else if (winWidth <= 360 && winWidth > 320) {
+    //     $('.wheel-button').css('margin-left', '-109px');
+    // } else if (winWidth <= 320 && winWidth > 0) {
+    //     $('.wheel-button').css('margin-left', '-90px');
+    // } else {
+    //     $('.wheel-button').css('margin-left', -halfPaddingHeight);
+    // }
+    // // $('#wheel-blue').css('display', 'inline');
+    // // $('.wheel-button').css('display', 'inline');
 
-    $(window).resize(function () {
-        var winWidth = $(window).width();
-        var winHeight = $(window).height();
-        var navHeight = $('.fixed-nav.bg-dark').height();
-        var fixHeight = winHeight - navHeight;
-        var padding = 0;
-        var paddingTop = 0;
-        var paddingHeight = 0;
+    // $(window).resize(function () {
+    //     var winWidth = $(window).width();
+    //     var winHeight = $(window).height();
+    //     var navHeight = $('.fixed-nav.bg-dark').height();
+    //     var fixHeight = winHeight - navHeight;
+    //     var padding = 0;
+    //     var paddingTop = 0;
+    //     var paddingHeight = 0;
 
-        if (winWidth <= 2000 && winWidth > 1600) {
-            padding = 90;
-            paddingTop = padding / 2;
-        } else if (winWidth <= 1600 && winWidth > 1300) {
-            padding = 80;
-            paddingTop = padding / 2;
-        } else if (winWidth <= 1300 && winWidth > 768) {
-            padding = 60;
-            paddingTop = padding / 2;
-        }
+    //     if (winWidth <= 2000 && winWidth > 1600) {
+    //         padding = 90;
+    //         paddingTop = padding / 2;
+    //     } else if (winWidth <= 1600 && winWidth > 1300) {
+    //         padding = 80;
+    //         paddingTop = padding / 2;
+    //     } else if (winWidth <= 1300 && winWidth > 768) {
+    //         padding = 60;
+    //         paddingTop = padding / 2;
+    //     }
 
-        if (window.orientation == 0) {
-            if (winWidth <= 768 && winWidth > 414) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-            } else if (winWidth <= 414 && winWidth > 375) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '50px');
-            } else if (winWidth <= 375 && winWidth > 360) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '50px');
-            } else if (winWidth <= 360 && winWidth > 320) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '50px');
-            } else if (winWidth <= 320) {
-                fixHeight = fixHeight - 60.2;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '50px');
-            }
-        } else {
-            if (winWidth <= 768 && winWidth > 414) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '0px');
-            } else if (winWidth <= 414 && winWidth > 375) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '0px');
-            } else if (winWidth <= 375 && winWidth > 360) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '0px');
-            } else if (winWidth <= 360 && winWidth > 320) {
-                fixHeight = fixHeight - 68;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '0px');
-            } else if (winWidth <= 320) {
-                fixHeight = fixHeight - 60.2;
-                padding = 50;
-                paddingTop = padding / 2;
-                $('#wheel-blue').css('margin-left', '0px');
-            }
-        }
+    //     if (window.orientation == 0) {
+    //         if (winWidth <= 768 && winWidth > 414) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //         } else if (winWidth <= 414 && winWidth > 375) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '50px');
+    //         } else if (winWidth <= 375 && winWidth > 360) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '50px');
+    //         } else if (winWidth <= 360 && winWidth > 320) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '50px');
+    //         } else if (winWidth <= 320) {
+    //             fixHeight = fixHeight - 60.2;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '50px');
+    //         }
+    //     } else {
+    //         if (winWidth <= 768 && winWidth > 414) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '0px');
+    //         } else if (winWidth <= 414 && winWidth > 375) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '0px');
+    //         } else if (winWidth <= 375 && winWidth > 360) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '0px');
+    //         } else if (winWidth <= 360 && winWidth > 320) {
+    //             fixHeight = fixHeight - 68;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '0px');
+    //         } else if (winWidth <= 320) {
+    //             fixHeight = fixHeight - 60.2;
+    //             padding = 50;
+    //             paddingTop = padding / 2;
+    //             $('#wheel-blue').css('margin-left', '0px');
+    //         }
+    //     }
 
-        paddingHeight = fixHeight - padding;
-        halfPaddingHeight = paddingHeight / 2;
+    //     paddingHeight = fixHeight - padding;
+    //     halfPaddingHeight = paddingHeight / 2;
 
-        $('#wheel-game').css('height', fixHeight);
-        $('.wheel-inner.wheel-blue').css('height', fixHeight);
-        $('.sWheel-marker > img').css('height', fixHeight/5);
-        $('#wheel-blue').css('height', paddingHeight);
-        $('#wheel-blue').css('margin-top', paddingTop);
-        $('.wheel-button').css('width', paddingHeight);
-        $('.wheel-button').css('height', paddingHeight);
-        $('.wheel-button').css('top', '50%');
-        $('.wheel-button').css('left', '50%');
-        $('.wheel-button').css('margin-top', -halfPaddingHeight);
-        if (winWidth <= 414 && winWidth > 375) {
-            $('.wheel-button').css('margin-left', '-136px');
-        } else if (winWidth <= 375 && winWidth > 360) {
-            $('.wheel-button').css('margin-left', '-117px');
-        } else if (winWidth <= 360 && winWidth > 320) {
-            $('.wheel-button').css('margin-left', '-109px');
-        } else if (winWidth <= 320 && winWidth > 0) {
-            $('.wheel-button').css('margin-left', '-90px');
-        } else {
-            $('.wheel-button').css('margin-left', -halfPaddingHeight);
-        }
-    });
+    //     $('#wheel-game').css('height', fixHeight);
+    //     $('.wheel-inner.wheel-blue').css('height', fixHeight);
+    //     $('.sWheel-marker > img').css('height', fixHeight/5);
+    //     $('#wheel-blue').css('height', paddingHeight);
+    //     $('#wheel-blue').css('margin-top', paddingTop);
+    //     $('.wheel-button').css('width', paddingHeight);
+    //     $('.wheel-button').css('height', paddingHeight);
+    //     $('.wheel-button').css('top', '50%');
+    //     $('.wheel-button').css('left', '50%');
+    //     $('.wheel-button').css('margin-top', -halfPaddingHeight);
+    //     if (winWidth <= 414 && winWidth > 375) {
+    //         $('.wheel-button').css('margin-left', '-136px');
+    //     } else if (winWidth <= 375 && winWidth > 360) {
+    //         $('.wheel-button').css('margin-left', '-117px');
+    //     } else if (winWidth <= 360 && winWidth > 320) {
+    //         $('.wheel-button').css('margin-left', '-109px');
+    //     } else if (winWidth <= 320 && winWidth > 0) {
+    //         $('.wheel-button').css('margin-left', '-90px');
+    //     } else {
+    //         $('.wheel-button').css('margin-left', -halfPaddingHeight);
+    //     }
+    // });
 });

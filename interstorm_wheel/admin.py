@@ -73,8 +73,8 @@ class WheelAdmin(admin.ModelAdmin):
 
 @admin.register(WheelBonusCode)
 class WheelAdminBonus(admin.ModelAdmin):
-    fields = ('winning_key','level','bonus_key', 'bonus_code')
-    list_display = ('winning_key','level','bonus_key', 'bonus_code')
+    fields = ('winning_key','level','bonus_key', 'bonus_code','bonus_detail')
+    list_display = ('winning_key','level','bonus_key', 'bonus_code','bonus_detail')
 
     def has_add_permission(self, request, obj=None):
         return False
