@@ -106,8 +106,8 @@ class WheelAdminImageLevel(admin.ModelAdmin):
     # fields = ('image','level')
    
     
-    # def has_add_permission(self, request, obj=None):
-    #     return False
+    def has_add_permission(self, request, obj=None):
+        return False
 
     
     def get_queryset(self, request):
@@ -151,6 +151,10 @@ class WheelLevelManageAdmin(admin.ModelAdmin):
     list_display = ('level','deposit')
     fields = ['level','deposit']
     readonly_fields = ['vendor',]
+
+    def has_add_permission(self, request, obj=None):
+        return False
+        
     def get_queryset(self, request):
         qs = super(WheelLevelManageAdmin, self).get_queryset(request)
         print(request.user.is_superuser)
