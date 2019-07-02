@@ -53,7 +53,7 @@ var WHEEL = (function () {
                     }else{
                         // alert('No available')
                         const el = document.createElement('div')
-                        el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please deposit for play loyalty games</center>"
+                        el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/> <br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
                         swal({
                             title: "No available!",
                             content: el,
@@ -63,7 +63,7 @@ var WHEEL = (function () {
                     }
                 }else{
                     const el = document.createElement('div')
-                    el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please wait for games running</center>"
+                    el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please wait for games running. </center>"
                     swal({
                         title: "Games is running!",
                         content: el,
@@ -294,7 +294,7 @@ var WHEEL = (function () {
                     // showCurrentWheel(session,newTransactions);
                     if(!gameIsAvailable){
                         const el = document.createElement('div')
-                        el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please deposit for play loyalty games</center>"
+                        el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
                         swal({
                             title: "No available! !",
                             content: el,
@@ -314,9 +314,9 @@ var WHEEL = (function () {
             console.log('login fales')
             setImageLevel()
             const el = document.createElement('div')
-            el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please you login or signup for play loyalty games</center>"
+            el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/><br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
             swal({
-                title: "Not Login",
+                title: "NOT LOGGED IN",
                 content: el,
                 // type:'warning',
                 // icon: "warning",

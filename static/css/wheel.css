@@ -323,7 +323,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255);
     padding: 10px;
     font-size: 4.5em;
     /* text-align: center; */
@@ -345,7 +345,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255);
     padding: 10px;
     /* font-size: 2em; */
     border-radius: 4px;
@@ -368,7 +368,7 @@ body {
 }
 
 .text-spin{
-    color: whitesmoke;
+    color: rgb(110, 110, 110);
 }
 @media (max-width: 576px){
     .show-spin{
@@ -384,7 +384,7 @@ body {
         /* top: 50%; */
         /* left: 50%; */
         /* transform: translate(-50%,-50%); */
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255);
         padding: 10px;
         font-size: 3.5em;
         /* text-align: center; */
@@ -405,7 +405,7 @@ body {
         /* top: 50%; */
         /* left: 50%; */
         /* transform: translate(-50%,-50%); */
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255);
         padding: 10px;
         /* font-size: 2em; */
         border-radius: 4px;
@@ -430,7 +430,7 @@ body {
         /* top: 50%; */
         /* left: 50%; */
         /* transform: translate(-50%,-50%); */
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255);
         padding: 10px;
         font-size: 3.5em;
         /* text-align: center; */
@@ -451,7 +451,7 @@ body {
         /* top: 50%; */
         /* left: 50%; */
         /* transform: translate(-50%,-50%); */
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255);
         padding: 10px;
         /* font-size: 2em; */
         border-radius: 4px;
@@ -476,7 +476,7 @@ body {
         /* top: 50%; */
         /* left: 50%; */
         /* transform: translate(-50%,-50%); */
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255);
         padding: 10px;
         font-size: 3.5em;
         /* text-align: center; */
@@ -497,7 +497,7 @@ body {
         /* top: 50%; */
         /* left: 50%; */
         /* transform: translate(-50%,-50%); */
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255);
         padding: 10px;
         /* font-size: 2em; */
         border-radius: 4px;
