@@ -136,3 +136,5 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 
 MEDIA_URL = '/mediafile/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'mediafile')
+
+X_FRAME_OPTIONS = 'ALLOW-FROM http://82.221.113.132:3000/Wheel'
