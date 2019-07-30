@@ -24,7 +24,7 @@ def index(request):
 	# import pprint
 	# pp = pprint.PrettyPrinter(indent=4)
 	# pp.pprint(request.GET)
-	userid = request.GET.get('userid')
+	userid = request.GET.get('cmsSessionID')
 	usercode = request.GET.get('usercode')
 	print(userid,usercode)
 	if(InterStormUserVendor.objects.filter(usercode = usercode).exists()):
