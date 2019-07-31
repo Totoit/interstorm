@@ -137,4 +137,4 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 MEDIA_URL = '/mediafile/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'mediafile')
 
-X_FRAME_OPTIONS = 'AOLLOWALL'
+X_FRAME_OPTIONS = 'ALLOWALL'
