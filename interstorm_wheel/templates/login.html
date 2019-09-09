@@ -94,15 +94,15 @@
         }
         }
         function resizeIframe() {
-            console.log("==resizeIframe==");
+            // console.log("==resizeIframe==");
             if (typeof $("iframe").contents().find('html').height() != 'undefined'){
                 // console.log('ssss');
                 // console.log($("iframe").contents().find('html').height())
                 if ($("iframe").contents().find('html').height() > 100) {
-                    console.log("==iframeBetting resizeIframe==");
+                    // console.log("==iframeBetting resizeIframe==");
                     $('#iframeBetting').height(  $("iframe").contents().find('html').height()  + 'px') ;
                 } else {
-                    console.log("==iframeBetting resizeIframe2==");
+                    // console.log("==iframeBetting resizeIframe2==");
                     setTimeout(function (e) {
                         resizeIframe();
                     }, 50);

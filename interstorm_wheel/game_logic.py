@@ -450,6 +450,14 @@ class GameAccess:
 				self.access_record.level_3 -= 1
 			
 		self.access_record.save()
+	
+	def reset_spin(self):
+		print('reset Spin')
+		self.access_record.level_1 = 0
+		self.access_record.level_2 = 0
+		self.access_record.level_3 = 0
+			
+		self.access_record.save()
 
 
 def suffle_price(reward):

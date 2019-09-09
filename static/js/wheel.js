@@ -5,7 +5,8 @@ var WHEEL = (function () {
 
     var userId = null,
         userEmail = null,
-        level=1;
+        level=1,
+        transactions;
 
 
     // positions for the wheel for the various winnings
@@ -94,7 +95,7 @@ var WHEEL = (function () {
             return;
         }
         
-        var transactions = newTransactions || {};
+        transactions = newTransactions || {};
 
         $.ajax({
             url: '/api/get_spins',
@@ -389,25 +390,47 @@ var WHEEL = (function () {
             return;
         }
 
-        var parameters = {
-            'bonusCode': bonusCode
-        };
+        
         $('.waiting-api').css('display', 'inline');
         try {
-            userSession.call("/user/bonus#apply", [], parameters).then(function (result) {
-                console.log('bonus', result)
-                $('.waiting-api').css('display', 'none');
-                hideInfoBox();
-            }, function (err) {
-                $('.waiting-api').css('display', 'none');
-                hideInfoBox();
-                console.log(err)
-                swal({
-                    title: ("Warning!"),
-                    text: err.kwargs.desc + ' ' + ('Could you contact support'),
-                    icon: "warning",
-                    button: ("OK"),
-                });
+            console.log('userId',userId)
+            var transaction_data = transactions.transactions[0]
+            $.ajax({
+                url: '/api/get_convert_bonus',
+                type: 'POST',
+                method: 'POST',
+                data: {
+                    userID:userId,
+                    bonusCode:bonusCode,
+                    debitAccountID:transaction_data.transactionID,
+                    debitAmount:transaction_data.credit.amount,
+                    currency:transaction_data.credit.currency
+                },
+                success: function (res) {
+                    var result = JSON.parse(res)
+                    if(result.bonusWalletID !== undefined){
+                        console.log('worked')
+                    }else{
+                        $('.waiting-api').css('display', 'none');
+                        hideInfoBox();
+                        swal({
+                            title: ("Warning!"),
+                            text: ('Error giving bonus code Could you contact support'),
+                            icon: "warning",
+                            button: ("OK"),
+                        });
+                    }
+                },
+                error: function (xhr, errmsg, err) {
+                    $('.waiting-api').css('display', 'none');
+                    hideInfoBox();
+                    swal({
+                        title: ("Warning!"),
+                        text: ('Error giving bonus code Could you contact support'),
+                        icon: "warning",
+                        button: ("OK"),
+                    });
+                }
             });
         } catch (e) {
             $('.waiting-api').css('display', 'none');
@@ -838,7 +861,7 @@ var WHEEL = (function () {
             // }
         }, 1000);
         
-        // giveUserBonusCode(winBonusCode);
+        giveUserBonusCode(winBonusCode);
         getAvailableSpins({},function(){
             setTimeout(function () {
                 isWheelRunning = false;

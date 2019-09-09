@@ -16,6 +16,10 @@ from interstorm import settings
 from django.views.decorators.csrf import csrf_protect
 from interstorm_vendor.models import InterStormUserVendor
 from site_config.models import SiteConfig
+
+from .ubsMatrix import ubsSystem
+
+res = ubsSystem()
 # Create your views here.
 @never_cache
 def index(request):
@@ -75,6 +79,38 @@ def login(request):
 	# domain = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).domain)
     # url = str(SiteConfig.objects.get(vendor_id = InterStormUserVendor.objects.get(usercode = code).user_id).url)
 
+@csrf_exempt
+def getGrantedBonuses(request):
+
+	if request.method == 'POST':
+
+		response = res.getEligibleDepositBonusPrograms(request)
+		response = json.dumps(response, default=lambda o: o.__dict__,
+            sort_keys=True, indent=4)
+
+	return JsonResponse(response,safe=False)
+
+@csrf_exempt
+def getEligibleClaimBonus(request):
+
+	if request.method == 'POST':
+
+		response = res.getEligibleClaimBonusProgram(request)
+		response = json.dumps(response, default=lambda o: o.__dict__,
+            sort_keys=True, indent=4)
+
+	return JsonResponse(response,safe=False)
+
+@csrf_exempt
+def getConvertBonus(request):
+
+	if request.method == 'POST':
+
+		response = res.postconvertToBonus(request)
+		response = json.dumps(response, default=lambda o: o.__dict__,
+            sort_keys=True, indent=4)
+
+	return JsonResponse(response,safe=False)
 
 @csrf_exempt
 def get_last_transaction(request):
@@ -201,13 +237,14 @@ def spin(request):
 
 def handle_transactions(game_access, transactions):
 	# insert new transactions
-	
+	print('handle_transactions')
 	# free_spin  = 0;
 	if 'totalRecordCount' in transactions and transactions['totalRecordCount'] > 0:
 		print('game_access.vendor',game_access.vendor)
 		# print(transactions['totalRecordCount'])
 		# vendor_id = InterStormUserVendor.objects.get(usercode = game_access.vendor).user_id
 		# print(transactions['transactions'])
+		deposit_level = 1
 		for transaction in transactions['transactions']:
 			transaction_id = transaction['transactionID']
 			transaction_date = dateutil.parser.parse(transaction['time'])
@@ -249,7 +286,7 @@ def handle_transactions(game_access, transactions):
 			
 			deposit_euro = totalTransactions
 			# find level
-			deposit_level = 1
+			# deposit_level = 1
 			
 		
 			if deposit_euro < level1[0].deposit:
@@ -260,7 +297,9 @@ def handle_transactions(game_access, transactions):
 				deposit_level = 3
 			# get spin
 			
-			game_access.add_spins(str(deposit_level), 1, 'deposit ' + str(amount) + '(' + transaction_id + ')')
+		game_access.add_spins(str(deposit_level), 1, 'deposit ' + str(amount) + '(' + transaction_id + ')')
+	else:
+		game_access.reset_spin()
 			
 		
 
