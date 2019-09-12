@@ -14,7 +14,7 @@ class ubsSystem:
         self.urlApi = 'https://ubs.stage.everymatrix.com/'
         self.payload ={}
         self.header ={}
-        # self.loginApp()
+        self.loginApp()
 
     def loginApp(self):
         # self.payload = (('username', 'ubs_app_user_buckandbutler'), ('password', '*App_user_buck321!'),('culture','en'))

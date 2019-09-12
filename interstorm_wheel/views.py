@@ -248,9 +248,9 @@ def handle_transactions(game_access, transactions):
 		for transaction in transactions['transactions']:
 			transaction_id = transaction['transactionID']
 			transaction_date = dateutil.parser.parse(transaction['time'])
-			amount = transaction['debit']['amount']
-			name = transaction['debit']['name']
-			currency = transaction['debit']['currency']
+			amount = transaction['credit']['amount']
+			name = transaction['credit']['name']
+			currency = transaction['credit']['currency']
 
 			WheelTransaction.objects.create(
 				user_id=game_access.user_id, 
@@ -287,8 +287,6 @@ def handle_transactions(game_access, transactions):
 			deposit_euro = totalTransactions
 			# find level
 			# deposit_level = 1
-			
-		
 			if deposit_euro < level1[0].deposit:
 				deposit_level  = 1
 			elif deposit_euro >= level1[0].deposit and deposit_euro < level2[0].deposit:
