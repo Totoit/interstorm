@@ -1,5 +1,5 @@
 from .settings import *
-import pymysql
+# import pymysql
 import sys
 # pymysql.install_as_MySQLdb()
 
