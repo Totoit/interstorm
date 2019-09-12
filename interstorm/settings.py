@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c#z%s-+3t+14^$(cv6z(bo4p)tqe!72!d3q6gjnrkk-t9u4%ue'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'interstorm_wheel',
     'site_config',
     'interstorm_vendor',
-    
 ]
 
 MIDDLEWARE = [
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'interstorm.middleware.DefaultLanguageMiddleware',
 ]
 
 ROOT_URLCONF = 'interstorm.urls'
@@ -141,3 +142,11 @@ X_FRAME_OPTIONS = 'ALLOWALL'
 
 UBSSYSTEM_user =  'ubs_app_user_sandboxwcapi'
 UBSSYSTEM_password =  'UBSAppUs3r123!456'
+
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('lt', _('Lithuanian')),
+    ('en', _('English')),
+    ('ru', _('Russian'))
+)
