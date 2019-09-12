@@ -140,9 +140,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'mediafile')
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 
-UBSSYSTEM_user =  'ubs_app_user_sandboxwcapi'
-UBSSYSTEM_password =  'UBSAppUs3r123!456'
-
+# UBSSYSTEM_user =  'ubs_app_user_sandboxwcapi'
+# UBSSYSTEM_password =  'UBSAppUs3r123!456'
+UBSSYSTEM_user = 'ubs_app_user_shangrilalive_com'
+UBSSYSTEM_password = 'RJokCde8LUPW!'
 LANGUAGE_CODE = 'en'
 
 LANGUAGES = (
