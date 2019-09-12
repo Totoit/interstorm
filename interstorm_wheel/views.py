@@ -19,7 +19,7 @@ from site_config.models import SiteConfig
 
 from .ubsMatrix import ubsSystem
 
-res = ubsSystem()
+# res = ubsSystem()
 # Create your views here.
 @never_cache
 def index(request):
