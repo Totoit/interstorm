@@ -56,8 +56,8 @@ urlpatterns = [
     # url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns = i18n_patterns(
-    url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-    url(r'^admin/', admin.site.urls),
-    url(r'', include('interstorm_wheel.urls')),
-)
+# urlpatterns = i18n_patterns(
+#     url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+#     url(r'^admin/', admin.site.urls),
+#     url(r'', include('interstorm_wheel.urls')),
+# )

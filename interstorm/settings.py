@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'interstorm.middleware.DefaultLanguageMiddleware',
+    # 'interstorm.middleware.DefaultLanguageMiddleware',
 ]
 
 ROOT_URLCONF = 'interstorm.urls'
