@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c#z%s-+3t+14^$(cv6z(bo4p)tqe!72!d3q6gjnrkk-t9u4%ue'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -140,10 +140,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'mediafile')
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 
-# UBSSYSTEM_user =  'ubs_app_user_sandboxwcapi'
-# UBSSYSTEM_password =  'UBSAppUs3r123!456'
-UBSSYSTEM_user = 'ubs_app_user_shangrilalive_com'
-UBSSYSTEM_password = 'RJokCde8LUPW!'
+UBSSYSTEM_url = 'https://acs-external-stage.everymatrix.com/'
+UBSSYSTEM_urlApi = 'http://ubs.stage.everymatrix.com/'
+UBSSYSTEM_user =  'ubs_app_user_sandboxwcapi'
+UBSSYSTEM_password =  'UBSAppUs3r123!456'
+
 LANGUAGE_CODE = 'en'
 
 LANGUAGES = (

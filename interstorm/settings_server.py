@@ -3,7 +3,7 @@ from .settings import *
 import sys
 # pymysql.install_as_MySQLdb()
 
-
+DEBUG = False
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -14,7 +14,12 @@ import sys
 #     }
 # }
 
-# ROOT_URLCONF = 'pwr.urls_server'
+ROOT_URLCONF = 'interstorm.urls_server'
+
+UBSSYSTEM_url = 'https://acs-external.everymatrix.com/'
+UBSSYSTEM_urlApi = 'http://ubs.everymatrix.com/'
+UBSSYSTEM_user = 'ubs_app_user_shangrilalive_com'
+UBSSYSTEM_password = 'RJokCde8LUPW!'
 
 INSTALLED_APPS += (
     'redis_cache',
@@ -119,3 +124,4 @@ TRANSLATIONS_API_IGNORED_PATHS = ['front-']
 TRANSLATIONS_API_RETURN_ALL = False
 
 TRANSLATIONS_SYNC_REMOTE_URL = 'http://localhost/translations/sync/'
+

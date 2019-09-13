@@ -1,5 +1,5 @@
 import json
-from interstorm.settings import UBSSYSTEM_user,UBSSYSTEM_password,LANGUAGE_CODE
+from interstorm.settings import UBSSYSTEM_user,UBSSYSTEM_password,LANGUAGE_CODE,UBSSYSTEM_url,UBSSYSTEM_urlApi
 import requests
 
 class Struct:
@@ -10,10 +10,8 @@ class Struct:
 class ubsSystem:
 
     def __init__(self):
-        self.url = 'https://acs-external.everymatrix.com/loginApp'
-        # self.url = 'https://acs-external-stage.everymatrix.com/'//stage
-        # self.urlApi = 'http://ubs.stage.everymatrix.com/'
-        self.urlApi = 'http://ubs.everymatrix.com/'
+        self.url = UBSSYSTEM_url
+        self.urlApi = UBSSYSTEM_urlApi
         self.payload ={}
         self.header ={}
         self.loginApp()
