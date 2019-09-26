@@ -73,8 +73,8 @@ class WheelAdmin(admin.ModelAdmin):
 
 @admin.register(WheelBonusCode)
 class WheelAdminBonus(admin.ModelAdmin):
-    fields = ('winning_key','level','bonus_key', 'bonus_code','bonus_detail')
-    list_display = ('winning_key','level','bonus_key', 'bonus_code','bonus_detail')
+    fields = ('winning_key','level', 'bonus_code','bonus_detail')
+    list_display = ('winning_key','level', 'bonus_code','bonus_detail')
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -83,13 +83,13 @@ class WheelAdminBonus(admin.ModelAdmin):
         return False
 
     def get_readonly_fields(self, request, obj=None):
-        return ['winning_key','level','bonus_key']
+        return ['winning_key','level']
 
     def get_queryset(self, request):
         qs = super(WheelAdminBonus, self).get_queryset(request)
         # print(request.user.is_superuser)
         if request.user.is_superuser:
-            self.list_display = ('winning_key','level','bonus_key', 'bonus_code','vendor')
+            self.list_display = ('winning_key','level', 'bonus_code','vendor')
             # self.fields = ['name', 'detail','create_by']
             # self.readonly_fields = ['create_by']
             self.search_fields = ('vendor')
