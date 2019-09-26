@@ -106,3 +106,6 @@ class WheelLevelManage(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,blank=False)
     level = models.IntegerField(choices=ALL_LEVEL,blank=False)
     deposit = models.FloatField("Deposit Less Than",blank=False)
+
+    class Meta:
+        verbose_name = "Wheel Level Management"
