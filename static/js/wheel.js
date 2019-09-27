@@ -12,15 +12,15 @@ var WHEEL = (function () {
     // positions for the wheel for the various winnings
     var positions = {
         blue: {
-            'prize_1': [[340, 295],[175,130]],
-            'prize_2': [[285,240], [120,75]],
-            'prize_3': [[230,185], [65,20]],
-            'bonus': [[360,350],[10,0]]
+            'coin': [[340, 295],[175,130]],
+            'chip': [[285,240], [120,75]],
+            'box': [[230,185], [65,20]],
+            'jackpot': [[360,350],[10,0]]
         },
 
     };
     // the posible values the bonus game can land on
-    var possibleBonuses = ['prize_1', 'prize_2', 'prize_3'];
+    var possibleBonuses = ['coin', 'chip', 'box'];
     var gameIsAvailable = false;
     var availableSpins = {
         blue: 0,

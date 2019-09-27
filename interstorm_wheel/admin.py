@@ -50,8 +50,8 @@ class WheelAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def get_readonly_fields(self, request, obj=None):
-        return ['percent_id','rewards','level']
+    # def get_readonly_fields(self, request, obj=None):
+    #     return ['percent_id','rewards','level']
 
     def get_queryset(self, request):
         qs = super(WheelAdmin, self).get_queryset(request)
@@ -82,8 +82,8 @@ class WheelAdminBonus(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
-    def get_readonly_fields(self, request, obj=None):
-        return ['winning_key','level']
+    # def get_readonly_fields(self, request, obj=None):
+    #     return ['winning_key','level']
 
     def get_queryset(self, request):
         qs = super(WheelAdminBonus, self).get_queryset(request)
