@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -148,7 +149,10 @@ UBSSYSTEM_password =  'UBSAppUs3r123!456'
 LANGUAGE_CODE = 'en'
 
 LANGUAGES = (
-    ('lt', _('Lithuanian')),
     ('en', _('English')),
-    ('ru', _('Russian'))
+    ('ru', _('Russian')),
+    ('az', _('Azeri')),
+    ('de', _('German')),
+    ('tr', _('Turkish')),
+    ('fa', _('Farsi')),
 )

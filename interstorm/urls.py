@@ -48,16 +48,35 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.i18n import JavaScriptCatalog
 from django.conf.urls.i18n import i18n_patterns
+from interstorm_wheel import views as Wheel
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    url(r'', include('interstorm_wheel.urls')),
+    # url(r'', include('interstorm_wheel.urls')),
+    # url(r'^$', Wheel.login),
+    # url(r'^game', Wheel.index),
     url(r'^admin/', admin.site.urls),
     url(r'^get_game_api/', InterStoremVenderViews.get_game_api),
+    url((r'^api/'),include([
+        url(r'^spin$', csrf_exempt(Wheel.spin), name='spin'),
+        url(r'^get_spins$', Wheel.get_spins, name='get_spins'),
+        url(r'^get_last_transaction$', Wheel.get_last_transaction, name='get_last_transaction'),
+        url(r'^get_bonus_code$', Wheel.get_bonus_code, name='get_bonus_code'),
+        url(r'^get_wheel_image', Wheel.get_wheel_image, name='get_wheel_image'),
+        url(r'^get_granted_bonuses$', Wheel.getGrantedBonuses, name='get_granted_bonuses'),
+        url(r'^get_eligible_claimBonus',Wheel.getEligibleClaimBonus,name='get_eligible_claimBonus'),
+        url(r'^get_convert_bonus',Wheel.getConvertBonus,name='get_convert_bonus')
+    ]))
     # url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# urlpatterns = i18n_patterns(
-#     url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-#     url(r'^admin/', admin.site.urls),
-#     url(r'', include('interstorm_wheel.urls')),
-# )
+urlpatterns += i18n_patterns(
+    url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    # url(r'^admin/', admin.site.urls),
+    url(r'^$', Wheel.login),
+    url(r'^game', Wheel.index),
+    
+    # url(r'', include('interstorm_wheel.urls')),
+    
+    
+)
