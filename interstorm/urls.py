@@ -50,7 +50,7 @@ from django.views.i18n import JavaScriptCatalog
 from django.conf.urls.i18n import i18n_patterns
 from interstorm_wheel import views as Wheel
 from django.views.decorators.csrf import csrf_exempt
-
+from interstorm import views as AppViews
 urlpatterns = [
     # url(r'', include('interstorm_wheel.urls')),
     # url(r'^$', Wheel.login),
@@ -65,7 +65,8 @@ urlpatterns = [
         url(r'^get_wheel_image', Wheel.get_wheel_image, name='get_wheel_image'),
         url(r'^get_granted_bonuses$', Wheel.getGrantedBonuses, name='get_granted_bonuses'),
         url(r'^get_eligible_claimBonus',Wheel.getEligibleClaimBonus,name='get_eligible_claimBonus'),
-        url(r'^get_convert_bonus',Wheel.getConvertBonus,name='get_convert_bonus')
+        url(r'^get_convert_bonus',Wheel.getConvertBonus,name='get_convert_bonus'),
+        url(r'^reload_uwsgi/', AppViews.reload_uwsgi ,name="reload-uwsgi"),
     ]))
     # url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
