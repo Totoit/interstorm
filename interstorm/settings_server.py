@@ -3,7 +3,7 @@ from .settings import *
 import sys
 # pymysql.install_as_MySQLdb()
 
-DEBUG = False
+# DEBUG = False
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
