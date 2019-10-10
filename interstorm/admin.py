@@ -1,0 +1,8 @@
+from django.contrib import admin
+from translation_manager.models import TranslationEntry,TranslationBackup,ProxyTranslationEntry
+from translation_manager.admin import TranslationEntryAdmin,TranslationBackupAdmin,ProxyTranslationEntryAdmin
+
+
+admin.site.register(TranslationEntry, TranslationEntryAdmin)
+admin.site.register(TranslationBackup, TranslationBackupAdmin)
+admin.site.register(ProxyTranslationEntry, ProxyTranslationEntryAdmin)
