@@ -1,4 +1,6 @@
-
+var gettext = window.gettext || function (s) {
+	return s;
+}
 var WHEEL = (function () {
     var goldWheel = null,
         blueWheel = null;
@@ -317,7 +319,7 @@ var WHEEL = (function () {
             const el = document.createElement('div')
             el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/><br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
             swal({
-                title: "NOT LOGGED IN",
+                title: gettext("TEXT_JS_NOT_LOGGED_IN"),
                 content: el,
                 // type:'warning',
                 // icon: "warning",
