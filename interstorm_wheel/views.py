@@ -111,6 +111,20 @@ def getConvertBonus(request):
             sort_keys=True, indent=4)
 
 	return JsonResponse(response,safe=False)
+@csrf_exempt
+def getConvertBonus2(request):
+	import requests
+
+	headers = {
+	}
+
+	data = {
+	}
+
+	response = requests.post('http://ubs.everymatrix.com/bonus/trigger/convert', headers=headers, data=data)
+	print(response.json())
+	return JsonResponse(response.json(),safe=False)
+
 
 @csrf_exempt
 def get_last_transaction(request):

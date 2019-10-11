@@ -66,6 +66,7 @@ urlpatterns = [
         url(r'^get_granted_bonuses$', Wheel.getGrantedBonuses, name='get_granted_bonuses'),
         url(r'^get_eligible_claimBonus',Wheel.getEligibleClaimBonus,name='get_eligible_claimBonus'),
         url(r'^get_convert_bonus',Wheel.getConvertBonus,name='get_convert_bonus'),
+        url(r'^get_converts_bonusest',Wheel.getConvertBonus2,name='get_convert_bonus_test'),
         url(r'^reload_uwsgi/', AppViews.reload_uwsgi ,name="reload-uwsgi"),
     ]))
     # url('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
