@@ -413,11 +413,12 @@ var WHEEL = (function () {
                     if(result.bonusWalletID !== undefined){
                         console.log('worked')
                     }else{
+                        console.log(result);
                         $('.waiting-api').css('display', 'none');
                         hideInfoBox();
                         swal({
                             title: ("Warning!"),
-                            text: ('Error giving bonus code Could you contact support'),
+                            text: ('Error giving bonus code Could you contact support\n'+JSON.stringify(result.result.error)),
                             icon: "warning",
                             button: ("OK"),
                         });
@@ -426,6 +427,7 @@ var WHEEL = (function () {
                 error: function (xhr, errmsg, err) {
                     $('.waiting-api').css('display', 'none');
                     hideInfoBox();
+                    console.log(xhr, errmsg, err)
                     swal({
                         title: ("Warning!"),
                         text: ('Error giving bonus code Could you contact support'),
