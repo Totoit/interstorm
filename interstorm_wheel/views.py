@@ -19,7 +19,7 @@ from site_config.models import SiteConfig
 
 from .ubsMatrix import ubsSystem
 
-res = ubsSystem()
+# res = ubsSystem()
 # Create your views here.
 @never_cache
 def index(request):
@@ -103,9 +103,9 @@ def getEligibleClaimBonus(request):
 
 @csrf_exempt
 def getConvertBonus(request):
-
+	
 	if request.method == 'POST':
-
+		res = ubsSystem()
 		response = res.postconvertToBonus(request)
 		response = json.dumps(response, default=lambda o: o.__dict__,
             sort_keys=True, indent=4)
