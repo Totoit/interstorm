@@ -122,7 +122,7 @@ class ubsSystem:
             return Struct(**r.json())
         else:
             return {
-                'result': ("error", r.status_code)
+                'result': {"error": r.json()}
             }
 
     def getBonusWalletsByUser(self, request):

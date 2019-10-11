@@ -382,7 +382,7 @@ class GameAccess:
 		elif deposit_euro >= level1[0].deposit and deposit_euro < level2[0].deposit:
 			deposit_level = 2
 		else:
-			deposit_level = 3
+			deposit_level = 2
 		return deposit_level
 
 	def add_spins(self, game_type, spins, reason):

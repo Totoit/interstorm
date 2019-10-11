@@ -306,7 +306,7 @@ def handle_transactions(game_access, transactions):
 			elif deposit_euro >= level1[0].deposit and deposit_euro < level2[0].deposit:
 				deposit_level = 2
 			else:
-				deposit_level = 3
+				deposit_level = 2
 			# get spin
 			
 		game_access.add_spins(str(deposit_level), 1, 'deposit ' + str(amount) + '(' + transaction_id + ')')
