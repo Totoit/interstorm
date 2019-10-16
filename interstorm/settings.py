@@ -174,7 +174,7 @@ import sys
 ROOT_URLCONF = 'interstorm.urls_server'
 
 UBSSYSTEM_url = 'https://acs-external.everymatrix.com/'
-UBSSYSTEM_urlApi = 'http://ubs.everymatrix.com/'
+UBSSYSTEM_urlApi = 'https://ubs-external.everymatrix.com'
 UBSSYSTEM_user = 'ubs_app_user_shangrilalive_com'
 UBSSYSTEM_password = 'RJokCde8LUPW!'
 
