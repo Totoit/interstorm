@@ -169,50 +169,50 @@ def get_last_transaction(request):
 def get_spins(request):
 
 	if request.method == 'POST':
-		# csrf_invalid = CsrfViewMiddleware().process_view(request, None, (), {})
+		csrf_invalid = CsrfViewMiddleware().process_view(request, None, (), {})
 		user_id = request.POST.get('user_id');
 		transactions = json.loads(request.POST.get('transactions'));
 		vendor = request.POST.get('vendor');
 		# game_type = request.POST.get('game_type');
 		response = {}
 
-		# if csrf_invalid:
-		# 	response = {
-		# 		'error' : 'invalid CSRF Token'
-		# 	}
-		# else :
-		if user_id == None:
-			raise Exception('User ID is not valid')
-		else:
-			ip = get_client_ip(request)
-			game_access = GameAccess(user_id, get_client_ip(request),vendor)
-			show_game = False
-			level = 1
-
-			# give free spins based on transactions, if necessary
-			handle_transactions(game_access, transactions)
-			level = game_access.get_level()
-			check_spin = game_access.get_spin_count();
-			if level == '3':
-				if check_spin['level_1']  >  0 :
-					for i in range(check_spin['level_1']):
-						game_access.add_spins('3', 1, 'plus from level 1 ')
-						game_access.use_spin('1')
-				if check_spin['level_2']  >  0 :
-					for i in range(check_spin['level_2']):
-						game_access.add_spins('3', 1, 'plus from level 2 ')
-						game_access.use_spin('2')
-			elif level == '2':
-				if check_spin['level_1']  >  0 :
-					for i in range(check_spin['level_1']):
-						game_access.add_spins('2', 1, 'plus from level 1 ')
-						game_access.use_spin('1')
+		if csrf_invalid:
 			response = {
-				'spins': game_access.get_spin_count(),
-				'level':level,
-				'show_game': show_game,
-
+				'error' : 'invalid CSRF Token'
 			}
+		else :
+			if user_id == None:
+				raise Exception('User ID is not valid')
+			else:
+				ip = get_client_ip(request)
+				game_access = GameAccess(user_id, get_client_ip(request),vendor)
+				show_game = False
+				level = 1
+
+				# give free spins based on transactions, if necessary
+				handle_transactions(game_access, transactions)
+				level = game_access.get_level()
+				check_spin = game_access.get_spin_count();
+				if level == '3':
+					if check_spin['level_1']  >  0 :
+						for i in range(check_spin['level_1']):
+							game_access.add_spins('3', 1, 'plus from level 1 ')
+							game_access.use_spin('1')
+					if check_spin['level_2']  >  0 :
+						for i in range(check_spin['level_2']):
+							game_access.add_spins('3', 1, 'plus from level 2 ')
+							game_access.use_spin('2')
+				elif level == '2':
+					if check_spin['level_1']  >  0 :
+						for i in range(check_spin['level_1']):
+							game_access.add_spins('2', 1, 'plus from level 1 ')
+							game_access.use_spin('1')
+				response = {
+					'spins': game_access.get_spin_count(),
+					'level':level,
+					'show_game': show_game,
+
+				}
 
 			#'totalTransactions': totalTransactions.get('amount__sum'),
 			#'givenGoldSpins': givenGoldSpins.get('gold_spins__sum')
@@ -282,10 +282,14 @@ def handle_transactions(game_access, transactions):
 			# sumary monney
 			totalTransactions = 0
 			deposit_euro = 0
-			totalTransactionsQuery = WheelTransaction.objects.filter(user_id=game_access.user_id, currency=currency,vendor_id=game_access.vendor).aggregate(Sum('amount'))
-			totalTransactions = totalTransactionsQuery.get('amount__sum')
-			
-			totalTransactionsCount = WheelTransaction.objects.filter(user_id=game_access.user_id, currency=currency,vendor_id=game_access.vendor).count()
+			# totalTransactionsQuery = WheelTransaction.objects.filter(user_id=game_access.user_id, currency=currency,vendor_id=game_access.vendor).aggregate(Sum('amount'))
+			# totalTransactions = totalTransactionsQuery.get('amount__sum')
+			totalTransactionsQuery = WheelTransaction.objects.filter(user_id=game_access.user_id, vendor_id=game_access.vendor).order_by('-transaction_date')
+			if totalTransactionsQuery.exists():
+				totalTransactions = totalTransactionsQuery[0].amount
+				currency = totalTransactionsQuery[0].currency
+				totalTransactions = game_access.currencyChange(totalTransactions,currency)
+			# totalTransactionsCount = WheelTransaction.objects.filter(user_id=game_access.user_id, currency=currency,vendor_id=game_access.vendor).count()
 			
 			#---------------- change
 			
