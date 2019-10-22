@@ -59,7 +59,7 @@ urlpatterns = [
     url(r'^get_game_api/', InterStoremVenderViews.get_game_api),
     url((r'^api/'),include([
         url(r'^spin$', csrf_exempt(Wheel.spin), name='spin'),
-        url(r'^get_spins$', Wheel.get_spins, name='get_spins'),
+        url(r'^get_spins$', csrf_exempt(Wheel.get_spins), name='get_spins'),
         url(r'^get_last_transaction$', Wheel.get_last_transaction, name='get_last_transaction'),
         url(r'^get_bonus_code$', Wheel.get_bonus_code, name='get_bonus_code'),
         url(r'^get_wheel_image', Wheel.get_wheel_image, name='get_wheel_image'),

@@ -5,7 +5,8 @@ from django.urls import get_script_prefix, is_valid_path
 from django.utils import translation
 from django.utils.cache import patch_vary_headers
 from django.utils.deprecation import MiddlewareMixin
-
+from django.views.decorators.csrf import csrf_exempt
+from django.middleware.csrf import get_token
 
 class DefaultLanguageMiddleware(MiddlewareMixin):
     """
@@ -27,6 +28,7 @@ class DefaultLanguageMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         language = translation.get_language()
+        response.set_cookie('csrftoken', get_token(request))
         language_from_path = translation.get_language_from_path(request.path_info)
         urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
         i18n_patterns_used, prefixed_default_language = is_language_prefix_patterns_used(urlconf)
