@@ -56,9 +56,9 @@ var WHEEL = (function () {
                     }else{
                         // alert('No available')
                         const el = document.createElement('div')
-                        el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/> <br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
+                        el.innerHTML = "<center><b>"+gettext("TEXT_JS_NO_AVAILABLE_TITLE")+"</b> <br/> <br/> "+gettext("TEXT_JS_NO_AVAILABLE_DETAIL")+"</center>"
                         swal({
-                            title: "No available!",
+                            title: gettext("TEXT_JS_NO_AVAILABLE!"),
                             content: el,
                             // icon: "warning",
                             button: "OK",
@@ -66,9 +66,9 @@ var WHEEL = (function () {
                     }
                 }else{
                     const el = document.createElement('div')
-                    el.innerHTML = "<center><b>Play loyalty games</b> <br/> Please wait for games running. </center>"
+                    el.innerHTML = "<center><b>"+gettext("TEXT_JS_GAMES_IS_RUNNING_TITLE")+"</b> <br/> "+gettext("TEXT_JS_GAMES_IS_RUNNING_DETAIL")+" </center>"
                     swal({
-                        title: "Games is running!",
+                        title: gettext("TEXT_JS_GAMES_IS_RUNNING"),
                         content: el,
                         // icon: "warning",
                         button: "OK",
@@ -297,9 +297,9 @@ var WHEEL = (function () {
                     // showCurrentWheel(session,newTransactions);
                     if(!gameIsAvailable){
                         const el = document.createElement('div')
-                        el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
+                        el.innerHTML = "<center><b>"+gettext("TEXT_JS_NO_AVAILABLE_TITLE")+"</b> <br/> <br/> "+gettext("TEXT_JS_NO_AVAILABLE_DETAIL")+"</center>"
                         swal({
-                            title: "No available! !",
+                            title: gettext("TEXT_JS_NO_AVAILABLE!"),
                             content: el,
                             // icon: "warning",
                             button: "OK",
@@ -317,7 +317,7 @@ var WHEEL = (function () {
             console.log('login fales')
             setImageLevel()
             const el = document.createElement('div')
-            el.innerHTML = "<center><b>The wheel is not available to you right now!</b> <br/><br/> Depoit today to get a spin on the wheel and a chance to win BIG.</center>"
+            el.innerHTML = "<center><b>"+gettext("TEXT_JS_NOT_LOGGED_IN_TITLE")+"</b> <br/><br/> "+gettext("TEXT_JS_NOT_LOGGED_IN_DETAIL")+"</center>"
             swal({
                 title: gettext("TEXT_JS_NOT_LOGGED_IN"),
                 content: el,
@@ -384,8 +384,8 @@ var WHEEL = (function () {
         if (bonusCode === '') {
             hideInfoBox();
             swal({
-                title: ("Warning!"),
-                text: ("Don't have bonus code. Could you contact support"),
+                title: gettext("TEXT_JS_WARNING"),
+                text: gettext("TEXT_JS_DONT_HAVE_BONUS_CODE"),
                 icon: "warning",
                 button: ("OK"),
             });
@@ -417,8 +417,8 @@ var WHEEL = (function () {
                         $('.waiting-api').css('display', 'none');
                         hideInfoBox();
                         swal({
-                            title: ("Warning!"),
-                            text: ('Error giving bonus code Could you contact support\n'+JSON.stringify(result.result.error)),
+                            title: gettext("TEXT_JS_WARNING"),
+                            text: gettext("TEXT_JS_ERROR_BONUS_CODE")+'\n'+JSON.stringify(result.result.error),
                             icon: "warning",
                             button: ("OK"),
                         });
@@ -429,8 +429,8 @@ var WHEEL = (function () {
                     hideInfoBox();
                     console.log(xhr, errmsg, err)
                     swal({
-                        title: ("Warning!"),
-                        text: ('Error giving bonus code Could you contact support'),
+                        title: gettext("TEXT_JS_WARNING"),
+                        text: gettext("TEXT_JS_ERROR_BONUS_CODE"),
                         icon: "warning",
                         button: ("OK"),
                     });
@@ -440,8 +440,8 @@ var WHEEL = (function () {
             $('.waiting-api').css('display', 'none');
             hideInfoBox();
             swal({
-                title: ("Warning!"),
-                text: ('Error giving bonus code') + e + ' ' + ('Could you contact support'),
+                title: gettext("TEXT_JS_WARNING"),
+                text: gettext("TEXT_JS_ERROR_GIVING_BONUS_CODE") + e + ' ' + gettext("TEXT_JS_CONTACT_SUPPORT"),
                 icon: "warning",
                 button: ("OK"),
             });
@@ -815,8 +815,8 @@ var WHEEL = (function () {
                 } else {
                     // alert('An error occurred. Game cancelled.');
                     swal({
-                        title: ("Error!"),
-                        text: ('An error occurred. Game cancelled.'),
+                        title: gettext("TEXT_JS_ERROR"),
+                        text: gettext("TEXT_JS_GAME_CANCEL"),
                         icon: "warning",
                         button: ("OK"),
                     });
