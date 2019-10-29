@@ -371,6 +371,26 @@ body {
 .text-spin{
     color: rgb(110, 110, 110);
 }
+.swal-overlay--show-modal .swal-modal{
+    border: 3px solid green;
+    color: white;
+    background: rgba(143, 37, 37,0.8);
+    border-radius:10px;
+}
+.swal-button:not([disabled]):hover,.swal-button:active,.swal-button.active{
+    background-color: rgba(143, 37, 37);
+    border: 2px solid green;
+}
+.swal-title{
+    color: white;
+}
+.swal-button{
+    background-color: rgba(143, 37, 37);
+    border: 2px solid green;
+}
+.swal-button:focus {
+    box-shadow: 0 0 0 0;
+}
 @media (max-width: 576px){
     .show-spin{
         display: none;
