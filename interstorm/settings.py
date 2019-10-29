@@ -169,9 +169,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'interstorm',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'Th3futur3',
         'HOST': 'localhost',
-        'PORT': '8889'
+        # 'PORT': '8889'
     }
 }
 
