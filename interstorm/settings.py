@@ -155,6 +155,8 @@ LANGUAGES = (
     ('de', _('German')),
     ('tr', _('Turkish')),
     ('fa', _('Farsi')),
+    ('ar', _('Arabic')),
+    ('es', _('Spanish'))
 )
 
 import sys
