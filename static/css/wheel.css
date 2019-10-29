@@ -519,6 +519,7 @@ body {
     }
     .how-to-play{
         display: inherit ;
+        color: #fff;
     }
     .how-to-play-bottom{
         display: none;
