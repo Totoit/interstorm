@@ -160,18 +160,20 @@ LANGUAGES = (
 )
 
 import sys
-# pymysql.install_as_MySQLdb()
+import pymysql
+pymysql.install_as_MySQLdb()
 
-# DEBUG = False
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'uniclub_casino',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost'
-#     }
-# }
+DEBUG = False
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'interstorm',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '8889'
+    }
+}
 
 ROOT_URLCONF = 'interstorm.urls_server'
 
