@@ -15,7 +15,7 @@ class InterStormUserVendor(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False)
 
     created_date = models.DateTimeField(default=timezone.now)
-    udpated_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.usercode

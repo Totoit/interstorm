@@ -38,7 +38,7 @@ class InterStormUserVendorForm(forms.Form):
                 ch = str(chr(n))
                 random_code = random_code+ch
 
-            InterStormUserVendorObject = InterStormUserVendor(name = self.name,usercode=random_code,created_date = timezone.now,udpated_date = timezone.now)
+            InterStormUserVendorObject = InterStormUserVendor(name = self.name,usercode=random_code,created_date = timezone.now,updated_date = timezone.now)
 
         if commit:
             instance.save()
