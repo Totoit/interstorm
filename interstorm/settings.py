@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+
+import django.conf.locale
+
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -152,12 +156,35 @@ LANGUAGES = (
     ('en', _('English')),
     ('ru', _('Russian')),
     ('az', _('Azeri')),
+    ('ar', _('Arabic')),
     ('de', _('German')),
     ('tr', _('Turkish')),
     ('fa', _('Farsi')),
     ('ar', _('Arabic')),
-    ('es', _('Spanish'))
+    ('es', _('Spanish')),
+    ('en-ca', _('English CA')),
+    ('en-in', _('English IN')),
+
 )
+
+EXTRA_LANG_INFO = {
+    'en-ca': {
+        'bidi': False,
+        'code': 'en-ca',
+        'name': 'English CA',
+        'name_local': u'English CA',
+    },
+    'en-in': {
+        'bidi': False,
+        'code': 'en-in',
+        'name': 'English IN',
+        'name_local': u'English IN',
+    },
+}
+LANG_INFO = dict()
+LANG_INFO.update(django.conf.locale.LANG_INFO)
+LANG_INFO.update(EXTRA_LANG_INFO.items())
+django.conf.locale.LANG_INFO = LANG_INFO
 
 import sys
 import pymysql

@@ -126,15 +126,15 @@ var WHEEL = (function () {
                     if (availableSpins['level_' + level] > 1) {
                         // $('.txt-available').find('span').html(('You have ') + availableSpins['level_' + deposit_lv] + ' ' + ('spins'))
                         $('.text-amont-spin').html(availableSpins['level_' + level]);
-                        $('.text-spin').html('Spins');
+                        $('.text-spin').html(gettext('TEXT_JS_SPINS'));
                     } else {
                         if(availableSpins['level_' + level] == 0 ){
                             $('.text-amont-spin').removeClass('has');
                             $('.text-amont-spin').html('0');
-                            $('.text-spin').html('Spin');
+                            $('.text-spin').html(gettext('TEXT_JS_SPIN'));
                         }else{
                             $('.text-amont-spin').html(availableSpins['level_' + level]);
-                            $('.text-spin').html('Spin');
+                            $('.text-spin').html(gettext('TEXT_JS_SPIN'));
                         }
                         
                     }
@@ -142,7 +142,7 @@ var WHEEL = (function () {
                 }else{
                     $('.text-amont-spin').removeClass('has');
                     $('.text-amont-spin').html('0');
-                    $('.text-spin').html('Spin');
+                    $('.text-spin').html(gettext('TEXT_JS_SPIN'));
                 }
                 $('.right-box').show()
                 
@@ -1104,9 +1104,11 @@ var WHEEL = (function () {
         var reward = result.winning;
         // reward = 'jackpot';
         //  var bonuscode = 'FFFACAAD'
+        var txt_congrate = ''
         if (reward) {
             // $('.show-reward img').attr('class', '');
-            if (reward == 'bonus') {
+            if (reward == 'jackpot') {
+                txt_congrate = gettext('TEXT_JS_CONGRATURATIONS_JACKPOT')
                 // $('.show-reward img').addClass('nomal-cal');
                 $('.reward-bg img').attr('src','/static/images/reward/coin1.png')
                 $('.reward-img img').attr('src','/static/images/reward/jackpot_lv'+level+'.png');
@@ -1123,13 +1125,20 @@ var WHEEL = (function () {
                 // $('.swal-overlay').css('background-color', 'rgba(0,0,0,.6)');
 
                 // $('#reward-box img').attr('src', cdn_link + '/static/images/wheel/jackpot3.gif');
+                if(reward == 'coin'){
+                    txt_congrate = gettext('TEXT_JS_CONGRATURATIONS_COIN')
+                }else if(reward == 'chip'){
+                    txt_congrate = gettext('TEXT_JS_CONGRATURATIONS_CHIP')
+                }else{
+                    txt_congrate = gettext('TEXT_JS_CONGRATURATIONS_BOX')
+                }
                 $('.reward-bg img').attr('src','/static/images/reward/coin2.png')
                 $('.reward-img img').attr('src', '/static/images/reward/prize_lv'+level+'.png');
             }
             // $('#reward-box').css('display', 'inline');
             // $('#reward-box').removeClass('hide');
             // $('.reward-box').addClass('show');
-            $('.reward-txt-bonus span').html('Congraturations');
+            $('.reward-txt-bonus span').html(txt_congrate);
             $('.reward-box').show();
             // $('.reward-box img').attr('src','')
             // $('#reward-box img').css('display', 'inline');

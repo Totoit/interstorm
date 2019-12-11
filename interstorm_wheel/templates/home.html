@@ -89,12 +89,8 @@
                             <span>{% trans "TEXT_HOW_TO_PLAY" %}</span>
                         </div>
                         <div class="htp-content">
-                            <p>{% trans "TEXT_STEP_1" %}</p>
-                            <p>{% trans "TEXT_STEP_2" %}</p>
-                            <p>{% trans "TEXT_STEP_3" %}</p>
-                            <p>{% trans "TEXT_STEP_4" %}</p>
-                            <p>{% trans "TEXT_STEP_5" %}</p>
-                            <p>{% trans "TEXT_STEP_6" %}</p>
+                            {% trans "TEXT_HOW_TO_PLAY_DETAIL" as trs_play_detail %}
+                            {{ trs_play_detail|linebreaks }}
                         </div>
                     </div>
                     <div class="show-spin-top">
