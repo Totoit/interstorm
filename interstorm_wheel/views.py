@@ -10,6 +10,7 @@ from interstorm_wheel.game_logic import Game, GameAccess
 from interstorm_wheel.models import WheelTransaction, WheelAccessLog,  WheelGames, WheelBonusCode,WheelLevelManage,WheelImageLevel
 from site_config.models import SiteConfig
 import datetime
+from datetime import timedelta  
 import json
 import dateutil.parser
 from interstorm import settings
@@ -152,7 +153,7 @@ def get_last_transaction(request):
 			if(WheelTransaction.objects.filter(user_id=user_id,vendor_id = InterStormUserVendor.objects.get(usercode = vendor).user_id).exists()):
 				print("have data")
 				transaction = WheelTransaction.objects.filter(user_id=user_id,vendor_id = InterStormUserVendor.objects.get(usercode = vendor).user_id).order_by('-transaction_date')[:1].get()
-				response['transaction_date'] = transaction.transaction_date
+				response['transaction_date'] = transaction.transaction_date + timedelta(seconds=1)
 			else:
 				print("no data")
 				transaction = None
